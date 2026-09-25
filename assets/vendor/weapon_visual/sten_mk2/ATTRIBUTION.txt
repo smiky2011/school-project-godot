@@ -1,0 +1,17 @@
+Sten mk2
+Creator: Lotnik
+Original publication: https://opengameart.org/content/sten-mk2
+Original publication date: 16 May 2016
+License: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+License deed: https://creativecommons.org/licenses/by/3.0/
+License legal code: https://creativecommons.org/licenses/by/3.0/legalcode
+
+Changes: This project converted the original FBX into a glTF/GLB model,
+rescaled it for the first-person view, split the side magazine into an
+independently movable mesh, and repacked the original Unity metalness RGB,
+smoothness alpha and occlusion map into glTF occlusion/roughness/metallic
+channels. The original albedo and normal images are embedded in the GLB.
+The source FBX and texture files remain unchanged under source/original/;
+the downloaded archive remains under source/. The split and material pipeline
+are recorded in docs/WEAPON_CHARACTER_ASSETS.md. Lotnik does not endorse this
+project.
