@@ -213,7 +213,6 @@ func _build_residence() -> void:
 	var ramp := _box("Residence stairs ramp", Vector3(-2.55, 1.48, -21.3), ramp_size, _wood)
 	ramp.rotation.x = atan2(3.0, 6.4)
 	_box("Upper floor", Vector3(1.0, 3.0, -28.25), Vector3(14.0, 0.3, 7.5), _wood)
-	_box("Upper front landing", Vector3(3.5, 3.0, -21.2), Vector3(9.0, 0.3, 6.6), _wood)
 	_box("Residence ceiling", Vector3(1.0, 6.28, -25), Vector3(14.6, 0.3, 14.6), _roof)
 	_box("Entry threshold", Vector3(-2.5, 0.04, -17.55), Vector3(3.7, 0.08, 0.75), _wood)
 	_box("Contact desk", Vector3(3.6, 3.62, -29.4), Vector3(2.2, 0.7, 0.8), _wood, true)

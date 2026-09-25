@@ -2,7 +2,7 @@
 
 Status: playable blockout under integration and playtest. See [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md) for provisional tuning and confirmed design boundaries.
 
-Open this project in Godot 4.7.2 and press Play Project (F6/F5 as configured), or run the Godot executable with `--path "/path/to/personal project"`. On the target Mac, the currently available executable is `/Users/quan/Downloads/Godot.app/Contents/MacOS/Godot`. The project starts with a briefing. Begin the mission to capture the pointer. Esc pauses and releases it; use Resume or Esc to return. The pause and result screens also offer a full restart and Quit.
+Open this project in Godot 4.7.2 and press Play Project (F5), or run the Godot executable with `--path "/path/to/personal project"`. On the target Mac, the currently available executable is `/Users/quan/Downloads/Godot.app/Contents/MacOS/Godot`. The project starts with a briefing. Begin the mission to capture the pointer. Esc pauses and releases it; use Resume or Esc to return. The pause and result screens also offer a full restart and Quit.
 
 | Action | Controls |
 | --- | --- |
@@ -17,4 +17,4 @@ The goal is the upstairs contact in the requisitioned residence. A safe three-se
 
 The HUD shows direction, distance and floor relation to the current objective; local suspicion, combat/search state and noise; health, ammunition and reload; interaction readiness/progress; and story subtitles. Guard vision cones are visible on the ground. The weapon model and much of the town are deliberate blockout geometry while asset selection and playtesting continue.
 
-For implementation checks, run Godot with `--headless --path . --editor --quit` for import and `--headless --path . --quit-after 120` for startup. These checks do not establish that the mission is playable. Manual acceptance must traverse the contact, alarm, extraction, death and retry, including a zero-kill path.
+For implementation checks, run Godot with `--headless --path . --editor --quit` for import, `--headless --path . --quit-after 120` for startup, and `--headless --path . --script res://tests/mission_regression.gd` for state and interaction regression. These checks do not establish that the mission is playable. Manual acceptance must traverse the contact, alarm, extraction, death and retry, including a zero-kill path.

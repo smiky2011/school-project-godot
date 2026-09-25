@@ -26,6 +26,7 @@ var _subtitle_timer := 0.0
 var _exposure_timer := 0.0
 var _exposure_stage := 0
 var _stage_timer := 0.0
+var _pending_interact_press := false
 
 
 func setup(mission_player, mission_level) -> void:
@@ -36,6 +37,7 @@ func setup(mission_player, mission_level) -> void:
 	handoff_progress = 0.0
 	_exposure_stage = 0
 	_exposure_timer = 0.0
+	_pending_interact_press = false
 	running = false
 
 
@@ -154,8 +156,14 @@ func say(message: String, seconds: float = 4.0) -> void:
 	_subtitle_timer = seconds
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if is_active() and event.is_action_pressed("interact") and not event.is_echo():
+		_pending_interact_press = true
+
+
 func _process(delta: float) -> void:
 	if not is_active():
+		_pending_interact_press = false
 		return
 	mission_time += delta
 	last_noise = maxf(0.0, last_noise - delta * 0.7)
@@ -168,6 +176,7 @@ func _process(delta: float) -> void:
 	elif phase == "INTEL_SECURED":
 		_update_exposure(delta)
 		_update_extraction()
+	_pending_interact_press = false
 
 
 func _update_contact(delta: float) -> void:
@@ -254,7 +263,7 @@ func _update_extraction() -> void:
 		interaction_text = "Enter the shelter to reach the scout"
 		return
 	interaction_text = "Press E to deliver the packet"
-	if Input.is_action_just_pressed("interact"):
+	if _pending_interact_press or Input.is_action_just_pressed("interact"):
 		if _exposure_stage == 0:
 			_announce_discovery()
 		if _exposure_stage == 1:
