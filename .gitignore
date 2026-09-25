@@ -1,0 +1,22 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+/reference/
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Python caches and local credentials
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+
+# Exported builds
+/build/
+/dist/
+*.pck
