@@ -1,0 +1,23 @@
+First-person grip hands
+
+Source: MakeHuman Community system assets (CC0), including the
+middleage_lightskinned_male skin and MakeHuman human base mesh.
+Official source: https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html
+MakeHuman output rights: https://static.makehumancommunity.org/makehuman/faq/are_makehuman_files_free.html
+Accessed: 25 September 2026. The public downloads required no account or payment.
+
+Adaptation: Extracted both hands from the 53-bone MakeHuman contact prototype,
+curled finger joints into a Sten grip pose, cut at the wrists, retained skin UVs,
+and exported separate left/right GLB meshes with embedded skin texture.
+Cloth cuffs and sleeves are original procedural game geometry, not MakeHuman assets.
+
+Editable hand source: source/grip_hands_working.blend. Its two posed hand meshes
+and skin images are packed in the Blender file. The production GLBs are
+hand_left_grip.glb and hand_right_grip.glb. The extraction and pose recipe is
+tools/art/weapon_pose_hands.py; the standalone source writer is
+tools/art/weapon_hand_source.py. The extraction recipe reads the separately
+authored MakeHuman character source while the standalone hand source remains
+editable without that character file.
+
+These hands are an initial first-person fit. They do not establish a guard or
+player faction, a final costume, or any historical uniform identity.

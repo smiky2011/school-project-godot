@@ -10,6 +10,7 @@ const MAGAZINE_SIZE := 30
 const RELOAD_SECONDS := 1.9
 const FIRE_INTERVAL := 0.105
 const BULLET_DAMAGE := 34.0
+const WEAPON_PRESENTATION_SCRIPT: Script = preload("res://scripts/player/weapon_presentation.gd")
 
 var health := 100.0
 var dead := false
@@ -27,8 +28,6 @@ var _head: Node3D
 var _weapon: Node3D
 var _collider: CollisionShape3D
 var _capsule: CapsuleShape3D
-var _muzzle_light: OmniLight3D
-var _muzzle_visual: MeshInstance3D
 var _shot_audio: AudioStreamPlayer
 var _pitch := 0.0
 var _fire_timer := 0.0
@@ -56,7 +55,8 @@ func _ready() -> void:
 	_camera.fov = 76.0
 	_camera.near = 0.05
 	_head.add_child(_camera)
-	_build_placeholder_weapon()
+	_weapon = WEAPON_PRESENTATION_SCRIPT.new() as Node3D
+	_camera.add_child(_weapon)
 	_build_shot_sound()
 
 
@@ -109,10 +109,6 @@ func _physics_process(delta: float) -> void:
 	shot_flash = maxf(0.0, shot_flash - delta)
 	hit_marker = maxf(0.0, hit_marker - delta)
 	damage_flash = maxf(0.0, damage_flash - delta)
-	_muzzle_light.visible = shot_flash > 0.0
-	_muzzle_visual.visible = shot_flash > 0.0
-	_weapon.position.y = lerpf(_weapon.position.y, -0.29, minf(1.0, delta * 18.0))
-	_weapon.rotation.x = lerpf(_weapon.rotation.x, 0.0, minf(1.0, delta * 20.0))
 	if is_reloading:
 		_reload_timer -= delta
 		if _reload_timer <= 0.0:
@@ -149,6 +145,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("stealth_kill") and director != null:
 		director.try_stealth_kill()
 	_camera.fov = lerpf(_camera.fov, 62.0 if Input.is_action_pressed("aim") else 76.0, minf(1.0, delta * 12.0))
+	_weapon.call("update_pose", delta, Input.is_action_pressed("aim"), direction_2d.length() > 0.01, Input.is_action_pressed("sprint"), is_reloading, get_reload_progress())
 
 
 func _start_reload() -> void:
@@ -164,8 +161,7 @@ func _fire() -> void:
 		return
 	ammo -= 1
 	shot_flash = 0.085
-	_weapon.position.y -= 0.022
-	_weapon.rotation.x += 0.065
+	_weapon.call("fired")
 	_pitch = clampf(_pitch + 0.008, -1.45, 1.45)
 	_shot_audio.play()
 	if director != null:
@@ -190,71 +186,17 @@ func get_reload_progress() -> float:
 
 
 func _can_stand() -> bool:
-	var standing := CapsuleShape3D.new()
-	standing.radius = 0.32
-	standing.height = 1.75
+	# Check only the space the taller stance would newly occupy. Testing the
+	# entire standing capsule can detect the floor beneath a settled crouched
+	# player and permanently prevent standing.
+	var headroom := CylinderShape3D.new()
+	headroom.radius = 0.32
+	headroom.height = 0.68
 	var query := PhysicsShapeQueryParameters3D.new()
-	query.shape = standing
-	query.transform = Transform3D(global_transform.basis, global_position + Vector3.UP * 0.9)
+	query.shape = headroom
+	query.transform = Transform3D(global_transform.basis, global_position + Vector3.UP * 1.43)
 	query.exclude = [get_rid()]
 	return get_world_3d().direct_space_state.intersect_shape(query, 1).is_empty()
-
-
-func _build_placeholder_weapon() -> void:
-	_weapon = Node3D.new()
-	_weapon.name = "PlaceholderSMG"
-	_weapon.position = Vector3(0.27, -0.29, -0.55)
-	_camera.add_child(_weapon)
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.19, 0.19, 0.18)
-	material.metallic = 0.6
-	material.roughness = 0.43
-	var receiver := BoxMesh.new()
-	receiver.size = Vector3(0.14, 0.15, 0.4)
-	var receiver_mesh := MeshInstance3D.new()
-	receiver_mesh.mesh = receiver
-	receiver_mesh.material_override = material
-	_weapon.add_child(receiver_mesh)
-	var barrel := CylinderMesh.new()
-	barrel.top_radius = 0.027
-	barrel.bottom_radius = 0.027
-	barrel.height = 0.36
-	var barrel_mesh := MeshInstance3D.new()
-	barrel_mesh.mesh = barrel
-	barrel_mesh.material_override = material
-	barrel_mesh.rotation.x = PI / 2.0
-	barrel_mesh.position.z = -0.34
-	_weapon.add_child(barrel_mesh)
-	var magazine := BoxMesh.new()
-	magazine.size = Vector3(0.08, 0.3, 0.09)
-	var magazine_mesh := MeshInstance3D.new()
-	magazine_mesh.mesh = magazine
-	magazine_mesh.material_override = material
-	magazine_mesh.position = Vector3(0.0, -0.18, 0.09)
-	_weapon.add_child(magazine_mesh)
-	_muzzle_light = OmniLight3D.new()
-	_muzzle_light.position.z = -0.5
-	_muzzle_light.light_color = Color(1.0, 0.67, 0.31)
-	_muzzle_light.light_energy = 0.6
-	_muzzle_light.omni_range = 1.3
-	_muzzle_light.shadow_enabled = false
-	_muzzle_light.visible = false
-	_weapon.add_child(_muzzle_light)
-	var flash_material := StandardMaterial3D.new()
-	flash_material.albedo_color = Color(1.0, 0.76, 0.38)
-	flash_material.emission_enabled = true
-	flash_material.emission = Color(1.0, 0.55, 0.18)
-	flash_material.emission_energy_multiplier = 3.0
-	flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	var flash_mesh := SphereMesh.new()
-	flash_mesh.radius = 0.075
-	flash_mesh.height = 0.15
-	_muzzle_visual = MeshInstance3D.new()
-	_muzzle_visual.mesh = flash_mesh
-	_muzzle_visual.material_override = flash_material
-	_muzzle_visual.position.z = -0.52
-	_muzzle_visual.visible = false
-	_weapon.add_child(_muzzle_visual)
 
 
 func _build_shot_sound() -> void:

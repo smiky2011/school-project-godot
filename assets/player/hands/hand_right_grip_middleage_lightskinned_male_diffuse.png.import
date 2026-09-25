@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsja715bn73v5"
-path.s3tc="res://.godot/imported/sten_mk2_sten_normals.jpg-99227fc5db1d8786d71560e6bcc7f976.s3tc.ctex"
+uid="uid://dgjc7stsbdsjj"
+path.s3tc="res://.godot/imported/hand_right_grip_middleage_lightskinned_male_diffuse.png-73a852db871419d3037e1d35d83165f3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "05e1251d728dced028337f15f429821e"
+"md5": "8b1c8cd30d1358947630bc34c0b2990f"
 }
 
 [deps]
 
-source_file="res://assets/vendor/weapon_visual/sten_mk2/runtime/sten_mk2_sten_normals.jpg"
-dest_files=["res://.godot/imported/sten_mk2_sten_normals.jpg-99227fc5db1d8786d71560e6bcc7f976.s3tc.ctex"]
+source_file="res://assets/player/hands/hand_right_grip_middleage_lightskinned_male_diffuse.png"
+dest_files=["res://.godot/imported/hand_right_grip_middleage_lightskinned_male_diffuse.png-73a852db871419d3037e1d35d83165f3.s3tc.ctex"]
 
 [params]
 
@@ -25,12 +25,12 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://assets/vendor/weapon_visual/sten_mk2/runtime/sten_mk2_sten_normals.jpg"
+roughness/mode=0
+roughness/src_normal=""
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2
