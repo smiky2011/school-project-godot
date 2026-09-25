@@ -1,0 +1,16 @@
+Poly Haven sample asset license record
+Checked: 2026-09-25
+Source license: https://polyhaven.com/license
+License: Creative Commons CC0 1.0 Universal
+License deed: https://creativecommons.org/publicdomain/zero/1.0/
+
+Poly Haven states that its HDRIs, textures, and 3D models are CC0. It permits
+redistribution and use in a game without attribution. This file records the
+license and does not replace the original source packages or item-level
+provenance in docs/ASSET_PROVENANCE.md.
+
+Included upstream asset pages:
+https://polyhaven.com/a/plastered_stone_wall
+https://polyhaven.com/a/stone_wall
+https://polyhaven.com/a/muddy_tracks
+https://polyhaven.com/a/wooden_crate_02
