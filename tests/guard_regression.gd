@@ -238,13 +238,13 @@ func _test_finite_reinforcements_and_npcs() -> void:
 	var contact_found := false
 	var scout_found := false
 	for child in f.level.get_children():
-		if child.name == "Contact coat":
+		if child.name == "Contact civilian visual":
 			contact_found = true
-		if child.name == "Scout coat":
+		if child.name == "Scout field visual":
 			scout_found = true
-		if child.name == "Contact coat" or child.name == "Scout coat":
-			npc_has_collider = npc_has_collider or child is CollisionObject3D
-			npc_has_damage_method = npc_has_damage_method or child.has_method("take_damage")
+		if child.name == "Contact civilian visual" or child.name == "Scout field visual":
+			npc_has_collider = npc_has_collider or _tree_has_collision(child)
+			npc_has_damage_method = npc_has_damage_method or _tree_has_damage_handler(child)
 	_expect(contact_found and scout_found, "Both protected mission NPCs exist")
 	_expect(not npc_has_collider, "Protected NPC visuals are noncolliding")
 	_expect(not npc_has_damage_method, "Protected NPC visuals have no damage handler")
@@ -270,3 +270,21 @@ func _find_collider(node: Node) -> CollisionShape3D:
 		if child is CollisionShape3D:
 			return child
 	return null
+
+
+func _tree_has_collision(node: Node) -> bool:
+	if node is CollisionObject3D or node is CollisionShape3D:
+		return true
+	for child in node.get_children():
+		if _tree_has_collision(child):
+			return true
+	return false
+
+
+func _tree_has_damage_handler(node: Node) -> bool:
+	if node.has_method("take_damage"):
+		return true
+	for child in node.get_children():
+		if _tree_has_damage_handler(child):
+			return true
+	return false

@@ -1,6 +1,10 @@
 extends Node3D
 
 const GUARD_SCRIPT := preload("res://scripts/actors/guard.gd")
+const TOWN_PRESENTATION := preload("res://scripts/world/town_presentation.gd")
+const CONTACT_VISUAL: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/contact_idle.glb")
+const SCOUT_VISUAL: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/scout_idle.glb")
+const CONTACT_DESK_SURFACE_Y := 3.825
 const MIN_X := -64
 const MAX_X := 64
 const MIN_Z := -204
@@ -17,9 +21,10 @@ var _dark_stone: StandardMaterial3D
 var _plaster: StandardMaterial3D
 var _earth: StandardMaterial3D
 var _roof: StandardMaterial3D
+var _slate_roof: StandardMaterial3D
 var _wood: StandardMaterial3D
+var _glass: StandardMaterial3D
 var _contact_blue: StandardMaterial3D
-var _exit_green: StandardMaterial3D
 var _mud_track: StandardMaterial3D
 
 
@@ -79,15 +84,42 @@ func _build_materials() -> void:
 	_plaster = _material(Color(0.72, 0.70, 0.62))
 	_earth = _material(Color(0.39, 0.37, 0.31))
 	_roof = _material(Color(0.38, 0.31, 0.29))
+	_slate_roof = _material(Color(0.68, 0.71, 0.73))
+	_slate_roof.albedo_texture = load("res://assets/environment/textures/slate_base.png")
+	_slate_roof.normal_enabled = true
+	_slate_roof.normal_texture = load("res://assets/environment/textures/slate_normal.png")
+	_slate_roof.roughness_texture = load("res://assets/environment/textures/slate_rough.png")
+	_slate_roof.uv1_triplanar = true
+	_slate_roof.uv1_world_triplanar = true
+	_slate_roof.uv1_scale = Vector3.ONE / 1.5
 	_wood = _material(Color(0.40, 0.28, 0.21))
+	_wood.albedo_texture = load("res://assets/environment/textures/oak_base.jpg")
+	_wood.albedo_color = Color(0.82, 0.78, 0.72)
+	_wood.normal_enabled = true
+	_wood.normal_texture = load("res://assets/environment/textures/oak_normal.png")
+	_wood.roughness_texture = load("res://assets/environment/textures/oak_rough.png")
+	_wood.uv1_triplanar = true
+	_wood.uv1_world_triplanar = true
+	_wood.uv1_scale = Vector3.ONE / 2.0
+	_glass = _material(Color(0.19, 0.23, 0.25, 0.72))
+	_glass.roughness = 0.27
+	_glass.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_contact_blue = _material(Color(0.24, 0.53, 0.72))
-	_exit_green = _material(Color(0.32, 0.67, 0.43))
 	# CC0 sample textures are recorded in docs/ASSET_PROVENANCE.md.
 	_stone.albedo_texture = load("res://assets/vendor/polyhaven/materials/stone_wall_diff_1k.jpg")
 	_stone.albedo_color = Color(0.87, 0.86, 0.82)
 	_stone.uv1_triplanar = true
 	_stone.uv1_world_triplanar = true
 	_stone.uv1_scale = Vector3.ONE / 3.0
+	_dark_stone.albedo_texture = load("res://assets/environment/textures/stone_base.jpg")
+	_dark_stone.albedo_color = Color(0.70, 0.71, 0.68)
+	_dark_stone.normal_enabled = true
+	_dark_stone.normal_texture = load("res://assets/environment/textures/stone_normal.png")
+	_dark_stone.normal_scale = 0.55
+	_dark_stone.roughness_texture = load("res://assets/environment/textures/stone_rough.png")
+	_dark_stone.uv1_triplanar = true
+	_dark_stone.uv1_world_triplanar = true
+	_dark_stone.uv1_scale = Vector3.ONE / 2.4
 	_plaster.albedo_texture = load("res://assets/vendor/polyhaven/materials/plastered_stone_wall_diff_1k.jpg")
 	_plaster.albedo_color = Color(0.93, 0.91, 0.84)
 	_plaster.uv1_triplanar = true
@@ -110,11 +142,18 @@ func _material(color: Color) -> StandardMaterial3D:
 func _build_town() -> void:
 	_build_lighting()
 	_box("Ground", Vector3(0, -0.25, 0), Vector3(130, 0.5, 410), _earth)
+	TOWN_PRESENTATION.add_street_surfaces(self, _obstacles)
 	_visual_box("Southern muddy track sample", Vector3(-47, 0.008, 190), Vector3(5.5, 0.018, 11), _mud_track)
 	_box("West outer boundary", Vector3(-65, 2, 0), Vector3(1, 4, 410), _dark_stone, true)
 	_box("East outer boundary", Vector3(65, 2, 0), Vector3(1, 4, 410), _dark_stone, true)
 	_box("South outer boundary", Vector3(0, 2, 205), Vector3(130, 4, 1), _dark_stone, true)
 	_box("North outer boundary", Vector3(0, 2, -205), Vector3(130, 4, 1), _dark_stone, true)
+	for x in [-65.0, 65.0]:
+		_visual_box("Boundary stone coping", Vector3(x, 4.04, 0), Vector3(1.25, 0.16, 410), _stone)
+		_visual_box("Boundary foot course", Vector3(x, 0.15, 0), Vector3(1.10, 0.3, 410), _stone)
+	for z in [-205.0, 205.0]:
+		_visual_box("Boundary stone coping", Vector3(0, 4.04, z), Vector3(130, 0.16, 1.25), _stone)
+		_visual_box("Boundary foot course", Vector3(0, 0.15, z), Vector3(130, 0.3, 1.10), _stone)
 	_box("Core west edge", Vector3(-28, 2, 0), Vector3(1, 4, 86), _dark_stone, true)
 	_box("Core east edge", Vector3(28, 2, 0), Vector3(1, 4, 86), _dark_stone, true)
 	_build_southern_district()
@@ -147,21 +186,24 @@ func _build_lighting() -> void:
 	var environment := Environment.new()
 	environment.background_mode = Environment.BG_SKY
 	var sky := Sky.new()
-	var atmosphere := ProceduralSkyMaterial.new()
-	atmosphere.sky_top_color = Color(0.42, 0.52, 0.59)
-	atmosphere.sky_horizon_color = Color(0.72, 0.73, 0.69)
-	atmosphere.ground_bottom_color = Color(0.34, 0.36, 0.35)
+	var atmosphere := PanoramaSkyMaterial.new()
+	atmosphere.panorama = load("res://assets/vendor/environment_visual/polyhaven/overcast_soil_puresky/overcast_soil_puresky_1k.hdr")
+	atmosphere.energy_multiplier = 0.28
 	sky.sky_material = atmosphere
 	environment.sky = sky
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	environment.ambient_light_energy = 0.52
+	environment.ambient_light_energy = 0.48
+	environment.ssao_enabled = true
+	environment.ssao_radius = 1.45
+	environment.ssao_intensity = 1.1
 	world.environment = environment
 	add_child(world)
 	var sun := DirectionalLight3D.new()
 	sun.name = "Soft afternoon sun"
 	sun.rotation_degrees = Vector3(-50, -28, 0)
-	sun.light_energy = 1.15
-	sun.light_color = Color(0.91, 0.91, 0.84)
+	sun.light_energy = 0.82
+	sun.light_color = Color(0.88, 0.90, 0.91)
+	sun.light_angular_distance = 0.8
 	sun.shadow_enabled = true
 	add_child(sun)
 
@@ -304,11 +346,26 @@ func _build_crate_sample() -> void:
 
 
 func _build_solid_house(label: String, base: Vector3, size: Vector3, wall_material: Material) -> void:
-	_box(label, base + Vector3(0, size.y * 0.5, 0), size, wall_material, true)
-	_box(label + " roof", base + Vector3(0, size.y + 0.2, 0), Vector3(size.x + 0.5, 0.4, size.z + 0.5), _roof)
+	var plaster := wall_material == _plaster
+	var shell_added: bool = TOWN_PRESENTATION.add_plot_shell(self, label, base, size, plaster)
+	# Preserve the human-sized doors/windows: shell height is fixed in metres.
+	# The old rectangular collision still owns the same horizontal footprint.
+	var body_height: float = TOWN_PRESENTATION.shell_eaves_height(plaster, size) if shell_added else size.y
+	var mass := _box(label, base + Vector3(0, body_height * 0.5, 0), Vector3(size.x, body_height, size.z), wall_material, true)
+	if shell_added:
+		for child in mass.get_children():
+			if child is MeshInstance3D:
+				child.visible = false
+		var roof_body := _box(label + " legacy roof collision", base + Vector3(0, body_height + 0.2, 0), Vector3(size.x + 0.5, 0.4, size.z + 0.5), _roof)
+		for child in roof_body.get_children():
+			if child is MeshInstance3D:
+				child.visible = false
+	else:
+		_box(label + " roof", base + Vector3(0, size.y + 0.2, 0), Vector3(size.x + 0.5, 0.4, size.z + 0.5), _roof)
 	# Window/door tones are legibility cues on a rough stone mass.
-	for side in [-1.0, 1.0]:
-		_visual_box(label + " shutters", base + Vector3(side * (size.x * 0.5 + 0.015), 2.3, -2), Vector3(0.04, 1.4, 1.1), _wood)
+	if not shell_added:
+		for side in [-1.0, 1.0]:
+			_visual_box(label + " shutters", base + Vector3(side * (size.x * 0.5 + 0.015), 2.3, -2), Vector3(0.04, 1.4, 1.1), _wood)
 	_obstacles.append(Rect2(Vector2(base.x - size.x * 0.5, base.z - size.z * 0.5), Vector2(size.x, size.z)))
 
 
@@ -318,26 +375,123 @@ func _build_residence() -> void:
 	_box("Residence east wall", Vector3(8.2, 3.1, -25), Vector3(0.4, 6.2, 14.4), _stone)
 	_box("Residence north wall", Vector3(1, 3.1, -32.2), Vector3(14.8, 6.2, 0.4), _stone)
 	_box("Residence south left", Vector3(-5.3, 3.1, -17.8), Vector3(1.8, 6.2, 0.4), _plaster)
-	_box("Residence south right", Vector3(3.5, 3.1, -17.8), Vector3(9.4, 6.2, 0.4), _plaster)
+	# The two south windows admit daylight and have physical glass. The door
+	# opening at x=-4.4..-1 remains exactly as the mission route requires.
+	for span in [[-1.2, 0.4], [1.7, 4.65], [5.95, 8.2]]:
+		_box("Residence south pier", Vector3((span[0]+span[1])*0.5, 3.1, -17.8),
+			Vector3(span[1]-span[0], 6.2, 0.4), _plaster)
+	for span in [[0.4, 1.7], [4.65, 5.95]]:
+		var cx: float = (span[0]+span[1])*0.5
+		for band in [[0.0, 1.25], [2.45, 4.0], [5.2, 6.2]]:
+			_box("Residence window wall band", Vector3(cx, (band[0]+band[1])*0.5, -17.8),
+				Vector3(span[1]-span[0], band[1]-band[0], 0.4), _plaster)
+		for cy in [1.85, 4.6]:
+			_box("Residence window glass", Vector3(cx, cy, -17.85), Vector3(1.28, 1.16, 0.07), _glass)
+			_visual_box("Residence dressed stone sill", Vector3(cx, cy-0.68, -17.55), Vector3(1.58, 0.12, 0.31), _stone)
+			_visual_box("Residence dressed stone lintel", Vector3(cx, cy+0.68, -17.59), Vector3(1.55, 0.15, 0.23), _stone)
+			for side in [-1.0, 1.0]:
+				_visual_box("Residence window jamb", Vector3(cx+side*0.66, cy, -17.58), Vector3(0.11, 1.22, 0.20), _stone)
+			_visual_box("Residence timber mullion", Vector3(cx, cy, -17.61), Vector3(0.055, 1.13, 0.08), _wood)
+			_visual_box("Residence timber transom", Vector3(cx, cy, -17.61), Vector3(1.23, 0.055, 0.08), _wood)
 	_box("Residence lintel", Vector3(-2.5, 5.55, -17.8), Vector3(3.8, 1.3, 0.4), _stone)
 	# The ramp is collision-backed. Its moderate slope works with ordinary
 	# CharacterBody3D floor movement and avoids stair-step code in Player.
 	var ramp_size := Vector3(3.4, 0.32, 7.08)
 	var ramp := _box("Residence stairs ramp", Vector3(-2.55, 1.48, -21.3), ramp_size, _wood)
 	ramp.rotation.x = atan2(3.0, 6.4)
+	# Thirteen horizontal timber treads show where each step is. They are
+	# visual-only: the smooth collision ramp remains the traversable surface.
+	for step in range(13):
+		_visual_box("Residence timber stair tread", Vector3(-2.55, 0.13 + float(step)*0.245, -17.94-float(step)*0.535),
+			Vector3(3.18, 0.045, 0.51), _wood)
 	_box("Upper floor", Vector3(1.0, 3.0, -28.25), Vector3(14.0, 0.3, 7.5), _wood)
+	_add_contact_floor_plank_seams()
 	_box("Residence ceiling", Vector3(1.0, 6.28, -25), Vector3(14.6, 0.3, 14.6), _roof)
+	# Plastered interior faces, a timber wall band, and a pitched exterior
+	# roof make this contact space legible without moving its route geometry.
+	for x in [-5.96, 7.96]:
+		_visual_box("Interior plaster", Vector3(x, 3.1, -25), Vector3(0.045, 6.1, 13.8), _plaster)
+		_visual_box("Interior timber dado", Vector3(x, 0.76, -25), Vector3(0.09, 0.14, 13.6), _wood)
+	var room_light := OmniLight3D.new()
+	room_light.name = "Window-bounce contact room light"
+	room_light.position = Vector3(0.5, 4.9, -24.0)
+	room_light.light_color = Color(0.81, 0.84, 0.86)
+	room_light.light_energy = 2.0
+	room_light.omni_range = 11.0
+	room_light.shadow_enabled = false
+	add_child(room_light)
+	for roof_spec in [[-2.62, 0.257], [4.62, -0.257]]:
+		var roof_plane := MeshInstance3D.new()
+		roof_plane.name = "Residence pitched slate roof"
+		var roof_mesh := BoxMesh.new()
+		roof_mesh.size = Vector3(7.52, 0.22, 14.9)
+		roof_plane.mesh = roof_mesh
+		roof_plane.material_override = _slate_roof
+		roof_plane.position = Vector3(roof_spec[0], 7.24, -25)
+		roof_plane.rotation.z = roof_spec[1]
+		add_child(roof_plane)
+	_add_residence_gables()
 	_box("Entry threshold", Vector3(-2.5, 0.04, -17.55), Vector3(3.7, 0.08, 0.75), _wood)
-	_box("Contact desk", Vector3(3.6, 3.62, -29.4), Vector3(2.2, 0.7, 0.8), _wood, true)
+	_box("Contact desk top", Vector3(3.6, CONTACT_DESK_SURFACE_Y-0.065, -29.4), Vector3(2.2, 0.13, 0.83), _wood, true)
+	for x in [2.63, 4.57]:
+		for z in [-29.72, -29.08]:
+			_visual_box("Contact desk timber leg", Vector3(x, 3.43, z), Vector3(0.12, 0.64, 0.12), _wood)
+	_visual_box("Contact chair seat", Vector3(5.34, 3.48, -30.28), Vector3(0.65, 0.09, 0.62), _wood)
+	_visual_box("Contact chair back", Vector3(5.34, 3.85, -30.61), Vector3(0.65, 0.79, 0.09), _wood)
+	for x in [5.08, 5.60]:
+		for z in [-30.50, -30.05]:
+			_visual_box("Contact chair leg", Vector3(x, 3.26, z), Vector3(0.07, 0.42, 0.07), _wood)
 	# Guard ground paths avoid house interiors; the player alone can use it.
 	_obstacles.append(Rect2(Vector2(-6.45, -32.45), Vector2(14.9, 14.9)))
 
 
+func _add_contact_floor_plank_seams() -> void:
+	# Thin visible joints break the tiled oak noise into human-scale boards.
+	# One MultiMesh keeps the whole upper floor to a single additional draw.
+	var seam_material := _material(Color(0.15, 0.11, 0.09))
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(0.012, 0.005, 7.47)
+	mesh.material = seam_material
+	var seams := MultiMesh.new()
+	seams.transform_format = MultiMesh.TRANSFORM_3D
+	seams.mesh = mesh
+	seams.instance_count = 55
+	for i in range(55):
+		seams.set_instance_transform(i, Transform3D(Basis.IDENTITY,
+			Vector3(-5.75 + float(i) * 0.245, 3.153, -28.25)))
+	var visual := MultiMeshInstance3D.new()
+	visual.name = "Contact room oak plank joints"
+	visual.multimesh = seams
+	add_child(visual)
+
+
+func _add_residence_gables() -> void:
+	for side in [1.0, -1.0]:
+		var z: float = -17.8 if side > 0.0 else -32.2
+		var points := [Vector3(-6.2, 6.19, z), Vector3(8.2, 6.19, z), Vector3(1.0, 8.11, z)]
+		# SurfaceTool's outward front faces use clockwise winding in Godot.
+		if side > 0.0:
+			points.reverse()
+		var surface := SurfaceTool.new()
+		surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+		surface.set_material(_plaster if side > 0.0 else _stone)
+		for point in points:
+			surface.set_normal(Vector3(0, 0, side))
+			surface.set_uv(Vector2(point.x / 2.4, point.y / 2.4))
+			surface.add_vertex(point)
+		var gable := MeshInstance3D.new()
+		gable.name = "Residence plaster gable" if side > 0.0 else "Residence stone gable"
+		gable.mesh = surface.commit()
+		add_child(gable)
+
+
 func _build_contact() -> void:
 	var at := get_contact_position()
-	_visual_box("Contact coat", at + Vector3(0, 0.95, 0), Vector3(0.65, 1.7, 0.5), _contact_blue)
-	_sphere("Contact head", at + Vector3(0, 1.95, 0), 0.27, _plaster)
-	_visual_box("Copied packet", Vector3(3.6, 4.02, -29.3), Vector3(0.45, 0.04, 0.34), _contact_blue)
+	var contact_model := CONTACT_VISUAL.instantiate()
+	contact_model.name = "Contact civilian visual"
+	contact_model.position = Vector3(at.x, 3.15, at.z)
+	add_child(contact_model)
+	_visual_box("Copied packet", Vector3(3.6, CONTACT_DESK_SURFACE_Y+0.022, -29.3), Vector3(0.45, 0.04, 0.34), _contact_blue)
 	_sign("CONTACT", at + Vector3(0, 2.65, 0), Color(0.73, 0.88, 1.0))
 
 
@@ -347,9 +501,28 @@ func _build_scout_shelter() -> void:
 	_box("Shelter back", at + Vector3(4.0, 1.35, 0.2), Vector3(0.65, 2.7, 7.4), _dark_stone, true)
 	_box("Shelter north wing", at + Vector3(1.7, 1.35, -3.3), Vector3(5.2, 2.7, 0.65), _dark_stone, true)
 	_box("Shelter south wing", at + Vector3(2.6, 1.35, 3.7), Vector3(3.2, 2.7, 0.65), _dark_stone, true)
-	_box("Shelter canopy", at + Vector3(1.8, 2.9, 0.2), Vector3(5.2, 0.25, 7.7), _wood)
-	_visual_box("Scout coat", at + Vector3(0, 0.9, 0), Vector3(0.72, 1.65, 0.55), _exit_green)
-	_sphere("Scout head", at + Vector3(0, 1.9, 0), 0.27, _plaster)
+	var canopy := _box("Shelter canopy collision", at + Vector3(1.8, 2.9, 0.2), Vector3(5.2, 0.25, 7.7), _wood)
+	for child in canopy.get_children():
+		if child is MeshInstance3D:
+			child.visible = false
+	var roof_visual := MeshInstance3D.new()
+	roof_visual.name = "Scout shelter low slate roof"
+	var roof_mesh := BoxMesh.new()
+	roof_mesh.size = Vector3(5.5, 0.18, 8.0)
+	roof_visual.mesh = roof_mesh
+	roof_visual.material_override = _slate_roof
+	roof_visual.position = at + Vector3(1.8, 3.15, 0.2)
+	roof_visual.rotation.z = 0.06
+	add_child(roof_visual)
+	for z in [-3.1, 3.4]:
+		_box("Shelter timber support", at + Vector3(-0.8, 1.38, z), Vector3(0.16, 2.76, 0.18), _wood, true)
+		_visual_box("Shelter eave brace", at + Vector3(1.75, 2.70, z), Vector3(5.1, 0.16, 0.13), _wood)
+	var scout_model := SCOUT_VISUAL.instantiate()
+	scout_model.name = "Scout field visual"
+	# The interaction anchor is 6 cm above ground; the static model's shoe
+	# soles are at its origin and rest on the actual ground plane instead.
+	scout_model.position = Vector3(at.x, 0.0, at.z)
+	add_child(scout_model)
 	_sign("SCOUT", at + Vector3(0, 2.6, 0), Color(0.68, 1.0, 0.75))
 
 
@@ -404,18 +577,6 @@ func _visual_box(label: String, center: Vector3, size: Vector3, material: Materi
 	visual.material_override = material
 	add_child(visual)
 	visual.position = center
-
-
-func _sphere(label: String, at: Vector3, radius: float, material: Material) -> void:
-	var visual := MeshInstance3D.new()
-	visual.name = label
-	var mesh := SphereMesh.new()
-	mesh.radius = radius
-	mesh.height = radius * 2.0
-	visual.mesh = mesh
-	visual.material_override = material
-	add_child(visual)
-	visual.position = at
 
 
 func _sign(label: String, at: Vector3, color: Color) -> void:

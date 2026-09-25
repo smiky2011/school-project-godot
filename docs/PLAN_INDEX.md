@@ -24,6 +24,7 @@ Status: first-version design baseline with a locally packaged first playable God
 | [PLAYING.md](PLAYING.md) | Controls and local run instructions |
 | [PACKAGING.md](PACKAGING.md) | Self-contained macOS build procedure and its limits |
 | [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md) | Imported free assets and usage rights |
+| [VISUAL_PRODUCTION.md](VISUAL_PRODUCTION.md) | Current town-art implementation, rendered frames and review limits |
 | [RUNTIME_ENVIRONMENT.md](RUNTIME_ENVIRONMENT.md) | Target-machine runtime observations |
 | [QA_REPORT.md](QA_REPORT.md) | Source and packaged playthrough evidence, performance and acceptance limits |
 | [PLAYTEST_REPORT.md](PLAYTEST_REPORT.md) | Route observations and pacing interpretation |
@@ -36,7 +37,7 @@ Astra (`gpt-6-astra`) owns planning, architecture, coordination and acceptance. 
 
 ## Asset Strategy
 
-Use existing online assets first. Search, license-check and validate suitable assets before proposing custom modeling. Godot handles assembly; Blender/MCP are optional tools for necessary adaptations. See [ENVIRONMENT_PIPELINE.md](ENVIRONMENT_PIPELINE.md).
+Use suitable free online assets first, with license and import checks. The user has explicitly authorized custom Blender work where available free models cannot produce the grounded, coherent 1944-town look. Godot assembles and tests the result. Two authored exterior house variants and their editable Blender source now exist; see [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md) and [ENVIRONMENT_PIPELINE.md](ENVIRONMENT_PIPELINE.md). They do not by themselves establish a finished town.
 
 ## Latest Confirmed Constraints
 

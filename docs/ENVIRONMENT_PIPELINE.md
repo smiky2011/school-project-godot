@@ -1,6 +1,6 @@
 # Environment, Blender, and Godot Responsibilities
 
-Status: confirmed asset-first policy with a small imported free-asset sample. Godot now imports three CC0 Poly Haven materials and a crate model in the blockout; provenance is recorded in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md). The sample does not establish a finished art style or a complete asset library. Blender was not needed for these imports. Asset research and execution belong to Sol/high subagents; “modules” means reusable objects or building pieces, not a mandatory grid-shaped town.
+Status: asset-first policy in production. Godot imports CC0 Poly Haven materials, a crate, authored town-house GLBs and ground/sky materials; provenance is recorded in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md) and [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md). The user has explicitly rejected the raw graybox as the desired visual result and authorized Blender custom modeling/adaptation when suitable free assets are unavailable. Sol/high owns asset execution; “modules” means reusable objects or building pieces, not a mandatory grid-shaped town. The current visual pass remains under review.
 
 ## Confirmed Asset-First Policy
 
@@ -8,7 +8,7 @@ Search online for suitable existing assets before proposing custom modeling. Cov
 
 Check source/license/attribution, visual consistency, historical fit, file formats, editable parts, interior access, collision, animation compatibility and measured Godot performance on the target Mac. Downloadable does not mean open-source or cleared for redistribution. Record provenance and modifications. Use free assets only: no purchases, paid subscriptions or paid acquisition routes. Notify the user when a suitable free resource requires registration, and coordinate that step before account creation.
 
-Use Godot to assemble the town and implement routes, interactions, lighting, guards and mission logic. Use Blender only when a selected asset needs conversion, repair, optimization or a small adaptation that cannot reasonably be handled in the import/scene workflow. Propose from-scratch modeling only for a required gap with no suitable existing asset or acceptable substitute, explaining the gap and expected cost first. Do not spend subagent work on custom models by default.
+Use Godot to assemble the town and implement routes, interactions, lighting, guards and mission logic. Use Blender for conversion, repair, adaptation and custom modeling where the free-asset search leaves a concrete visual or functional gap. For example, the available CC0 building kits did not supply a convincing domestic 9–10 m street façade for these selected references, so two exterior shells were authored and imported. Record native source, material provenance, exported GLB, scale and real Godot render evidence. Do not imply that a closed exterior house can replace the walkable contact residence.
 
 Reference images remain research material, not cleared game assets. The upstairs contact residence specifically needs usable access, stairs and an interior; an attractive exterior-only model is insufficient.
 
@@ -21,7 +21,7 @@ Reference images remain research material, not cleared game assets. The upstairs
 5. Assemble selected assets in Godot. Adapt only the necessary gaps; preserve playable connections and avoid forcing the town into a repetitive grid.
 6. Walk the complete mission, including reinforced extraction, and verify navigation, readability and performance before expanding the library.
 
-Steps 1–4 have begun: a blockout and representative CC0 material/crate imports exist. The expanded packaged route has completed an input-driven rendered run; [QA_REPORT.md](QA_REPORT.md) records one target-machine performance sample. Full art replacement, asset-scale comparison and human play acceptance remain pending. Blender and MCP are optional tools, not required pipeline stages. A connected tool or downloaded model alone is not proof of a usable game asset. Existing technical leads: [Godot 3D import](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/available_formats.html) and [scene instancing](https://docs.godotengine.org/en/stable/getting_started/step_by_step/instancing.html); verify version-specific behavior during production.
+Steps 1–5 have begun: the blockout and CC0 material/crate samples remain, two custom Blender house variants have passed Godot import and target-Mac Metal render, and the town now instances those shells across full-size plots. Purpose-built narrow passage wings, cobble/mud PBR ground, an overcast sky, curb/prop dressing, a furnished contact room and a clothed contact visual are being integrated and checked in representative rendered frames. The expanded packaged blockout route previously completed an input-driven rendered run; [QA_REPORT.md](QA_REPORT.md) records that earlier performance sample. It is not a frame-rate measurement for the new art. Full-route visual/performance acceptance and human play acceptance remain pending. A connected tool or downloaded model alone is not proof of a usable game asset. Existing technical leads: [Godot 3D import](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/available_formats.html) and [scene instancing](https://docs.godotengine.org/en/stable/getting_started/step_by_step/instancing.html); verify version-specific behavior during production.
 
 ## Proposed Asset Handoff Record
 
@@ -39,7 +39,7 @@ Use one irregular street corner: two different facades, a traversable alley, one
 
 ## Existing Weapon Asset Proposals
 
-The user selected a submachine gun and suggested downloadable assets. The current firing system uses a visibly provisional procedural placeholder; no historical weapon asset has been selected or imported. Evaluate clearly licensed existing models before deciding what needs custom work.
+The user selected a submachine gun and suggested downloadable assets. A free CC BY 3.0 Sten Mk II has since been adapted with a separable magazine and imported; its first-person presentation is under visual review. See [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md) for exact source, modifications and attribution. Evaluate clearly licensed existing models before deciding what needs custom work.
 
 Check models/textures, independently movable parts such as magazines, first-person arms and animations, audio, and gameplay code separately. A model listing does not establish a complete weapon system. First inspect close-up quality, scale/orientation, materials, animation compatibility, editable parts, and runtime cost; validate one weapon's import, shooting, and reload before expanding the library.
 

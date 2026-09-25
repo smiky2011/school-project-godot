@@ -1,0 +1,2 @@
+# Godot recreates default import sidecars from the tracked source maps/HDRI.
+*.import

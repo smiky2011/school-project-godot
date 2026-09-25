@@ -1,0 +1,21 @@
+# Character production
+
+Status: three clothed human visuals are integrated. The upstairs contact and shelter scout remain noncolliding, invulnerable interaction targets. Guards retain the existing AI, vision, collider, damage and corpse-discovery rules; only their visual body, low-ready Sten and shot cue were changed. These are the first accepted visual assets for a playable mission, not a claim of a finished character art pipeline.
+
+## Candidate and rights
+
+- MakeHuman Community's [MPFB 2.0.17](https://static.makehumancommunity.org/mpfb/docs/getting_started.html) generates the base human and can rig attached clothes in Blender. MPFB is an authoring tool under GPL-3.0-or-later; its extension is not included in the game package. The [MakeHuman core output](https://static.makehumancommunity.org/makehuman/faq/are_makehuman_files_free.html) and the selected system assets are CC0.
+- The contact's suit is Margaret Toigo's `toigo_male_double-breasted_suit` from the [Suits 01 pack](https://static.makehumancommunity.org/assets/assetpacks/suits01.html), listed there as CC0. It has been recolored and checked in the actual upstairs room.
+- The selected skin, shoes, short hair, and revised field shirt/trousers and boots come from the [MakeHuman system assets pack](https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html), which lists those assets as CC0. Selected originals are retained under `source/selected_assets/`; edited textures are retained beside the editable Blender files.
+
+The official MPFB extension and both packs were anonymously downloaded on 25 September 2026 via their public direct links; HTTP status was 200 and all ZIP integrity tests passed. No account, paid resource or registration was needed for these downloads. Full archives and the authoring extension are kept only in ignored `reference/authoring/makehuman/`, outside Git and the app. The observed SHA-256 values are:
+
+| Local archive | SHA-256 |
+| --- | --- |
+| `mpfb-2.0.17.zip` | `4f0a879d64a39bf646fbf5f53601ac678855da329d650617dca5737548239a87` |
+| `makehuman_system_assets_cc0.zip` | `b542127a8e25547c7c29c19f2d1d2adb9a664c80396ecd694095dbc8028a0107` |
+| `suits01_cc0.zip` | `2b1d8676f3863b188e9eea98c1d8f234543d54c440e791d92b819f8ee1861f19` |
+
+The retained editable sources are `source/contact_candidate.blend`, `contact_idle.blend`, `guard_field_grip.blend` and `scout_idle.blend`, with derived image files and selected original assets beside them. Four independent fresh Blender opens checked every active material image: no missing file, unpacked absolute path or dependency on ignored `reference/`. The approved guard source can be rebuilt without installing MPFB: factory-startup Blender running `tools/art/build_guard_morph.py` produced a GLB byte-identical to `runtime/guard_field_morph.glb` (SHA-256 `297d9122f134d4ec76f26805aa68f1235e48e94230f5a7e1454de2f056c0d090`). The recipe evaluates MakeHuman's masked, visible mesh before export, so hidden helper faces do not appear in Godot. The runtime model has eight meshes, two stride morph targets per mesh and no skeletal animation. Horizontal speed from `get_real_velocity()` drives alternating left/right stride; stopping and death clear the motion. The Sten is visually held low and its muzzle marker anchors the flash and shot cue. Fingers remain coarsely posed; facial animation and a full skeletal gait are outside this increment.
+
+Actual Godot 4.7.2 Metal frames in the built town show the guard [idle](media/guard_actor_idle.png), [moving at 2.0 m/s](media/guard_actor_moving.png) with morph strength 0.748, and [lying on the ground](media/guard_actor_dead.png) with both shoes visible. The contact and khaki scout also passed separate in-world Metal previews. The scout is visually distinct from the gray-green guard and retains a friendly marker; interaction positions and timing are unchanged. Headless mission and guard regressions passed after integration, but this art increment has not yet completed its final exact-PCK full-route retest. The game's fictional 1944 European town is confirmed; region, month and factions remain open, so these garments have no insignia and are not presented as a historically authenticated uniform. Full source and rights details are in [`PROVENANCE.txt`](../assets/vendor/character_visual/makehuman/PROVENANCE.txt).

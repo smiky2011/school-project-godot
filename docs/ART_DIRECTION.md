@@ -1,6 +1,6 @@
 # Art Direction and Reference Research
 
-Status: working design, updated 25 September 2026. The first cross-region reference search and downloads were completed on 24–25 September. The user subsequently removed seven images and selected **G01-07 through G01-12** as preferred core references. The user confirmed a fictional European town in 1944; exact region and month remain open, and factions are not locked. Reference downloads do not constitute game-asset reuse permission. The current blockout is route validation, not representative final art.
+Status: working design with a first environment-art production pass, updated 25 September 2026. The first cross-region reference search and downloads were completed on 24–25 September. The user subsequently removed seven images and selected **G01-07 through G01-12** as preferred core references. The user confirmed a fictional European town in 1944; exact region and month remain open, and factions are not locked. Reference downloads do not constitute game-asset reuse permission. The user explicitly rejected the raw box buildings and gun as the target experience and asked for a grounded real-world 3D shooter. Custom Blender modeling/adaptation is authorized when suitable free assets cannot make a coherent style.
 
 ## Confirmed Reference Preference
 
@@ -46,7 +46,7 @@ The user's request to research and download before choosing a setting superseded
 - Use the requested singular directory `reference/`.
 - A complete, high-resolution, historically checked 1944 town plan has not been obtained. The collection is not yet a measured modeling base.
 
-Later production will refine architectural language, damage, landmarks and lighting from the selected references and validate dimensions through measurements/blockouts. No bulk asset production is underway.
+Production has now begun: two authored exterior house shells with stone/plaster PBR materials, pitched slate roofs, recessed closed openings and shutters passed Godot import/render review. Purpose-sized passage wings, shared cobble/mud surfaces, an overcast sky, contact-room details, selective roadside dressing and a neutral field-clothed scout have been integrated into representative playable-scene frames. These remain an architectural foundation, not acceptance of final realism: repetitive exteriors, limited damage/inhabited detail, static NPC presentation and full-route performance still need review. See [VISUAL_PRODUCTION.md](VISUAL_PRODUCTION.md) for exact frames and limits. The selected G01 images remain visual references, not game texture sources.
 
 ## Further Work
 

@@ -1,0 +1,33 @@
+Character assets — source, rights, and changes
+Retrieved: 25 September 2026. No registration or paid resource was required.
+
+MakeHuman Community's MakeHuman core output and system assets are CC0:
+https://static.makehumancommunity.org/makehuman/faq/are_makehuman_files_free.html
+https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html
+https://creativecommons.org/publicdomain/zero/1.0/
+Selected source items include the base adult human, skin, eyes, eyebrows,
+eyelashes, short hair, male_casualsuit02, shoes01 and shoes04. Original selected
+asset files are retained in source/selected_assets/.
+
+The contact's double-breasted suit is Margaret Toigo's asset from the CC0
+Suits 01 pack:
+https://static.makehumancommunity.org/assets/assetpacks/suits01.html
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The MPFB 2.0.17 Blender extension was used only while authoring. It is
+GPL-3.0-or-later and is not in the repository or game package:
+https://static.makehumancommunity.org/mpfb/docs/getting_started.html
+
+Changes: The contact suit and shoes were recolored to muted brown, skin was
+adjusted, and a relaxed idle pose was baked. The guard uses a fitted plain
+gray-green field shirt and trousers with the modern logo removed, black shoes,
+and no insignia. Both arms were posed for the low-ready Sten. MakeHuman's
+masked helper and hidden clothing-body faces were evaluated away before
+export; two visible-mesh walking morphs were baked. The runtime guard is a
+static mesh plus stride morphs, not a skeletal animation. The scout uses a
+separate muted khaki recolor and relaxed pose. These are fictional visual
+costumes, not reconstructions of a named military uniform or faction.
+
+Editable Blender files are retained in source/ beside the derived textures;
+runtime/ contains the Godot GLBs and textures. Full download archives and
+the authoring extension remain only in the Git-ignored reference/ directory.

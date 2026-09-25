@@ -1,5 +1,8 @@
 extends CharacterBody3D
 
+const FIELD_BODY = preload("res://scripts/characters/field_body_presentation.gd")
+const FIELD_WEAPON = preload("res://scripts/characters/field_weapon_presentation.gd")
+
 const VISION_RANGE := 13.0
 const HALF_CONE := deg_to_rad(38.0)
 const EYE_HEIGHT := 1.45
@@ -34,6 +37,8 @@ var _shot_flash_timer := 0.0
 var _reported_kill := false
 var _seen_corpses: Dictionary = {}
 var _visual: Node3D
+var _body_presentation: Node3D
+var _weapon_visual: Node3D
 var _collider: CollisionShape3D
 var _flash: MeshInstance3D
 var _shot_audio: AudioStreamPlayer3D
@@ -153,6 +158,8 @@ func _physics_process(delta: float) -> void:
 		"SEARCH":
 			_do_search(delta)
 	move_and_slide()
+	var actual_motion := get_real_velocity()
+	_body_presentation.call("update_locomotion", Vector2(actual_motion.x, actual_motion.z).length(), delta)
 	if _shot_flash_timer > 0.0:
 		_shot_flash_timer -= delta
 		_flash.visible = _shot_flash_timer > 0.0
@@ -352,8 +359,14 @@ func _die() -> void:
 	velocity = Vector3.ZERO
 	_cone_instance.visible = false
 	_flash.visible = false
-	_visual.rotation.z = PI * 0.5
-	_visual.position = Vector3(0.0, 0.2, 0.0)
+	_body_presentation.call("freeze_dead")
+	# Roll the upright body onto its side with a quarter turn around its own
+	# vertical axis first. This leaves the spread feet beside each other on the
+	# ground, instead of burying one shoe while the other floats above it.
+	_visual.basis = Basis(Vector3.BACK, PI * 0.5) * Basis(Vector3.UP, PI * 0.5)
+	# The body origin is at its feet; center its length over the existing
+	# horizontal corpse capsule without changing any physics or witness rules.
+	_visual.position = Vector3(0.85, 0.18, 0.0)
 	# Keep the body discoverable as the Guard collider, but lie it down so it
 	# does not remain an invisible standing obstacle in a route.
 	_collider.set_deferred("rotation", Vector3(0.0, 0.0, PI * 0.5))
@@ -417,11 +430,12 @@ func _build_visuals(coat_color: Color) -> void:
 	_visual = Node3D.new()
 	_visual.name = "GuardVisual"
 	add_child(_visual)
-	_mesh_box("Coat", Vector3(0, 0.95, 0), Vector3(0.66, 1.25, 0.42), coat_color)
-	_mesh_sphere("Head", Vector3(0, 1.72, 0), 0.27, Color(0.72, 0.61, 0.51))
-	_mesh_box("Helmet", Vector3(0, 1.94, 0), Vector3(0.58, 0.18, 0.58), Color(0.27, 0.29, 0.25))
-	_mesh_box("Arm", Vector3(0.45, 1.13, -0.05), Vector3(0.19, 0.8, 0.25), coat_color)
-	_mesh_box("Weapon", Vector3(0.28, 1.03, -0.48), Vector3(0.16, 0.16, 0.87), Color(0.18, 0.18, 0.17))
+	_body_presentation = FIELD_BODY.new() as Node3D
+	_body_presentation.name = "FieldBodyPresentation"
+	_visual.add_child(_body_presentation)
+	_weapon_visual = FIELD_WEAPON.make_model()
+	_visual.add_child(_weapon_visual)
+	var muzzle := _weapon_visual.find_child("Muzzle", true, false) as Marker3D
 	_flash = MeshInstance3D.new()
 	var flash_mesh := SphereMesh.new()
 	flash_mesh.radius = 0.19
@@ -431,16 +445,22 @@ func _build_visuals(coat_color: Color) -> void:
 	flash_material.albedo_color = Color(1.0, 0.48, 0.14)
 	flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	_flash.material_override = flash_material
-	_visual.add_child(_flash)
-	_flash.position = Vector3(0.28, 1.03, -0.93)
+	if muzzle != null:
+		muzzle.add_child(_flash)
+	else:
+		_visual.add_child(_flash)
+		_flash.position = Vector3(0.04, 1.06, -0.73)
 	_flash.visible = false
 	_shot_audio = AudioStreamPlayer3D.new()
 	_shot_audio.name = "GunshotCue"
-	_shot_audio.position = Vector3(0.28, 1.03, -0.93)
 	_shot_audio.max_distance = 42.0
 	_shot_audio.volume_db = -6.0
 	_shot_audio.stream = _build_shot_sound()
-	add_child(_shot_audio)
+	if muzzle != null:
+		muzzle.add_child(_shot_audio)
+	else:
+		_visual.add_child(_shot_audio)
+		_shot_audio.position = Vector3(0.04, 1.06, -0.73)
 	_cone_instance = MeshInstance3D.new()
 	_cone_instance.name = "VisionCone"
 	add_child(_cone_instance)
@@ -471,33 +491,6 @@ func _build_shot_sound() -> AudioStreamWAV:
 		samples.append((value >> 8) & 255)
 	sound.data = samples
 	return sound
-
-
-func _mesh_box(label: String, center: Vector3, size: Vector3, color: Color) -> void:
-	var visual := MeshInstance3D.new()
-	visual.name = label
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	visual.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	visual.material_override = material
-	_visual.add_child(visual)
-	visual.position = center
-
-
-func _mesh_sphere(label: String, center: Vector3, radius: float, color: Color) -> void:
-	var visual := MeshInstance3D.new()
-	visual.name = label
-	var mesh := SphereMesh.new()
-	mesh.radius = radius
-	mesh.height = radius * 2.0
-	visual.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	visual.material_override = material
-	_visual.add_child(visual)
-	visual.position = center
 
 
 func _update_cone() -> void:

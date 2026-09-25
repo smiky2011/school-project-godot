@@ -1,0 +1,14 @@
+# Local review exports, rejected variants and Blender autosaves are preserved
+# in the workspace but do not belong to the selected character source bundle.
+previews/*
+!previews/.gdignore
+source/*.blend1
+source/guard_clothing_base.blend
+source/guard_field_animated.blend
+source/guard_field_prototype.blend
+source/guard_field_workwear.blend
+source/guard_leather_dark_brown.png
+source/guard_skin_natural_warm.png
+source/guard_wool_gray_green.png
+source/selected_assets/clothes/shoes03/
+source/selected_assets/eyes/materials/brownlight*

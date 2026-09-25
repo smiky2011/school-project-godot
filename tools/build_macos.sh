@@ -58,7 +58,7 @@ mkdir -p "$stage" "$candidate/Contents/MacOS" "$resources/ThirdPartyLicenses"
 # source archives, Blender work files, raw FBX and unrelated project data stay out.
 cp "$project_root/project.godot" "$project_root/icon.svg" "$project_root/export_presets.cfg" "$stage/"
 runtime_filters=(
-	--exclude='source/' --exclude='.git/' --exclude='.godot/'
+	--exclude='source/' --exclude='previews/' --exclude='.git/' --exclude='.godot/'
 	--include='*/'
 	--include='*.gd' --include='*.gdshader' --include='*.shader'
 	--include='*.tscn' --include='*.tres' --include='*.res' --include='*.material' --include='*.mesh'
@@ -115,6 +115,15 @@ if [[ -d "$project_root/assets/vendor/weapon_visual/sten_mk2" ]]; then
 		grep -Fq "$required" "$sten_attribution" || fail "Sten attribution lacks: $required"
 	done
 fi
+character_root="$project_root/assets/vendor/character_visual/makehuman"
+if [[ -d "$character_root" ]]; then
+	for model in contact_idle guard_field_morph scout_idle; do
+		[[ -s "$stage/assets/vendor/character_visual/makehuman/runtime/$model.glb" ]] || \
+			fail "Character runtime GLB is missing: $model"
+	done
+	character_provenance="$character_root/PROVENANCE.txt"
+	[[ -s "$character_provenance" ]] || fail "Character source and CC0 provenance are missing."
+fi
 
 printf 'Importing game-only staging project...\n'
 "$godot_binary" --headless --path "$stage" --log-file "$log_dir/import.log" --import >/dev/null
@@ -147,6 +156,9 @@ cmp -s "$godot_binary" "$resources/Godot.app/Contents/MacOS/Godot" || fail "Runt
 cp "$project_root/assets/vendor/polyhaven/LICENSE.txt" "$resources/ThirdPartyLicenses/POLYHAVEN_LICENSE.txt"
 if [[ -f "$sten_runtime" ]]; then
 	cp "$sten_attribution" "$resources/ThirdPartyLicenses/STEN_MK2_ATTRIBUTION.txt"
+fi
+if [[ -d "$character_root" ]]; then
+	cp "$character_provenance" "$resources/ThirdPartyLicenses/MAKEHUMAN_CHARACTER_PROVENANCE.txt"
 fi
 cat > "$resources/ThirdPartyLicenses/GODOT_LICENSE.txt" <<'LICENSE'
 Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md).
