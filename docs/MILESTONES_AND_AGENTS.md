@@ -1,8 +1,8 @@
 # Milestones and Multi-Agent Working Agreement
 
-Status: production start authorized by the user; delegation policy confirmed. No subagents, MCP production, modeling, or gameplay implementation have been started under this plan. GPT-6 Astra is the intended planning/review lead; the user owns creative direction and scope. Execution work is delegated to GPT-6 Sol subagents with high reasoning effort, as specified below. Delegation does not guarantee lower usage; parallel work can increase cost through repeated context and integration.
+Status: production underway under the confirmed delegation policy. Astra leads architecture and acceptance; Sol/high subagents have implemented the Godot blockout, imported sample free assets, run integration checks and expanded zero-kill rendered routes, and built a self-contained local Mac app. The exact packaged PCK completed the covered route; intended human pacing and representative art still require playtesting. The user owns creative direction and scope. Delegation does not guarantee lower usage; parallel work can increase cost through repeated context and integration.
 
-The user has now authorized production. This supersedes the earlier design-only restriction; authorization is not evidence that production has begun. The Astra-led team may proceed within the agreed scope without asking for the same start approval again.
+The user authorized production, superseding the earlier design-only restriction. The Astra-led team may proceed within the agreed scope without asking for the same start approval again. The user subsequently confirmed a fictional European town in 1944 with no locked factions; exact region and month remain open.
 
 Open decision ownership is consolidated in [DESIGN_REVIEW.md](DESIGN_REVIEW.md). Routine implementation and tuning do not require repeated creative approval; changes to the agreed experience or scope do.
 
@@ -14,7 +14,7 @@ Open decision ownership is consolidated in [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
 - Use separate file ownership and parallelize only independent work. Respect the runtime's available concurrency; do not create extra work merely to keep agents busy.
 - If the requested model/settings cannot be selected, report the limitation before substituting. Do not claim that a prose prompt alone configured the runtime.
 
-Apply this policy when production runs. Updating this policy does not itself launch workers.
+This policy has been applied in the current production run. It remains the assignment and review rule for subsequent work.
 
 Asset budget is zero: use free resources only and notify the user about registration requirements. No paid assets or acquisition services. There is no fixed deadline; deliver a locally playable Mac game without expanding scope.
 
@@ -32,7 +32,7 @@ If a brief is infeasible, sources conflict, or a major creative change is needed
 
 - **Astra / design and integration:** maintain consistency, convert decisions into bounded briefs, review history/layout/assets/runtime evidence, and report tradeoffs. Dispatch the next phase after milestone approval; existing user authorization should not be requested again.
 - **Research agent:** record sources, dates, rights, observations, and inference limits; deliver candidate references, not an unapproved final art direction.
-- **Level design agent:** later develop spatial proposals and testable approach/extraction routes, sightlines, combat spaces and landmarks. An abstract node graph alone is not a grounded spatial proposal.
+- **Level design agent:** develop spatial proposals and testable approach/extraction routes, sightlines, combat spaces and landmarks. An abstract node graph alone is not a grounded spatial proposal.
 - **Asset integration agent:** search and evaluate existing assets first, validate imports and provenance, and report functional gaps. Use Blender only for necessary adaptations; propose custom modeling only after demonstrating a required gap. Do not redesign streets independently.
 - **Godot gameplay agent:** implement mission, player, weapon, guard and level integration within the architecture brief; prioritize actual playability and testable state.
 - **QA agent:** play the full loop and report navigation, pacing, feedback and technical problems; distinguish editor checks, automated tests and real playthroughs.
@@ -50,7 +50,9 @@ These are responsibilities, not a requirement to run six agents simultaneously. 
 | P4: MVP | Godot blockout with the minimum complete loop | Real playthrough of infiltration, contact handoff, escalation, extraction and retry | Playtest feedback |
 | P5: vertical slice | Representative finished quality in a compact area | Player feedback, performance, visual consistency and remaining risks | Final expansion scope |
 
-P3 and P4 may overlap later; detailed models must not substitute for route validation. Scope after P5 depends on actual results and the user's decisions. The first reference collection already exists; current P1 discussion uses G01-07 through G01-12 as the user's core preferences.
+P3 and P4 can overlap; detailed models must not substitute for route validation. Scope after P5 depends on actual results and the user's decisions. The first reference collection exists, and G01-07 through G01-12 remain the user's selected core preferences.
+
+The expanded P4 blockout has passed input-driven rendered zero-kill routes through the source and exact packaged PCK, plus separate mission and guard integration tests, combat/recovery checks, and a rendered failure/retry probe. The packaged covered route took 202.66 game seconds (about 3:23), while the source direct-west route took 207.88 seconds (about 3:28). These familiar automated routes do not measure first-time human pace. The final native packaged window opened the briefing, entered gameplay, paused and restarted to a fresh briefing. The first playable is delivered for review, without claiming the intended ten-minute experience or P5 art quality; see [QA_REPORT.md](QA_REPORT.md).
 
 ## Delegation Brief Template
 

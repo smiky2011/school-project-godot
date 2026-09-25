@@ -1,6 +1,6 @@
 # Environment, Blender, and Godot Responsibilities
 
-Status: future production proposal. MCP and asset import have not been validated here. The user has authorized production by the Astra-led team; asset research and production execution belong to Sol/high subagents. “Modules” means reusable objects or building pieces, not a mandatory grid-shaped town.
+Status: confirmed asset-first policy with a small imported free-asset sample. Godot now imports three CC0 Poly Haven materials and a crate model in the blockout; provenance is recorded in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md). The sample does not establish a finished art style or a complete asset library. Blender was not needed for these imports. Asset research and execution belong to Sol/high subagents; “modules” means reusable objects or building pieces, not a mandatory grid-shaped town.
 
 ## Confirmed Asset-First Policy
 
@@ -12,7 +12,7 @@ Use Godot to assemble the town and implement routes, interactions, lighting, gua
 
 Reference images remain research material, not cleared game assets. The upstairs contact residence specifically needs usable access, stairs and an interior; an attractive exterior-only model is insufficient.
 
-## Proposed Later Workflow
+## Production Workflow
 
 1. Derive an asset requirements list from the confirmed game design and reference selection.
 2. Search and compare compatible asset packs; record licenses, costs and functional gaps before bulk acquisition.
@@ -21,7 +21,7 @@ Reference images remain research material, not cleared game assets. The upstairs
 5. Assemble selected assets in Godot. Adapt only the necessary gaps; preserve playable connections and avoid forcing the town into a repetitive grid.
 6. Walk the complete mission, including reinforced extraction, and verify navigation, readability and performance before expanding the library.
 
-Blender and MCP are optional tools, not required pipeline stages. A connected tool or downloaded model is not proof of a usable game asset. Existing technical leads: [Godot 3D import](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/available_formats.html) and [scene instancing](https://docs.godotengine.org/en/stable/getting_started/step_by_step/instancing.html); verify version-specific behavior during production.
+Steps 1–4 have begun: a blockout and representative CC0 material/crate imports exist. The expanded packaged route has completed an input-driven rendered run; [QA_REPORT.md](QA_REPORT.md) records one target-machine performance sample. Full art replacement, asset-scale comparison and human play acceptance remain pending. Blender and MCP are optional tools, not required pipeline stages. A connected tool or downloaded model alone is not proof of a usable game asset. Existing technical leads: [Godot 3D import](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/available_formats.html) and [scene instancing](https://docs.godotengine.org/en/stable/getting_started/step_by_step/instancing.html); verify version-specific behavior during production.
 
 ## Proposed Asset Handoff Record
 
@@ -29,7 +29,7 @@ Include `asset_id`, reference IDs, intended placement, dimensions/units, variant
 
 ## Proposed Small Validation Experiment
 
-Use one irregular street corner: two different facades, a traversable alley, one damaged feature, and a reusable prop. Use downloaded assets first. Compare blockout routes against routes after model replacement; measure scale, collision, and frame rate in Godot. Identify specific adaptation needs before considering Blender work. Schedule this experiment within the authorized production plan when its dependencies are ready.
+Use one irregular street corner: two different facades, a traversable alley, one damaged feature, and a reusable prop. Use downloaded assets first. Compare blockout routes against routes after model replacement; measure scale, collision, and frame rate in Godot. Identify specific adaptation needs before considering Blender work. The current sample crate and materials provide an import starting point; this full comparison has not been completed.
 
 ## Choices Not Yet Fixed
 
@@ -39,7 +39,7 @@ Use one irregular street corner: two different facades, a traversable alley, one
 
 ## Existing Weapon Asset Proposals
 
-The user selected a submachine gun and suggested downloadable assets. No asset has been selected or imported. Evaluate clearly licensed existing models before deciding what needs custom work.
+The user selected a submachine gun and suggested downloadable assets. The current firing system uses a visibly provisional procedural placeholder; no historical weapon asset has been selected or imported. Evaluate clearly licensed existing models before deciding what needs custom work.
 
 Check models/textures, independently movable parts such as magazines, first-person arms and animations, audio, and gameplay code separately. A model listing does not establish a complete weapon system. First inspect close-up quality, scale/orientation, materials, animation compatibility, editable parts, and runtime cost; validate one weapon's import, shooting, and reload before expanding the library.
 

@@ -1,6 +1,6 @@
 # Art Direction and Reference Research
 
-Status: working design, updated 25 September 2026. The first cross-region reference search and downloads were completed on 24–25 September. The user subsequently removed seven images and selected **G01-07 through G01-12** as preferred core references. The year is confirmed as 1944; exact region, town, and month are still undecided. Reference downloads do not constitute game-asset reuse permission.
+Status: working design, updated 25 September 2026. The first cross-region reference search and downloads were completed on 24–25 September. The user subsequently removed seven images and selected **G01-07 through G01-12** as preferred core references. The user confirmed a fictional European town in 1944; exact region and month remain open, and factions are not locked. Reference downloads do not constitute game-asset reuse permission. The current blockout is route validation, not representative final art.
 
 ## Confirmed Reference Preference
 
@@ -50,4 +50,4 @@ Later production will refine architectural language, damage, landmarks and light
 
 ## Further Work
 
-Archive links and item-level limitations are maintained in the [reference index](../reference/RESOURCE_INDEX.md), rather than duplicated here. Research should cover ordinary town structure as well as war damage. Region/date remain user decisions; later asset dimensions and layout belong to Astra. The year 1944 is confirmed; the exact region and historical framing remain open.
+Archive links and item-level limitations are maintained in the [reference index](../reference/RESOURCE_INDEX.md), rather than duplicated here. Research should cover ordinary town structure as well as war damage. Exact region/month and historical framing remain user decisions; layout and asset dimensions belong to Astra's implementation review. The selected free materials and sample crate are recorded in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md).

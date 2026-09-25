@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 2160" role="img" aria-labelledby="title desc">
+<title id="title">1944 fictional town mission blockout</title>
+<desc id="desc">Topdown plan of implemented building footprints and two rendered-verified no-kill routes: a direct-west path and a covered service-passage path. North is at the top.</desc>
+<rect width="790" height="2160" fill="#edeae2"/>
+<rect x="65" y="45" width="650" height="2050" fill="#d3d0c7" stroke="#42413c" stroke-width="3"/>
+<style>
+.house{fill:#b59d83;stroke:#6a5c4e;stroke-width:1.5}.plaster{fill:#c5b7a0;stroke:#766b5b;stroke-width:1.5}
+.core{fill:#a48b72;stroke:#5f5348;stroke-width:2}.contact-house{fill:#ccb99e;stroke:#315c82;stroke-width:3}
+.cover{fill:#77756e;stroke:#565550;stroke-width:1}.approach{fill:none;stroke:#1974aa;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+.escape{fill:none;stroke:#22794b;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+.verified{fill:none;stroke:#83387d;stroke-width:5;stroke-dasharray:15 10;stroke-linecap:round;stroke-linejoin:round;opacity:.98}
+.marker-entry{fill:#1974aa;stroke:white;stroke-width:3}.marker-contact{fill:#f4d47a;stroke:#315c82;stroke-width:4}
+.marker-scout{fill:#2d985a;stroke:white;stroke-width:3}.label{font:bold 18px system-ui,sans-serif;fill:#202421;paint-order:stroke;stroke:#f4f1e9;stroke-width:5px}
+.small{font:14px system-ui,sans-serif;fill:#26312c;paint-order:stroke;stroke:#f4f1e9;stroke-width:4px}
+.grid{stroke:#8b8b82;stroke-width:1;stroke-dasharray:3 8;opacity:.6}
+</style>
+<line class="grid" x1="65" y1="70.0" x2="715" y2="70.0"/>
+<text class="small" x="12" y="74.0">z -200</text>
+<line class="grid" x1="65" y1="320.0" x2="715" y2="320.0"/>
+<text class="small" x="12" y="324.0">z -150</text>
+<line class="grid" x1="65" y1="570.0" x2="715" y2="570.0"/>
+<text class="small" x="12" y="574.0">z -100</text>
+<line class="grid" x1="65" y1="820.0" x2="715" y2="820.0"/>
+<text class="small" x="12" y="824.0">z -50</text>
+<line class="grid" x1="65" y1="1070.0" x2="715" y2="1070.0"/>
+<text class="small" x="12" y="1074.0">z 0</text>
+<line class="grid" x1="65" y1="1320.0" x2="715" y2="1320.0"/>
+<text class="small" x="12" y="1324.0">z 50</text>
+<line class="grid" x1="65" y1="1570.0" x2="715" y2="1570.0"/>
+<text class="small" x="12" y="1574.0">z 100</text>
+<line class="grid" x1="65" y1="1820.0" x2="715" y2="1820.0"/>
+<text class="small" x="12" y="1824.0">z 150</text>
+<line class="grid" x1="65" y1="2070.0" x2="715" y2="2070.0"/>
+<text class="small" x="12" y="2074.0">z 200</text>
+<rect class="plaster" x="70.0" y="1931.0" width="50.0" height="80.0"/>
+<rect class="house" x="177.5" y="1922.0" width="45.0" height="80.0"/>
+<rect class="house" x="232.5" y="1922.0" width="45.0" height="80.0"/>
+<rect class="plaster" x="320.0" y="1931.0" width="50.0" height="80.0"/>
+<rect class="house" x="375.0" y="1922.0" width="50.0" height="80.0"/>
+<rect class="house" x="477.5" y="1922.0" width="45.0" height="80.0"/>
+<rect class="plaster" x="527.5" y="1931.0" width="45.0" height="80.0"/>
+<rect class="house" x="640.0" y="1922.0" width="50.0" height="80.0"/>
+<rect class="house" x="75.0" y="1761.0" width="50.0" height="80.0"/>
+<rect class="house" x="172.5" y="1752.0" width="45.0" height="80.0"/>
+<rect class="plaster" x="237.5" y="1752.0" width="45.0" height="80.0"/>
+<rect class="house" x="315.0" y="1761.0" width="50.0" height="80.0"/>
+<rect class="house" x="380.0" y="1752.0" width="50.0" height="80.0"/>
+<rect class="plaster" x="472.5" y="1752.0" width="45.0" height="80.0"/>
+<rect class="house" x="532.5" y="1761.0" width="45.0" height="80.0"/>
+<rect class="house" x="635.0" y="1752.0" width="50.0" height="80.0"/>
+<rect class="house" x="66.5" y="1591.0" width="50.0" height="80.0"/>
+<rect class="plaster" x="371.5" y="1582.0" width="50.0" height="80.0"/>
+<rect class="house" x="481.0" y="1582.0" width="45.0" height="80.0"/>
+<rect class="house" x="524.0" y="1591.0" width="45.0" height="80.0"/>
+<rect class="plaster" x="643.5" y="1582.0" width="50.0" height="80.0"/>
+<rect class="plaster" x="73.0" y="1421.0" width="50.0" height="80.0"/>
+<rect class="house" x="174.5" y="1412.0" width="45.0" height="80.0"/>
+<rect class="house" x="235.5" y="1412.0" width="45.0" height="80.0"/>
+<rect class="plaster" x="317.0" y="1421.0" width="50.0" height="80.0"/>
+<rect class="house" x="378.0" y="1412.0" width="50.0" height="80.0"/>
+<rect class="house" x="474.5" y="1412.0" width="45.0" height="80.0"/>
+<rect class="house" x="637.0" y="1412.0" width="50.0" height="80.0"/>
+<rect class="house" x="68.0" y="1301.0" width="50.0" height="50.0"/>
+<rect class="house" x="179.5" y="1292.0" width="45.0" height="50.0"/>
+<rect class="plaster" x="230.5" y="1292.0" width="45.0" height="50.0"/>
+<rect class="house" x="322.0" y="1301.0" width="50.0" height="50.0"/>
+<rect class="house" x="373.0" y="1292.0" width="50.0" height="50.0"/>
+<rect class="plaster" x="479.5" y="1292.0" width="45.0" height="50.0"/>
+<rect class="house" x="525.5" y="1301.0" width="45.0" height="50.0"/>
+<rect class="house" x="642.0" y="1292.0" width="50.0" height="50.0"/>
+<rect class="house" x="181.0" y="1585.0" width="35.0" height="80.0"/>
+<rect class="plaster" x="239.0" y="1585.0" width="35.0" height="80.0"/>
+<rect class="plaster" x="320.0" y="1585.0" width="15.0" height="80.0"/>
+<rect class="house" x="355.0" y="1585.0" width="18.0" height="80.0"/>
+<rect class="plaster" x="70.0" y="726.5" width="50.0" height="80.0"/>
+<rect class="house" x="165.0" y="734.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="240.0" y="726.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="330.0" y="726.5" width="50.0" height="80.0"/>
+<rect class="house" x="390.0" y="734.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="490.0" y="726.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="550.0" y="726.5" width="50.0" height="80.0"/>
+<rect class="house" x="650.0" y="734.5" width="50.0" height="80.0"/>
+<rect class="house" x="67.0" y="576.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="168.0" y="584.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="237.0" y="576.5" width="50.0" height="80.0"/>
+<rect class="house" x="333.0" y="576.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="387.0" y="584.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="493.0" y="576.5" width="50.0" height="80.0"/>
+<rect class="house" x="547.0" y="576.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="653.0" y="584.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="73.5" y="426.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="161.5" y="434.5" width="50.0" height="80.0"/>
+<rect class="house" x="243.5" y="426.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="326.5" y="426.5" width="50.0" height="80.0"/>
+<rect class="house" x="486.5" y="426.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="553.5" y="426.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="646.5" y="434.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="68.0" y="276.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="238.0" y="276.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="332.0" y="276.5" width="50.0" height="80.0"/>
+<rect class="house" x="388.0" y="284.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="492.0" y="276.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="548.0" y="276.5" width="50.0" height="80.0"/>
+<rect class="house" x="652.0" y="284.5" width="50.0" height="80.0"/>
+<rect class="house" x="71.5" y="126.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="163.5" y="134.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="241.5" y="126.5" width="50.0" height="80.0"/>
+<rect class="house" x="328.5" y="126.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="391.5" y="134.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="488.5" y="126.5" width="50.0" height="80.0"/>
+<rect class="house" x="551.5" y="126.5" width="50.0" height="80.0"/>
+<rect class="plaster" x="648.5" y="134.5" width="50.0" height="80.0"/>
+<rect class="house" x="390.0" y="430.0" width="18.0" height="80.0"/>
+<rect class="plaster" x="424.0" y="430.0" width="16.0" height="80.0"/>
+<rect class="core" x="272.5" y="1122.5" width="45.0" height="75.0"/>
+<rect class="core" x="272.5" y="1005.0" width="45.0" height="70.0"/>
+<rect class="core" x="455.0" y="1130.0" width="50.0" height="70.0"/>
+<rect class="core" x="272.5" y="882.5" width="45.0" height="65.0"/>
+<rect class="plaster" x="462.5" y="1000.0" width="12.5" height="70.0"/>
+<rect class="core" x="490.0" y="1000.0" width="17.5" height="70.0"/>
+<rect class="contact-house" x="359.0" y="909.0" width="72.0" height="72.0"/>
+<rect class="cover" x="346.0" y="1123.5" width="21.0" height="3.0"/>
+<rect class="cover" x="343.2" y="1048.8" width="3.5" height="27.5"/>
+<rect class="cover" x="434.2" y="1078.0" width="3.5" height="24.0"/>
+<rect class="cover" x="449.0" y="944.2" width="18.0" height="3.5"/>
+<rect class="cover" x="478.5" y="380.0" width="3.0" height="20.0"/>
+<rect class="cover" x="162.5" y="248.5" width="15.0" height="3.0"/>
+<rect class="cover" x="628.4" y="62.5" width="3.2" height="37.0"/>
+<rect class="cover" x="605.5" y="61.9" width="26.0" height="3.2"/>
+<rect class="cover" x="615.0" y="96.9" width="16.0" height="3.2"/>
+<polyline class="approach" points="150.0,2060.0 150.0,1890.0 227.5,1890.0 227.5,1720.0 227.5,1550.0 227.5,1380.0 295.0,1380.0 295.0,1275.0 340.0,1275.0 340.0,1240.0 340.0,991.5 377.5,991.5 377.5,976.5 377.5,940.0 413.0,940.0 413.0,934.0"/>
+<polyline class="escape" points="413.0,934.0 377.5,940.0 377.5,990.0 340.0,990.0 340.0,865.0 310.0,845.0 310.0,695.0 227.5,695.0 227.5,95.0 605.0,95.0 610.0,80.0"/>
+<polyline class="verified" points="150,2060 150,1890 150,1720 150,1550 150,1380 295,1380 295,1275 340,1275 340,1240 340,991.5 377.5,991.5 377.5,976.5 377.5,940 413,940 413,934"/>
+<polyline class="verified" points="413,934 377.5,940 377.5,990 340,990 340,865 310,845 310,695 150,695 150,95 605,95 610,80"/>
+<circle class="marker-entry" cx="150.0" cy="2060.0" r="10"/>
+<circle class="marker-contact" cx="413.0" cy="934.0" r="11"/>
+<circle class="marker-scout" cx="610.0" cy="80.0" r="11"/>
+<circle class="cover" cx="391.0" cy="1079.0" r="5"/>
+<text class="label" x="90.0" y="2030.0">ENTRY</text>
+<text class="small" x="330.0" y="1890.0">SOUTH PLOTS</text>
+<text class="small" x="145.0" y="1555.0">WEST LANE</text>
+<text class="label" x="350.0" y="1090.0">COURT / PUMP</text>
+<text class="label" x="415.0" y="925.0">CONTACT 2F</text>
+<text class="small" x="475.0" y="695.0">WORKERS STREET</text>
+<text class="small" x="150.0" y="390.0">BACK LANE</text>
+<text class="label" x="490.0" y="145.0">SCOUT SHELTER</text>
+<text x="70" y="30" class="label">N ↑  ·  1944 fictional European town  ·  implemented footprint</text>
+<rect x="72" y="2110" width="18" height="8" fill="#1974aa"/><text x="98" y="2119" class="small">covered approach (PCK passed)</text>
+<rect x="350" y="2110" width="18" height="8" fill="#22794b"/><text x="376" y="2119" class="small">covered escape (PCK passed)</text>
+<rect x="640" y="2110" width="18" height="8" fill="#b59d83"/><text x="666" y="2119" class="small">building</text>
+<line x1="72" y1="2140" x2="92" y2="2140" class="verified"/><text x="100" y="2144" class="small">direct-west rendered (597.82 m); covered PCK (565.37 m); both 0 kills</text>
+</svg>

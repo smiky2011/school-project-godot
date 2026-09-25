@@ -1,0 +1,15 @@
+# Playtest Report
+
+Status: complete input-driven playthrough of the final packaged PCK. Findings below separate observed play from target pacing and design proposals.
+
+## Mission loop
+
+On the expanded source checkout, an input-driven rendered run started at the southern town edge, walked north through open streets, climbed the residence ramp, held E for copied plans, waited for the lockdown radio order, then escaped through the northern district and pressed E once at the opposite shelter. The game generated an audio cue for the radio order; this automated run did not independently record what a listener heard. The result screen showed packet delivery with zero kills. The run moved 597.82 m in 207.88 seconds of game time (3:28). Forward input occupied 183.75 seconds, turning 12.13 seconds and combat-triggered sprint 5.67 seconds. Health fell from guard fire to 64 on the northern bypass, then regenerated to 100 before delivery; guards changed from eight to twelve, with four finite reinforcements. `build/qa/rendered_direct_west.log` is the raw record.
+
+The final packaged PCK was also completed on the covered passage route: 565.37 m in 202.66 game seconds (3:22), with 177.15 seconds of forward input, 13.48 seconds turning and no sprint. Health remained at 100; guards rose from eight to twelve and the result screen showed zero kills. The same PCK was loaded from outside the checkout. [Spawn](media/covered_spawn.png), [lockdown](media/covered_lockdown.png) and [delivery](media/covered_delivery.png) show the rendered states. The final `.app` also passed native-window Begin, Esc pause and Restart controls. The first proposed zigzag walk across an exposed southern street failed under guard fire at game time 43.52 seconds. The route was statically clear but tactically unsafe. Both the direct-west and covered routes now demonstrate viable zero-kill alternatives. A separate rendered combat smoke test confirmed visible hit, empty magazine, reload and kill feedback. A rendered failure/retry run and native CUA click confirmed the failed screen and reset to a fresh mission.
+
+## Pacing and feel
+
+The observed 3:22 covered and 3:28 direct-west completions are shorter than the intended roughly ten-minute mission. Both are measured by the in-game mission clock; automated control ran without per-waypoint tool waits, with continuous forward motion and little observation. They do not establish how long an unaided first-time human playthrough would take. Do not lengthen the game with artificial waits merely to meet the target. The packaged run averaged 130 FPS across one-second samples, with a 7.672 ms median and 9.691 ms 95th-percentile render-frame interval. Its four >50 ms intervals followed test screenshot saves immediately; see [QA_REPORT.md](QA_REPORT.md) for the measurement boundary.
+
+The town and characters are a functional blockout using sampled CC0 textures and a crate. Cover choices, readable sightlines and the connected indoor contact path matter more to this vertical slice than final art. Visual fidelity and first-time human pacing remain open for later iteration.

@@ -1,10 +1,10 @@
 # Stealth and Guard Behavior
 
-Status: confirmed game-design direction, recorded 2026-09-25. No gameplay implementation or map layout is specified here. All project-authored documentation, including earlier documents, uses English; discussion with the user may remain in Chinese. This document is authoritative for the detection and search decisions below; older architecture proposals must not override them.
+Status: confirmed game-design direction, recorded 2026-09-25. A provisional guard implementation now lives in `scripts/actors/guard.gd`, with a current blockout in [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md). This document remains authoritative for the intended detection and search behavior; the code and test evidence do not turn initial tuning numbers into user decisions. All project-authored documentation uses English; discussion with the user may remain in Chinese.
 
 ## Intended Experience
 
-The outbound journey emphasizes observation, judgment, and action. Players watch patrols, recognize openings, and choose between bypassing guards, close-range stealth kills, and shooting. Route alternatives should offer understandable tradeoffs: direct streets expose the player, side alleys trade distance for concealment, and building passages may involve close encounters. Exact routes and guard placement are for later level design.
+The outbound journey emphasizes observation, judgment, and action. Players watch patrols, recognize openings, and choose between bypassing guards, close-range stealth kills, and shooting. Route alternatives should offer understandable tradeoffs: direct streets expose the player, side alleys trade distance for concealment, and building passages may involve close encounters. The current blockout routes and placements are recorded in [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md); their gameplay tuning remains provisional.
 
 Mistakes are recoverable. Detection does not immediately fail the mission or trigger the post-contact town-wide lockdown.
 

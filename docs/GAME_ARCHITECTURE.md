@@ -1,6 +1,6 @@
-# Gameplay Rules and Proposed Architecture
+# Gameplay Rules and Runtime Architecture
 
-Status: game-design baseline, not a finished technical architecture. Detailed interfaces, drawings and implementation belong to the now-authorized production phase, under the team delegation policy.
+Status: game-design baseline with an implemented Godot architecture and a packaged first playable blockout. Confirmed rules here govern the current blockout; file interfaces and tuning are recorded in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). The expanded route has completed an input-driven rendered zero-kill run through the exact packaged PCK; first-time human navigation and pacing remain to be measured.
 
 ## Mission and System Boundaries
 
@@ -8,7 +8,7 @@ Use the confirmed loop in [GAME_VISION.md](GAME_VISION.md). [MISSION_STORY.md](M
 
 Mission progress, local guard awareness and persistent lockdown are separate concepts. Completing the packet handoff updates the objective to extraction; returning personnel then discover intrusion and trigger lockdown. Receiving the packet does not clear prior awareness, and ending a local search does not lift lockdown.
 
-Proposed implementation labels are `INFILTRATE` → `INTEL_SECURED` → `EXTRACTED`, plus `FAILED`. These are examples, not fixed interfaces; they must preserve the handoff/discovery distinction.
+The current director implements `INFILTRATE` → `INTEL_SECURED` → `EXTRACTED`, plus `FAILED`, and keeps `lockdown` separate. These implementation labels preserve the confirmed handoff/discovery distinction.
 
 ## Guards and Reinforcements
 
@@ -29,33 +29,32 @@ Extraction is **tense but forgiving**. Encounters should allow recoverable mista
 - Gunfire alerts nearby guards. Unwitnessed stealth kills do not attract guards like gunshots; witnessed attacks and discovered bodies still matter.
 - No body carrying. Later patrols may discover a body, so killing a guard does not permanently make a route safe.
 
-A rear approach and interaction prompt are proposed for stealth kills. Exact eligibility, range, animation and interruption rules remain open, as do reload initiation, partial-magazine behavior, duration, damage and recoil.
+The current blockout offers an F prompt for a nearby clear-line rear takedown, R reload and brief shot/reload feedback. Distances, damage, timing and animation remain provisional tuning and presentation details.
 
 ## Health and Full Restart
 
-Health regenerates automatically out of combat. Disengagement criteria, delay, rate, cap and interruption behavior need specification. **Proposal:** use immediate threats rather than global lockdown as the regeneration condition; requiring lockdown to end could disable recovery throughout extraction. This specific eligibility rule is not confirmed.
+Health regenerates automatically out of combat. The current provisional implementation waits seven seconds without damage and checks active guard threats, not the persistent lockdown flag, before restoring health. Exact timing and rate remain subject to playtesting; this implementation choice is not a separate user-confirmed rule.
 
 There are no checkpoints. Death restarts the mission with initial player position, health and ammunition; enemies, bodies, awareness, NPC interactions, packet availability, alarm and reinforcements reset. Previous-run searches and delayed events must not continue. Regeneration cannot revive the dead player.
 
 ## Navigation and Feedback
 
-Provide a short briefing, landmarks and a simple current-objective direction cue. The player chooses routes. The objective changes from the contact to extraction after packet delivery and resets on retry. Marker style, distance display and interaction presentation remain open. Towers and bridges are examples, not approved assets.
+Provide a short briefing, landmarks and a simple current-objective direction cue. The player chooses routes. The objective changes from the contact to extraction after packet delivery and resets on retry. The current HUD displays bearing, distance, elevation and interaction feedback; the visual presentation remains provisional. Towers and bridges are examples, not approved assets.
 
-## Proposed Technical Responsibilities
+## Current Technical Responsibilities
 
-| Module | Responsibility |
+| Module | Responsibility and file |
 | --- | --- |
-| `Main` | Startup, menus/loading and result screens |
-| `TownLevel` | Environment placement, collision, navigation and encounter locations |
-| `Player` | First-person movement, view, health and inputs |
-| `Weapon` | Shooting, ammunition, reload and hit feedback |
-| `Enemy` | Perception, patrol/sentry duties, search, combat and damage |
-| `MissionDirector` | Authoritative mission progress, escalation and completion |
-| `HUD` | Display objectives and feedback without owning mission progress |
+| `Main` | Startup, scene assembly, pause and result flow: `scripts/core/main.gd` |
+| `TownLevel` | Environment, collision, routes and encounter locations: `scripts/world/town_level.gd` |
+| `Player` | Movement, view, health, inputs and provisional SMG: `scripts/player/player.gd` |
+| `Guard` | Perception, duty, search, combat and damage: `scripts/actors/guard.gd` |
+| `MissionDirector` | Authoritative phase, handoff, alarm and completion: `scripts/core/mission_director.gd` |
+| `HUD` | Read-only mission feedback and menus: `scripts/ui/hud.gd` |
 
-These names and signal-based coordination are proposals. Do not treat them as existing code. Later encounter records should identify routes, landmarks, cover, initial guards, reinforcement changes and likely player misunderstandings before choosing a data format.
+The weapon behavior currently lives in `Player`; there is no separate `Weapon` node. [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters. These module boundaries are implemented code, while future art and broader scope remain proposals.
 
-## Future Acceptance Checks
+## Acceptance Checks
 
 - Recover from detection, satisfy secret-contact conditions and complete the packet handoff.
 - Observe meaningful, finite post-handoff escalation while retaining player control.
@@ -64,4 +63,4 @@ These names and signal-based coordination are proposals. Do not treat them as ex
 - Reload is required when empty; reserves never run out. Health recovery behaves consistently with its eventual specification.
 - Death before/after the alarm and consecutive retries produce clean, completable runs.
 
-A diagram, asset download or successful import alone is not playable evidence. Remaining work is classified in [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
+The expanded packaged route completed a rendered zero-kill extraction in 202.66 game seconds. Integration tests cover handoff interruption, alarm, combat-allowed extraction, death and repeated retry; rendered probes also covered magazine exhaustion, health recovery, failure and retry. This is input-driven route evidence, not a first-time human playthrough or proof of the intended ten-minute pace. See [QA_REPORT.md](QA_REPORT.md). A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).

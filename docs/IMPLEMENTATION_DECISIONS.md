@@ -1,6 +1,6 @@
 # First Playable Mission: Implementation Decisions
 
-Status: Astra-reviewed production decisions for the blockout. The underlying experience is defined by [GAME_VISION.md](GAME_VISION.md), [MISSION_STORY.md](MISSION_STORY.md), and [STEALTH_AND_GUARD_BEHAVIOR.md](STEALTH_AND_GUARD_BEHAVIOR.md). Distances, times, health, ammunition and enemy counts below are provisional tuning values, not user-confirmed creative choices.
+Status: Astra-reviewed production decisions for the locally packaged first playable blockout. The underlying experience is defined by [GAME_VISION.md](GAME_VISION.md), [MISSION_STORY.md](MISSION_STORY.md), and [STEALTH_AND_GUARD_BEHAVIOR.md](STEALTH_AND_GUARD_BEHAVIOR.md). Distances, times, health, ammunition and enemy counts below are provisional tuning values, not user-confirmed creative choices.
 
 The user has confirmed a fictional European town in 1944 with no locked factions. Exact region and month remain unselected; this blockout does not assert either.
 
@@ -20,10 +20,10 @@ About seven seconds later, returning personnel discover a cut security seal on t
 
 The player uses WASD, mouse look, Shift to sprint, Ctrl/C to crouch, Space to jump, E to interact, F for eligible rear stealth kills, R to reload and left click to fire the automatic submachine gun. Right click aims; arrow keys offer keyboard look for a trackpad. The first weapon is an explicit placeholder pending free-asset evaluation. Thirty rounds fit one magazine, reserve ammunition is unlimited, and an empty magazine cannot fire until reloaded. Gunfire reports a 24 metre noise to the director. Guards react to hits through their own `take_damage` method. The director counts player kills.
 
-Provisional movement speeds for the expanded route blockout are 3.2 m/s walking, 5.2 m/s sprinting and 1.45 m/s crouching. These are pacing hypotheses for the intended roughly ten-minute successful run, not a measured duration or a new stamina rule.
+Provisional movement speeds for the expanded route blockout are 3.2 m/s walking, 5.2 m/s sprinting and 1.45 m/s crouching. These remain pacing hypotheses. A known input-driven packaged route took 202.66 game seconds, which does not measure first-time human pace or add a stamina rule.
 
-Health regenerates at 10 points per second after seven seconds without damage while no guard actively threatens the player. Persistent lockdown by itself does not suppress healing; death cannot regenerate. Guard tuning, combat damage and pacing will be revised after real playtesting.
+Health regenerates at 10 points per second after seven seconds without damage while no guard actively threatens the player. Persistent lockdown by itself does not suppress healing; death cannot regenerate. Guard tuning, combat damage and pacing remain subject to human playtest feedback; input-driven rendered route and combat observations are recorded in [QA_REPORT.md](QA_REPORT.md).
 
 ## Feedback and validation
 
-The HUD gives a short briefing, objective bearing, distance and height, health, ammunition, reload, local suspicion/guard state, noise, interaction reason and progress, subtitles, and completion time/kills with retry. Mission NPCs are invulnerable, do not detect the player, and do not create alerts. Headless import and runtime checks are necessary but cannot establish playability; actual play sessions must traverse infiltration, handoff, escalation, extraction, failure and retry.
+The HUD gives a short briefing, objective bearing, distance and height, health, ammunition, reload, local suspicion/guard state, noise, interaction reason and progress, subtitles, and completion time/kills with retry. Mission NPCs are invulnerable, do not detect the player, and do not create alerts. Headless import and runtime checks are necessary but cannot establish playability. The exact PCK completed an input-driven rendered infiltration, handoff, escalation and extraction; separate rendered/native checks covered failure and retry. Full manual human navigation is still unmeasured; see [QA_REPORT.md](QA_REPORT.md).
