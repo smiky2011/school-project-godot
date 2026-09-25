@@ -63,6 +63,7 @@ func _run() -> void:
 	await _test_corpse_discovery_once()
 	await _test_unwitnessed_and_witnessed_kills()
 	await _test_finite_reinforcements_and_npcs()
+	await _test_service_passage_clearance()
 	if _failures.is_empty():
 		print("GUARD REGRESSION PASS (", _checks, " checks)")
 		quit(0)
@@ -226,11 +227,12 @@ func _test_unwitnessed_and_witnessed_kills() -> void:
 
 func _test_finite_reinforcements_and_npcs() -> void:
 	var f := _fixture()
-	_expect(f.level.get_guards().size() == 6, "Six initial guards across central and southern districts")
+	_expect(f.level.get_guards().size() == 8, "Eight initial guards across three districts")
 	_expect(f.level.get_ground_path(f.level.get_spawn_transform().origin, Vector3(-19, 0, 41)).size() > 100, "Southern entry connects to the tested central district")
+	_expect(f.level.get_ground_path(Vector3(15, 0, -45), f.level.get_extraction_position()).size() > 100, "North lane connects to distant scout shelter")
 	f.level.spawn_reinforcements()
 	f.level.spawn_reinforcements()
-	_expect(f.level.get_guards().size() == 8, "One finite two-guard reinforcement contingent in southern stage")
+	_expect(f.level.get_guards().size() == 12, "One finite four-guard reinforcement contingent")
 	var npc_has_collider := false
 	var npc_has_damage_method := false
 	var contact_found := false
@@ -247,6 +249,19 @@ func _test_finite_reinforcements_and_npcs() -> void:
 	_expect(not npc_has_collider, "Protected NPC visuals are noncolliding")
 	_expect(not npc_has_damage_method, "Protected NPC visuals have no damage handler")
 	_expect(f.director.detections == 0, "NPC spawn creates no awareness event")
+	await _close_fixture(f)
+
+
+func _test_service_passage_clearance() -> void:
+	var f := _fixture()
+	f.director.active = false
+	await _physics_frames(2)
+	var horizontal := PhysicsRayQueryParameters3D.create(Vector3(-32.5, 1.05, 164), Vector3(-32.5, 1.05, 62))
+	var horizontal_hit: Dictionary = f.level.get_world_3d().direct_space_state.intersect_ray(horizontal)
+	_expect(horizontal_hit.is_empty(), "Southern roofed service alley has continuous body-height clearance")
+	var vertical := PhysicsRayQueryParameters3D.create(Vector3(-32.5, 0.1, 111), Vector3(-32.5, 2.1, 111))
+	var vertical_hit: Dictionary = f.level.get_world_3d().direct_space_state.intersect_ray(vertical)
+	_expect(vertical_hit.is_empty(), "Southern passage roof and lintels leave standing headroom")
 	await _close_fixture(f)
 
 

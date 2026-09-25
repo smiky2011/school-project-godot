@@ -14,6 +14,7 @@ var _story_audio: AudioStreamPlayer
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	DisplayServer.window_set_title("1944 Town Mission")
 	_register_inputs()
 	level = LevelScript.new()
 	level.name = "TownLevel"
