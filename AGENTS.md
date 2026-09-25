@@ -18,7 +18,7 @@ No test framework or coverage target is configured. For each gameplay change, st
 
 ## Commit & Pull Request Guidelines
 
-Use short, imperative commit subjects that describe one change, such as `Add player movement scene`. In pull requests, explain the behavior changed, cite the relevant design document or issue, list validation performed, and include screenshots or a short recording for visual or gameplay changes.
+During implementation, push commits to the active GitHub branch at meaningful completed increments so the user can inspect progress. Astra chooses the boundary, such as a finished function, coherent change, or feature, and delegates the Git operation. One agent stages, commits, and pushes shared-worktree changes at a time; stage only the reviewed files for that increment. Do not wait for a whole milestone or commit every tiny edit. Use short, imperative commit subjects that describe concrete work, such as `Add player movement scene`. Report actual validation and identify incomplete work; do not include secrets, generated caches, the local `reference/` directory, or another agent's unfinished edits. In pull requests, explain the behavior changed, cite the relevant design document or issue, list validation performed, and include screenshots or a short recording for visual or gameplay changes.
 
 ## Scope & Asset Provenance
 

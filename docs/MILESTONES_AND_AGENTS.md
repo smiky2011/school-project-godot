@@ -61,3 +61,5 @@ Example: “Using G01-09/G01-10, compare compatible existing wall/building asset
 ## Progress Reporting
 
 For each phase, report confirmed decisions, actual files, verification evidence, unresolved issues, and choices needing the user. Unapproved ideas remain labeled proposals. Preserve the student's own design explanations, playtest observations and revision reasons as learning evidence for the school project.
+
+During implementation, publish progress to GitHub by pushing commits at meaningful completed increments. Astra decides when a finished function, coherent change, or feature is ready and delegates one agent to stage, commit, and push the reviewed files. Only one agent performs Git writes in the shared worktree at a time. Do not wait for an entire milestone or commit every tiny edit. Use a concrete commit subject, link or identify the pushed commit in the progress report, state the validation actually performed, and identify work still incomplete. Exclude secrets, generated caches, the local `reference/` directory, and other agents' unfinished edits.
