@@ -17,4 +17,6 @@ The goal is the upstairs contact in the requisitioned residence. A safe three-se
 
 The HUD shows direction, distance and floor relation to the current objective; local suspicion, combat/search state and noise; health, ammunition and reload; interaction readiness/progress; and story subtitles. Guard vision cones are visible on the ground. The weapon model and much of the town are deliberate blockout geometry while asset selection and playtesting continue.
 
+Movement pacing and the expanded route are provisional. No ten-minute run time has been measured yet.
+
 For implementation checks, run Godot with `--headless --path . --editor --quit` for import, `--headless --path . --quit-after 120` for startup, and `--headless --path . --script res://tests/mission_regression.gd` for state and interaction regression. These checks do not establish that the mission is playable. Manual acceptance must traverse the contact, alarm, extraction, death and retry, including a zero-kill path.

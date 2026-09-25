@@ -1,10 +1,10 @@
 extends Node3D
 
 const GUARD_SCRIPT := preload("res://scripts/actors/guard.gd")
-const MIN_X := -27
-const MAX_X := 27
+const MIN_X := -64
+const MAX_X := 64
 const MIN_Z := -42
-const MAX_Z := 41
+const MAX_Z := 204
 
 var director: Node
 var player: CharacterBody3D
@@ -33,7 +33,7 @@ func setup(mission_director: Node, mission_player: CharacterBody3D) -> void:
 
 
 func get_spawn_transform() -> Transform3D:
-	return Transform3D(Basis.IDENTITY, Vector3(0.0, 0.08, 35.0))
+	return Transform3D(Basis.IDENTITY, Vector3(-48.0, 0.08, 198.0))
 
 
 func get_contact_position() -> Vector3:
@@ -107,13 +107,17 @@ func _material(color: Color) -> StandardMaterial3D:
 
 func _build_town() -> void:
 	_build_lighting()
-	_box("Ground", Vector3(0, -0.25, 0), Vector3(56, 0.5, 86), _earth)
-	_visual_box("Southern muddy track sample", Vector3(5, 0.008, 31), Vector3(5.5, 0.018, 11), _mud_track)
-	# Outer backdrops are impassable but the objectives remain well inside them.
-	_box("West boundary", Vector3(-28, 2, 0), Vector3(1, 4, 86), _dark_stone)
-	_box("East boundary", Vector3(28, 2, 0), Vector3(1, 4, 86), _dark_stone)
-	_box("South boundary", Vector3(0, 2, 43), Vector3(57, 4, 1), _dark_stone)
-	_box("North boundary", Vector3(0, 2, -43), Vector3(57, 4, 1), _dark_stone)
+	_box("Ground", Vector3(0, -0.25, 81), Vector3(130, 0.5, 248), _earth)
+	_visual_box("Southern muddy track sample", Vector3(-47, 0.008, 190), Vector3(5.5, 0.018, 11), _mud_track)
+	# The southern district connects into the tested compact town. Its north
+	# edge stays closed until the separately reviewed north extension is built.
+	_box("West outer boundary", Vector3(-65, 2, 81), Vector3(1, 4, 248), _dark_stone, true)
+	_box("East outer boundary", Vector3(65, 2, 81), Vector3(1, 4, 248), _dark_stone, true)
+	_box("South outer boundary", Vector3(0, 2, 205), Vector3(130, 4, 1), _dark_stone, true)
+	_box("North boundary", Vector3(0, 2, -43), Vector3(130, 4, 1), _dark_stone, true)
+	_box("Core west edge", Vector3(-28, 2, 0), Vector3(1, 4, 86), _dark_stone, true)
+	_box("Core east edge", Vector3(28, 2, 0), Vector3(1, 4, 86), _dark_stone, true)
+	_build_southern_district()
 
 	# Offset facades preserve a crooked street rather than a regular arena.
 	_build_solid_house("Western homes", Vector3(-19, 0, 18), Vector3(9, 6, 15), _plaster)
@@ -159,6 +163,51 @@ func _build_lighting() -> void:
 	sun.light_color = Color(0.91, 0.91, 0.84)
 	sun.shadow_enabled = true
 	add_child(sun)
+
+
+func _build_southern_district() -> void:
+	# Five staggered plot bands form real 8–12 m fronts. Four connected
+	# longitudinal lanes and their cross streets stay open for route choice.
+	var bands := [
+		{"z": 179.0, "depth": 16.0, "offset": 0.0},
+		{"z": 145.0, "depth": 16.0, "offset": 1.0},
+		{"z": 111.0, "depth": 16.0, "offset": -0.7},
+		{"z": 77.0, "depth": 16.0, "offset": 0.6},
+		{"z": 50.0, "depth": 10.0, "offset": -0.4},
+	]
+	var centers := [-59.0, -38.0, -27.0, -9.0, 2.0, 22.0, 32.0, 55.0]
+	var widths := [10.0, 9.0, 9.0, 10.0, 10.0, 9.0, 9.0, 10.0]
+	for row in range(bands.size()):
+		var band: Dictionary = bands[row]
+		for column in range(centers.size()):
+			if row == 2 and column == 3:
+				_build_south_workshop_passage()
+				continue
+			if row == 3 and column == 6:
+				continue # Small yard breaks a continuous facade.
+			var x: float = centers[column] + band.offset * (1.0 if column % 2 == 0 else -1.0)
+			var z: float = band.z + (1.2 if column % 3 == 0 else -0.6)
+			var height := 4.8 + float((row + column) % 3) * 0.55
+			var material: Material = _plaster if (row + column) % 3 == 0 else _stone
+			_build_solid_house("South plot %d-%d" % [row, column], Vector3(x, 0, z), Vector3(widths[column], height, band.depth), material)
+	# At the northern seam the plot edge gives way to the old central street.
+	# Modest low walls and a crate create sight breaks without closing lanes.
+	_box("South workshop chimney", Vector3(27.0, 4.2, 146), Vector3(1.2, 8.4, 1.2), _dark_stone, true)
+	_box("West water trough", Vector3(-59.0, 0.55, 94), Vector3(3.2, 1.1, 1.2), _stone, true)
+	_box("Entry lane wall", Vector3(-52.5, 0.75, 192), Vector3(0.6, 1.5, 8.0), _stone, true)
+	_sign("COURT  ↑", Vector3(-19, 2.55, 63), Color(0.91, 0.87, 0.69))
+	_sign("WEST LANE  ←", Vector3(-20, 2.55, 130), Color(0.91, 0.87, 0.69))
+	_sign("WORKSHOP  →", Vector3(12, 2.55, 130), Color(0.91, 0.87, 0.69))
+	_sign("COURT  ↑", Vector3(-48, 2.55, 164), Color(0.91, 0.87, 0.69))
+
+
+func _build_south_workshop_passage() -> void:
+	# This roofed shortcut joins two cross streets through a damaged shop.
+	_build_solid_house("South workshop west bay", Vector3(-12.5, 0, 111), Vector3(3.0, 5.0, 16), _plaster)
+	_build_solid_house("South workshop east bay", Vector3(-5.2, 0, 111), Vector3(3.6, 4.5, 16), _stone)
+	_box("South workshop passage roof", Vector3(-8.7, 4.8, 111), Vector3(4.6, 0.35, 16), _roof)
+	_box("South workshop south lintel", Vector3(-8.7, 3.7, 119), Vector3(4.3, 1.5, 0.35), _plaster)
+	_box("South workshop north lintel", Vector3(-8.7, 3.7, 103), Vector3(4.3, 1.5, 0.35), _plaster)
 
 
 func _build_passage_house() -> void:
@@ -245,6 +294,9 @@ func _spawn_initial_guards() -> void:
 	_spawn_guard("Courtyard patrol", Vector3(2.5, 0.08, 7.0), [Vector3(2.5, 0, 7), Vector3(5.4, 0, 0), Vector3(2.5, 0, -10), Vector3(-2.2, 0, -6)], false, Color(0.35, 0.41, 0.37))
 	_spawn_guard("Residence sentry", Vector3(3.0, 0.08, -13.0), [Vector3(3, 0, -13)], true, Color(0.33, 0.40, 0.37))
 	_spawn_guard("Eastern patrol", Vector3(10.0, 0.08, 24.0), [Vector3(10, 0, 24), Vector3(10, 0, 5), Vector3(11, 0, -13)], false, Color(0.37, 0.42, 0.38))
+	_spawn_guard("South west patrol", Vector3(-48, 0.08, 150), [Vector3(-48, 0, 150), Vector3(-48, 0, 116), Vector3(-20, 0, 128), Vector3(-20, 0, 162)], false, Color(0.35, 0.41, 0.37))
+	_spawn_guard("South middle sentry", Vector3(-19, 0.08, 92), [Vector3(-19, 0, 92)], true, Color(0.33, 0.40, 0.37))
+	_spawn_guard("South east patrol", Vector3(12, 0.08, 150), [Vector3(12, 0, 150), Vector3(12, 0, 100), Vector3(12, 0, 69)], false, Color(0.37, 0.42, 0.38))
 
 
 func _spawn_guard(label: String, position: Vector3, points: Array[Vector3], sentry: bool, color: Color) -> void:

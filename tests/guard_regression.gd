@@ -226,10 +226,11 @@ func _test_unwitnessed_and_witnessed_kills() -> void:
 
 func _test_finite_reinforcements_and_npcs() -> void:
 	var f := _fixture()
-	_expect(f.level.get_guards().size() == 3, "Three initial guards")
+	_expect(f.level.get_guards().size() == 6, "Six initial guards across central and southern districts")
+	_expect(f.level.get_ground_path(f.level.get_spawn_transform().origin, Vector3(-19, 0, 41)).size() > 100, "Southern entry connects to the tested central district")
 	f.level.spawn_reinforcements()
 	f.level.spawn_reinforcements()
-	_expect(f.level.get_guards().size() == 5, "One finite two-guard reinforcement contingent")
+	_expect(f.level.get_guards().size() == 8, "One finite two-guard reinforcement contingent in southern stage")
 	var npc_has_collider := false
 	var npc_has_damage_method := false
 	var contact_found := false

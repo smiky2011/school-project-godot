@@ -1,8 +1,8 @@
 extends CharacterBody3D
 
-const WALK_SPEED := 4.2
-const SPRINT_SPEED := 6.2
-const CROUCH_SPEED := 2.3
+const WALK_SPEED := 3.2
+const SPRINT_SPEED := 5.2
+const CROUCH_SPEED := 1.45
 const JUMP_VELOCITY := 4.6
 const MOUSE_SENSITIVITY := 0.0022
 const KEYBOARD_LOOK_SPEED := 1.7

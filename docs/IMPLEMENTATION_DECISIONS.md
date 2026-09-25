@@ -20,6 +20,8 @@ About seven seconds later, returning personnel discover a cut security seal on t
 
 The player uses WASD, mouse look, Shift to sprint, Ctrl/C to crouch, Space to jump, E to interact, F for eligible rear stealth kills, R to reload and left click to fire the automatic submachine gun. Right click aims; arrow keys offer keyboard look for a trackpad. The first weapon is an explicit placeholder pending free-asset evaluation. Thirty rounds fit one magazine, reserve ammunition is unlimited, and an empty magazine cannot fire until reloaded. Gunfire reports a 24 metre noise to the director. Guards react to hits through their own `take_damage` method. The director counts player kills.
 
+Provisional movement speeds for the expanded route blockout are 3.2 m/s walking, 5.2 m/s sprinting and 1.45 m/s crouching. These are pacing hypotheses for the intended roughly ten-minute successful run, not a measured duration or a new stamina rule.
+
 Health regenerates at 10 points per second after seven seconds without damage while no guard actively threatens the player. Persistent lockdown by itself does not suppress healing; death cannot regenerate. Guard tuning, combat damage and pacing will be revised after real playtesting.
 
 ## Feedback and validation
