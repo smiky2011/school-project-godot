@@ -67,6 +67,7 @@ runtime_filters=(
 	--include='*.tga' --include='*.bmp' --include='*.exr' --include='*.hdr' --include='*.svg'
 	--include='*.ogg' --include='*.wav' --include='*.mp3' --include='*.flac'
 	--include='*.ttf' --include='*.otf'
+	--include='/environment/townhouse_facades.json'
 	--include='*.import' --include='*.uid'
 	--exclude='*'
 )
@@ -88,6 +89,8 @@ for tree in scenes scripts assets; do
 done
 
 [[ -z "$(find "$stage" -type l -print -quit)" ]] || fail "Runtime staging must not contain symlinks."
+[[ -s "$stage/assets/environment/townhouse_facades.json" ]] || \
+	fail "Authored townhouse impact geometry contract is missing."
 
 # Keep authored import settings for copied sources, but drop stale sidecars for
 # FBX/work files that are intentionally absent from the staging project.
@@ -115,9 +118,22 @@ if [[ -d "$project_root/assets/vendor/weapon_visual/sten_mk2" ]]; then
 		grep -Fq "$required" "$sten_attribution" || fail "Sten attribution lacks: $required"
 	done
 fi
+stg_root="$project_root/assets/vendor/weapon_visual/stg44"
+stg_runtime="$stage/assets/vendor/weapon_visual/stg44/runtime/stg44.glb"
+[[ -s "$stg_runtime" ]] || fail "StG 44 runtime GLB is missing."
+stg_attribution="$stg_root/ATTRIBUTION.txt"
+stg_source_manifest="$stg_root/source/SOURCE_MANIFEST.txt"
+[[ -s "$stg_attribution" ]] || fail "StG 44 CC BY 4.0 attribution is missing."
+[[ -s "$stg_source_manifest" ]] || fail "StG 44 source manifest is missing."
+[[ -s "$stg_root/source/stg44_working.blend" ]] || fail "Editable StG 44 Blender source is missing."
+for required in 'Max Ilin' 'https://sketchfab.com/3d-models/stg-44-sturmgewehr-fa37bef729e141a6a29bb022a3e0be41' \
+	'https://creativecommons.org/licenses/by/4.0/' 'Changes:'; do
+	grep -Fq "$required" "$stg_attribution" || fail "StG 44 attribution lacks: $required"
+done
+grep -Fq 'Archive SHA-256:' "$stg_source_manifest" || fail "StG 44 source manifest lacks archive identity."
 character_root="$project_root/assets/vendor/character_visual/makehuman"
 if [[ -d "$character_root" ]]; then
-	for model in contact_idle guard_field_morph guard_field_animated scout_idle; do
+	for model in contact_idle guard_field_morph guard_field_animated scout_idle player_shadow_animated; do
 		[[ -s "$stage/assets/vendor/character_visual/makehuman/runtime/$model.glb" ]] || \
 			fail "Character runtime GLB is missing: $model"
 	done
@@ -157,6 +173,7 @@ cp "$project_root/assets/vendor/polyhaven/LICENSE.txt" "$resources/ThirdPartyLic
 if [[ -f "$sten_runtime" ]]; then
 	cp "$sten_attribution" "$resources/ThirdPartyLicenses/STEN_MK2_ATTRIBUTION.txt"
 fi
+cp "$stg_attribution" "$resources/ThirdPartyLicenses/STG44_ATTRIBUTION.txt"
 if [[ -d "$character_root" ]]; then
 	cp "$character_provenance" "$resources/ThirdPartyLicenses/MAKEHUMAN_CHARACTER_PROVENANCE.txt"
 fi

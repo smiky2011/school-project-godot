@@ -25,6 +25,8 @@ static func get_texture(key: String) -> Texture2D:
 			image = _scorch()
 		"tracer":
 			image = _tracer()
+		"tracer_glow":
+			image = _tracer_glow()
 		"shell_hole":
 			image = _shell_hole()
 		_:
@@ -106,22 +108,25 @@ static func _soft_puff() -> Image:
 
 
 static func _bullet_hole(wood: bool) -> Image:
-	var size := 64
+	var size := 128
 	var image := Image.create(size, size, false, Image.FORMAT_RGBA8)
 	for y in range(size):
 		for x in range(size):
 			var p := Vector2(x + 0.5, y + 0.5) / size * 2.0 - Vector2.ONE
 			var r := p.length()
 			var angle := atan2(p.y, p.x)
-			var jag := _value_noise(angle / TAU + 0.5, 0.3, 12.0, 21) * 0.18
-			var hole := 1.0 - smoothstep(0.14, 0.2, r - jag * 0.4)
-			var chip := (1.0 - smoothstep(0.3 + jag, 0.62 + jag, r)) * (0.55 + 0.45 * _value_noise(float(x) / size, float(y) / size, 14.0, 5))
+			var angular := _value_noise(angle / TAU + 0.5, 0.31, 21.0, 21)
+			var jag := (angular - 0.5) * 0.32
+			var grain := _value_noise(float(x) / size, float(y) / size, 19.0, 5)
+			var hole := 1.0 - smoothstep(0.27 + jag * 0.25, 0.35 + jag * 0.25, r)
+			var chip := (1.0 - smoothstep(0.36 + jag, 0.70 + jag, r)) * (0.28 + 0.72 * grain)
+			var splinter := chip * pow(clampf((grain - 0.48) * 1.9, 0.0, 1.0), 2.0)
 			var color: Color
 			if wood:
-				color = Color(0.07, 0.05, 0.035).lerp(Color(0.62, 0.48, 0.32), clampf(chip - hole, 0.0, 1.0) * 0.8)
+				color = Color(0.025, 0.018, 0.012).lerp(Color(0.55, 0.38, 0.23), splinter * (1.0 - hole) * 0.65)
 			else:
-				color = Color(0.05, 0.05, 0.05).lerp(Color(0.78, 0.76, 0.72), clampf(chip - hole, 0.0, 1.0) * 0.7)
-			var alpha := clampf(maxf(hole, chip * 0.75), 0.0, 1.0)
+				color = Color(0.022, 0.020, 0.018).lerp(Color(0.58, 0.54, 0.47), splinter * (1.0 - hole) * 0.55)
+			var alpha := clampf(maxf(hole, chip * 0.78), 0.0, 1.0)
 			image.set_pixel(x, y, Color(color.r, color.g, color.b, alpha))
 	return image
 
@@ -183,4 +188,18 @@ static func _tracer() -> Image:
 			var v := absf((y + 0.5) / h * 2.0 - 1.0)
 			var a := (1.0 - v) * (1.0 - v) * pow(u, 1.5)
 			image.set_pixel(x, y, Color(a, 0.9 * a, 0.7 * a, a))
+	return image
+
+
+static func _tracer_glow() -> Image:
+	var size := 32
+	var image := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	for y in range(size):
+		for x in range(size):
+			var p := (Vector2(x + 0.5, y + 0.5) / float(size) * 2.0 - Vector2.ONE).length()
+			var core := 1.0 - smoothstep(0.0, 0.35, p)
+			var haze := (1.0 - smoothstep(0.15, 1.0, p)) * 0.35
+			var value := clampf(core + haze, 0.0, 1.0)
+			# RGB carries intensity under additive blending.
+			image.set_pixel(x, y, Color(value, value * 0.87, value * 0.62, value))
 	return image

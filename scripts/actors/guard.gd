@@ -364,7 +364,7 @@ func _show_shot(eye: Vector3, target: Vector3, hit_player: bool, result: Diction
 	if fx != null:
 		fx.tracer(muzzle, end, Color(1.0, 0.8, 0.55, 0.5), 360.0, 0.02, 3.0)
 		if not hit_player and not result.is_empty():
-			fx.impact(result.position, result.normal, "stone", true)
+			fx.impact(result.position, result.normal, "stone", true, result.collider, (result.position - eye).normalized())
 	if _player.has_method("notify_incoming_fire"):
 		var passing := target + Vector3(_rng.randf_range(-0.6, 0.6), 0.3, _rng.randf_range(-0.6, 0.6))
 		_player.call("notify_incoming_fire", eye, hit_player, passing)

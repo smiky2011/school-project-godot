@@ -9,6 +9,7 @@ containing only TownArchitectureProduction, and GLBs contain only model meshes.
 """
 
 from pathlib import Path
+import json
 import bpy
 from mathutils import Vector
 
@@ -17,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "assets/environment"
 SOURCE = OUT / "source"
 TEXTURES = OUT / "textures"
+FACADE_SPEC = json.loads((OUT / "townhouse_facades.json").read_text())
 OUT.mkdir(parents=True, exist_ok=True)
 SOURCE.mkdir(parents=True, exist_ok=True)
 (SOURCE / ".gdignore").touch()
@@ -140,9 +142,9 @@ def add_wall(grid, axis, plane, coord_min, coord_max, height, openings, mat):
             if any(a <= center <= b and c <= z_mid <= d for a,b,c,d in openings):
                 continue
             if axis == "x":
-                grid.box("wall", plane, center, z_mid, 0.34, high-low, z1-z0, mat)
+                grid.box("wall", plane, center, z_mid, 2 * FACADE_SPEC["wall_half_thickness"], high-low, z1-z0, mat)
             else:
-                grid.box("wall", center, plane, z_mid, high-low, 0.34, z1-z0, mat)
+                grid.box("wall", center, plane, z_mid, high-low, 2 * FACADE_SPEC["wall_half_thickness"], z1-z0, mat)
 
 
 def trim_opening(g, axis, plane, center, low, high, width, is_door=False, shutters=False):
@@ -216,26 +218,29 @@ def make_house(name, style):
         bpy.data.objects.remove(obj, do_unlink=True)
     g = Geometry()
     wall_mat = 0 if style == "stone_gable" else 1
-    front = -8.0
-    back = 8.0
-    eaves = 5.85 if style == "stone_gable" else 5.55
-    door_x = -2.35 if style == "stone_gable" else 2.25
-    window_xs = (0.6, 2.85) if style == "stone_gable" else (-2.8, -0.45)
-    front_openings = [(door_x-0.61, door_x+0.61, 0, 2.26)]
-    front_openings += [(x-0.57, x+0.57, 0.93, 2.33) for x in window_xs]
-    front_openings += [(x-0.56, x+0.56, 3.46, 4.88) for x in (-2.7, 0, 2.7)]
-    add_wall(g, "y", front, -4.5, 4.5, eaves, front_openings, wall_mat)
-    add_wall(g, "y", back, -4.5, 4.5, eaves, [], wall_mat)
+    front_spec = FACADE_SPEC["front"]
+    side_spec = FACADE_SPEC["side"]
+    style_spec = FACADE_SPEC[style]
+    front = -FACADE_SPEC["half_depth"]
+    back = FACADE_SPEC["half_depth"]
+    eaves = style_spec["eaves"]
+    door_x = style_spec["front_door_center"]
+    window_xs = style_spec["front_lower_window_centers"]
+    front_openings = [(door_x-front_spec["door_half_width"], door_x+front_spec["door_half_width"], *front_spec["door_y"])]
+    front_openings += [(x-front_spec["lower_window_half_width"], x+front_spec["lower_window_half_width"], *front_spec["lower_window_y"]) for x in window_xs]
+    front_openings += [(x-front_spec["upper_window_half_width"], x+front_spec["upper_window_half_width"], *front_spec["upper_window_y"]) for x in front_spec["upper_window_centers"]]
+    add_wall(g, "y", front, -FACADE_SPEC["half_width"], FACADE_SPEC["half_width"], eaves, front_openings, wall_mat)
+    add_wall(g, "y", back, -FACADE_SPEC["half_width"], FACADE_SPEC["half_width"], eaves, [], wall_mat)
     for sign in (-1, 1):
-        ys = (-5.65, -2.05, 1.55, 5.15)
+        ys = side_spec["bay_centers"]
         side_openings = []
         for y in ys:
-            if y == -2.05 and sign == 1:
-                side_openings.append((y-0.60, y+0.60, 0, 2.26))
+            if y == side_spec["door_bay"] and sign == 1:
+                side_openings.append((y-side_spec["door_half_width"], y+side_spec["door_half_width"], *side_spec["door_y"]))
             else:
-                side_openings.append((y-0.53, y+0.53, 0.93, 2.30))
-            side_openings.append((y-0.53, y+0.53, 3.43, 4.82))
-        add_wall(g, "x", sign*4.5, -8.0, 8.0, eaves, side_openings, wall_mat)
+                side_openings.append((y-side_spec["lower_window_half_width"], y+side_spec["lower_window_half_width"], *side_spec["lower_window_y"]))
+            side_openings.append((y-side_spec["upper_window_half_width"], y+side_spec["upper_window_half_width"], *side_spec["upper_window_y"]))
+        add_wall(g, "x", sign*FACADE_SPEC["half_width"], -FACADE_SPEC["half_depth"], FACADE_SPEC["half_depth"], eaves, side_openings, wall_mat)
         for y0,y1,z0,z1 in side_openings:
             trim_opening(g, "x", sign*4.5, (y0+y1)/2, z0, z1, y1-y0,
                          is_door=(z0 == 0), shutters=(z0 > 0 and (style == "plaster_hip" or z0 > 3)))

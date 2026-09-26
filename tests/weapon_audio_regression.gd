@@ -1,6 +1,6 @@
 extends SceneTree
 
-# Audio playback regression for the real player's Sten report path. Repeated
+# Audio playback regression for the real player's gunshot report path. Repeated
 # calls emulate its 0.105-second automatic-fire interval without changing ammo,
 # damage, AI or mission state. Run with Godot --headless --path . --script
 # res://tests/weapon_audio_regression.gd.

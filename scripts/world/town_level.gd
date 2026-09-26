@@ -350,10 +350,18 @@ func _build_solid_house(label: String, base: Vector3, size: Vector3, wall_materi
 	var body_height: float = TOWN_PRESENTATION.shell_eaves_height(plaster, size) if shell_added else size.y
 	var mass := _box(label, base + Vector3(0, body_height * 0.5, 0), Vector3(size.x, body_height, size.z), wall_material, true)
 	if shell_added:
+		# The broad gameplay collider sits on the model's wall centre lines.
+		# CombatFx uses this description to place cosmetic impacts on the
+		# visible outer masonry, without changing movement or AI collision.
+		if size.x >= 8.5 and size.z >= 12.5:
+			var visual := get_node_or_null(NodePath(label + " architectural shell")) as Node3D
+			if visual != null:
+				mass.set_meta("impact_shell", {"transform": visual.global_transform, "style": "plaster_hip" if plaster else "stone_gable"})
 		for child in mass.get_children():
 			if child is MeshInstance3D:
 				child.visible = false
 		var roof_body := _box(label + " legacy roof collision", base + Vector3(0, body_height + 0.2, 0), Vector3(size.x + 0.5, 0.4, size.z + 0.5), _roof)
+		roof_body.set_meta("impact_hidden_roof", true)
 		for child in roof_body.get_children():
 			if child is MeshInstance3D:
 				child.visible = false

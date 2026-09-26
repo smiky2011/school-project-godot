@@ -352,7 +352,7 @@ func _resolve_hit(hit: Dictionary, from: Vector3, shot_dir: Vector3, fx: Node) -
 		if fx != null:
 			fx.body_hit(hit.position, hit.normal)
 	elif fx != null:
-		fx.impact(hit.position, hit.normal, _surface_of(body))
+		fx.impact(hit.position, hit.normal, _surface_of(body), true, body, shot_dir)
 
 
 func _surface_of(body: Object) -> String:

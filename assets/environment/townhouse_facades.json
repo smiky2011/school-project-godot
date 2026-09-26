@@ -1,0 +1,34 @@
+{
+  "wall_half_thickness": 0.17,
+  "half_width": 4.5,
+  "half_depth": 8.0,
+  "front": {
+    "door_half_width": 0.61,
+    "door_y": [0.0, 2.26],
+    "lower_window_half_width": 0.57,
+    "lower_window_y": [0.93, 2.33],
+    "upper_window_centers": [-2.7, 0.0, 2.7],
+    "upper_window_half_width": 0.56,
+    "upper_window_y": [3.46, 4.88]
+  },
+  "side": {
+    "bay_centers": [-5.65, -2.05, 1.55, 5.15],
+    "door_bay": -2.05,
+    "door_half_width": 0.60,
+    "door_y": [0.0, 2.26],
+    "lower_window_half_width": 0.53,
+    "lower_window_y": [0.93, 2.30],
+    "upper_window_half_width": 0.53,
+    "upper_window_y": [3.43, 4.82]
+  },
+  "stone_gable": {
+    "eaves": 5.85,
+    "front_door_center": -2.35,
+    "front_lower_window_centers": [0.6, 2.85]
+  },
+  "plaster_hip": {
+    "eaves": 5.55,
+    "front_door_center": 2.25,
+    "front_lower_window_centers": [-2.8, -0.45]
+  }
+}

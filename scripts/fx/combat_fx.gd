@@ -6,10 +6,12 @@ extends Node3D
 
 const FX_TEXTURES := preload("res://scripts/fx/fx_textures.gd")
 const SYNTH := preload("res://scripts/audio/sound_synth.gd")
+const HOUSE_IMPACT := preload("res://scripts/world/townhouse_impact_geometry.gd")
 
 const MAX_DECALS := 96
 const MAX_SHELLS := 40
 const WORLD_LAYER := 1
+const IMPACT_MARK_SIZE := 0.22
 
 var _decals: Array[Decal] = []
 var _decal_index := 0
@@ -21,6 +23,7 @@ var _puff_material: StandardMaterial3D
 var _chip_material: StandardMaterial3D
 var _spark_material: StandardMaterial3D
 var _tracer_material: StandardMaterial3D
+var _tracer_glow_material: StandardMaterial3D
 var _shell_material: StandardMaterial3D
 var _shell_mesh: CylinderMesh
 var _puff_mesh: QuadMesh
@@ -68,6 +71,8 @@ func _ready() -> void:
 	_tracer_material.albedo_texture = FX_TEXTURES.get_texture("tracer")
 	_tracer_material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	_tracer_material.vertex_color_use_as_albedo = true
+	_tracer_glow_material = _tracer_material.duplicate() as StandardMaterial3D
+	_tracer_glow_material.albedo_texture = FX_TEXTURES.get_texture("tracer_glow")
 	_shell_material = StandardMaterial3D.new()
 	_shell_material.albedo_color = Color(0.74, 0.56, 0.24)
 	_shell_material.metallic = 1.0
@@ -101,7 +106,9 @@ func play_3d(key: String, at: Vector3, volume_db: float = 0.0, pitch_jitter: flo
 	player.play()
 
 
-func impact(at: Vector3, normal: Vector3, surface: String, with_decal: bool = true) -> void:
+func impact(at: Vector3, normal: Vector3, surface: String, with_decal: bool = true, collider: Object = null, incoming_dir: Vector3 = Vector3.ZERO) -> void:
+	var receiver: Dictionary = HOUSE_IMPACT.resolve(at, normal, collider, IMPACT_MARK_SIZE, incoming_dir)
+	var visual_at: Vector3 = receiver.position
 	var dust := Color(0.62, 0.6, 0.56)
 	var chips := Color(0.55, 0.53, 0.5)
 	var sound := "impact_stone"
@@ -120,16 +127,17 @@ func impact(at: Vector3, normal: Vector3, surface: String, with_decal: bool = tr
 		"metal":
 			dust = Color(0.45, 0.45, 0.45)
 			sound = "impact_metal"
-	_spawn_puff(at, normal, dust, 7, 0.9, 1.4)
-	if surface != "metal":
-		_spawn_chips(at, normal, chips)
-	else:
-		_spawn_sparks(at, normal)
-	if with_decal and surface != "dirt":
-		_place_decal(at, normal, "bullet_hole_wood" if surface == "wood" else "bullet_hole", 0.13)
-	elif with_decal:
-		_place_decal(at, normal, "scorch", 0.16, Color(0.35, 0.3, 0.25, 0.8))
-	play_3d(sound, at, -9.0, 0.12)
+	if receiver.visible:
+		_spawn_puff(visual_at, normal, dust, 9, 0.9, 1.4)
+		if surface != "metal":
+			_spawn_chips(visual_at, normal, chips)
+		else:
+			_spawn_sparks(visual_at, normal)
+		if with_decal and surface != "dirt":
+			_place_decal(visual_at, normal, "bullet_hole_wood" if surface == "wood" else "bullet_hole", IMPACT_MARK_SIZE)
+		elif with_decal:
+			_place_decal(visual_at, normal, "scorch", 0.16, Color(0.35, 0.3, 0.25, 0.8))
+	play_3d(sound, visual_at, -9.0, 0.12)
 
 
 func body_hit(at: Vector3, normal: Vector3) -> void:
@@ -147,11 +155,23 @@ func tracer(from: Vector3, to: Vector3, color: Color = Color(1.0, 0.86, 0.62, 0.
 	mesh.size = Vector2.ONE
 	instance.mesh = mesh
 	var material := _tracer_material.duplicate() as StandardMaterial3D
-	material.albedo_color = color
+	# Additive blending uses the texture RGB. Alpha is not a brightness control.
+	material.albedo_color = Color(color.r, color.g, color.b)
 	instance.material_override = material
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(instance)
-	_tracers.append({"node": instance, "from": from, "dir": (to - from) / distance, "distance": distance, "travel": 0.0, "speed": speed, "width": width, "length": minf(length, distance)})
+	# A thin ribbon is edge-on when looking down the shot line. Its moving
+	# head gives that first-person view a brief, camera-facing point of light.
+	var glow := MeshInstance3D.new()
+	var glow_mesh := QuadMesh.new()
+	glow_mesh.size = Vector2.ONE
+	glow.mesh = glow_mesh
+	var glow_material := _tracer_glow_material.duplicate() as StandardMaterial3D
+	glow_material.albedo_color = material.albedo_color
+	glow.material_override = glow_material
+	glow.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(glow)
+	_tracers.append({"node": instance, "glow": glow, "from": from, "dir": (to - from) / distance, "distance": distance, "travel": 0.0, "speed": minf(speed, 340.0), "width": maxf(width, 0.016), "length": minf(maxf(length, 2.6), distance)})
 
 
 func eject_shell(at: Transform3D, velocity: Vector3) -> void:
@@ -192,6 +212,7 @@ func _process(delta: float) -> void:
 		var node: MeshInstance3D = t.node
 		if t.travel - t.length > t.distance or camera == null:
 			node.queue_free()
+			t.glow.queue_free()
 			_tracers.remove_at(i)
 			continue
 		var head_d: float = minf(t.travel, t.distance)
@@ -201,6 +222,7 @@ func _process(delta: float) -> void:
 		var seg := head - tail
 		if seg.length() < 0.01:
 			node.visible = false
+			t.glow.visible = false
 			continue
 		node.visible = true
 		var mid := (head + tail) * 0.5
@@ -211,6 +233,12 @@ func _process(delta: float) -> void:
 		side = side.normalized() * float(t.width)
 		var normal := seg.cross(side).normalized()
 		node.global_transform = Transform3D(Basis(seg, side, normal), mid)
+		var glow: MeshInstance3D = t.glow
+		glow.visible = t.travel <= t.distance
+		if glow.visible:
+			var glow_distance := camera.global_position.distance_to(head)
+			var glow_size := clampf(glow_distance * 0.012, 0.04, 0.16)
+			glow.global_transform = Transform3D(camera.global_basis * Basis.IDENTITY.scaled(Vector3(glow_size, glow_size, 1.0)), head)
 	for i in range(_shells.size() - 1, -1, -1):
 		var s: Dictionary = _shells[i]
 		var shell: MeshInstance3D = s.node
@@ -310,12 +338,14 @@ func _spawn_sparks(at: Vector3, normal: Vector3) -> void:
 
 
 func _emit(particles: CPUParticles3D, at: Vector3, normal: Vector3, lifetime: float) -> void:
+	particles.emitting = false
 	add_child(particles)
 	var up := normal.normalized()
 	var reference := Vector3.FORWARD if absf(up.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT
 	var x := reference.cross(up).normalized()
 	var z := x.cross(up).normalized()
 	particles.global_transform = Transform3D(Basis(x, up, z), at)
+	particles.restart()
 	particles.emitting = true
 	get_tree().create_timer(lifetime + 0.4, false).timeout.connect(particles.queue_free)
 
