@@ -43,7 +43,9 @@ func _run() -> void:
 	if not _check(first.stream == SYNTH.get_stream("tail_open") and is_equal_approx(first.volume_db, -10.0),
 			"Open shot uses its established stream and gain"):
 		return
-	for _i in range(3):
+	# Allow for device startup latency before checking playback position; the
+	# first voice has enough lifetime for five subsequent automatic rounds.
+	for _i in range(5):
 		await create_timer(SHOT_INTERVAL).timeout
 		_player.call("_play_shot")
 	print("WEAPON AUDIO playback first_playing=%s first_seconds=%.3f concurrent=%d" % [

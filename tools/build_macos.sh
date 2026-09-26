@@ -117,7 +117,7 @@ if [[ -d "$project_root/assets/vendor/weapon_visual/sten_mk2" ]]; then
 fi
 character_root="$project_root/assets/vendor/character_visual/makehuman"
 if [[ -d "$character_root" ]]; then
-	for model in contact_idle guard_field_morph scout_idle; do
+	for model in contact_idle guard_field_morph guard_field_animated scout_idle; do
 		[[ -s "$stage/assets/vendor/character_visual/makehuman/runtime/$model.glb" ]] || \
 			fail "Character runtime GLB is missing: $model"
 	done
