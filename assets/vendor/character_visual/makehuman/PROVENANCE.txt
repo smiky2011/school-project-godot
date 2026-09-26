@@ -31,3 +31,11 @@ costumes, not reconstructions of a named military uniform or faction.
 Editable Blender files are retained in source/ beside the derived textures;
 runtime/ contains the Godot GLBs and textures. Full download archives and
 the authoring extension remain only in the Git-ignored reference/ directory.
+
+26 September 2026: guard_field_locomotion.blend and guard_field_animated.glb
+derive solely from the retained guard_field_grip.blend and the same CC0 input
+assets. The selected MakeHuman body proportions were frozen, concealed helper
+and under-clothing faces were removed using the original masks, and the 53-bone
+rig and mesh weights were retained. GuardIdle and an in-place GuardWalk were
+authored locally; no third-party animation was imported. The earlier
+guard_field_morph.glb remains as comparison evidence.

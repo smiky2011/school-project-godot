@@ -1,14 +1,11 @@
 extends Node3D
 
-# Baked, visible-only mesh morphs avoid exporting MakeHuman's masked helper faces.
-const FIELD_BODY: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/guard_field_morph.glb")
+# The source rig, masked visible meshes, and two in-place clips are retained in
+# source/guard_field_locomotion.blend. Guard movement remains CharacterBody3D-led.
+const FIELD_BODY: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/guard_field_animated.glb")
 
-var _step_left: Array[MeshInstance3D] = []
-var _step_right: Array[MeshInstance3D] = []
-var _left_indices: Array[int] = []
-var _right_indices: Array[int] = []
-var _phase := 0.0
-var _intensity := 0.0
+var _animation: AnimationPlayer
+var _walking := false
 var _dead := false
 
 
@@ -17,44 +14,32 @@ func _ready() -> void:
 	body.name = "FieldBody"
 	body.rotation.y = PI # The imported model faces +Z; the actor faces -Z.
 	add_child(body)
-	_collect_shapes(body)
+	_animation = body.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if _animation == null or not _animation.has_animation("GuardIdle") or not _animation.has_animation("GuardWalk"):
+		push_error("Guard body is missing its authored idle/walk clips")
+		return
+	_animation.get_animation("GuardWalk").loop_mode = Animation.LOOP_LINEAR
+	_animation.play("GuardIdle")
 
 
-func update_locomotion(horizontal_speed: float, delta: float) -> void:
-	if _dead:
+func update_locomotion(horizontal_speed: float, _delta: float) -> void:
+	if _dead or _animation == null:
 		return
 	var moving := horizontal_speed > 0.12
-	var target := clampf(horizontal_speed / 2.0, 0.0, 1.0) if moving else 0.0
-	_intensity = move_toward(_intensity, target, delta * 4.0)
+	if moving != _walking:
+		_walking = moving
+		_animation.play("GuardWalk" if moving else "GuardIdle", 0.18)
 	if moving:
-		_phase += delta * horizontal_speed * 5.2
-	var left := maxf(0.0, sin(_phase)) * _intensity
-	var right := maxf(0.0, -sin(_phase)) * _intensity
-	for index in range(_step_left.size()):
-		_step_left[index].set_blend_shape_value(_left_indices[index], left)
-	for index in range(_step_right.size()):
-		_step_right[index].set_blend_shape_value(_right_indices[index], right)
+		# The authored ankle sweep spans about 0.78 m per step, so one
+		# 1.6 m cycle follows actual travel without the former slow foot slide.
+		_animation.speed_scale = clampf(horizontal_speed / 1.6, 0.08, 1.7)
+	else:
+		_animation.speed_scale = 1.0
 
 
 func freeze_dead() -> void:
 	_dead = true
-	for index in range(_step_left.size()):
-		_step_left[index].set_blend_shape_value(_left_indices[index], 0.0)
-	for index in range(_step_right.size()):
-		_step_right[index].set_blend_shape_value(_right_indices[index], 0.0)
-
-
-func _collect_shapes(node: Node) -> void:
-	if node is MeshInstance3D:
-		var visual := node as MeshInstance3D
-		if visual.mesh != null:
-			for index in range(visual.mesh.get_blend_shape_count()):
-				var shape_name: StringName = visual.mesh.get_blend_shape_name(index)
-				if shape_name == "StepLeft":
-					_step_left.append(visual)
-					_left_indices.append(index)
-				elif shape_name == "StepRight":
-					_step_right.append(visual)
-					_right_indices.append(index)
-	for child in node.get_children():
-		_collect_shapes(child)
+	_walking = false
+	if _animation != null:
+		_animation.speed_scale = 1.0
+		_animation.play("GuardIdle", 0.12)
