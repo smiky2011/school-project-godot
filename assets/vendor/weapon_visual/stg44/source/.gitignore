@@ -1,0 +1,4 @@
+# Keep the exact downloaded archive and unmodified high-resolution maps locally.
+# The editable .blend references the smaller committed converted maps.
+/stg-44-sturmgewehr.zip
+/original/textures/*.png

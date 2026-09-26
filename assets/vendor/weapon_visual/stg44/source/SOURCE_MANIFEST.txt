@@ -1,0 +1,19 @@
+Original archive: stg-44-sturmgewehr.zip
+Downloaded from: https://sketchfab.com/3d-models/stg-44-sturmgewehr-fa37bef729e141a6a29bb022a3e0be41
+Downloaded: 26 September 2026
+Archive SHA-256: 49dc74dc8f5356b7fd596619d9e3c14c03d729b39741d82e12c7cf13958ee3b3
+Archive entries: source/STG44_Full.fbx and 25 PNG texture maps under textures/
+ZIP file size: 184,344,241 bytes (stat); sum of 26 extracted entries:
+184,340,391 bytes (unzip listing). The PNG images are already compressed.
+Local archive: source/stg-44-sturmgewehr.zip (Git ignored)
+Local extracted originals: source/original/ (the 25 original maps are Git ignored)
+The original FBX is tracked; the editable stg44_working.blend and its
+repository-relative converted/ image dependencies are tracked.
+
+Rebuild from the local original archive at the path above:
+  unzip -oq assets/vendor/weapon_visual/stg44/source/stg-44-sturmgewehr.zip -d assets/vendor/weapon_visual/stg44/source/original
+  python3 tools/art/stg44_prepare_textures.py
+  /Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup --python tools/art/stg44_build_blender.py
+  python3 tools/art/stg44_finalize_glb.py
+
+The downloaded ZIP was inspected and its SHA-256 checked before adaptation.

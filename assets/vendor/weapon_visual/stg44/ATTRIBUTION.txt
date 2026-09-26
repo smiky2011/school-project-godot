@@ -1,0 +1,27 @@
+STG - 44 | Sturmgewehr
+Creator: Max Ilin / ELIZION
+Original publication: https://sketchfab.com/3d-models/stg-44-sturmgewehr-fa37bef729e141a6a29bb022a3e0be41
+Creator portfolio: https://elizion.artstation.com/projects/aYYBaL
+Original publication date: 7 November 2020 (Sketchfab listing)
+Download date: 26 September 2026
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License deed: https://creativecommons.org/licenses/by/4.0/
+License legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Changes: The original FBX meshes and five PBR texture sets were imported into
+an isolated Blender working file. Albedo maps were reduced to 1024 pixels and
+saved as JPEG; normal maps were reduced to 1024 pixels and saved as lossless
+PNG; each set's ambient occlusion, roughness and metallic maps were packed
+into the red, green and blue channels of a new PNG. The meshes and textures
+were exported as a GLB for Godot. The separate bottom magazine and bolt are
+animated in code, and the model is posed with separately attributed hands.
+The original mesh geometry, UVs and texture colors were not repainted.
+ELIZION does not endorse this project.
+
+The original downloaded archive remains locally at
+source/stg-44-sturmgewehr.zip and is excluded from Git because it is 176 MB.
+The unchanged original high-resolution maps remain locally at
+source/original/textures/ and are also excluded from Git. The unchanged
+source/original/source/STG44_Full.fbx, the portable working Blender file, all
+its converted texture dependencies, and the game GLB are tracked. See
+source/SOURCE_MANIFEST.txt for the archive SHA-256 and reconstruction steps.
