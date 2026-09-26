@@ -51,20 +51,53 @@ func _run() -> void:
 		return
 	_log("shooting_position", {"position": _position(), "walk_seconds": walk_seconds})
 
-	# A one-frame down-look sets the center ray on the distant guard's torso.
-	Input.action_press("look_down")
-	await physics_frame
-	Input.action_release("look_down")
+	# Architecture and live patrol movement changed the old fixed camera angle.
+	# Read the patrol's position, then steer with the ordinary look actions until
+	# the game's center ray sees its body. Never assign any actor transform.
+	var target: CharacterBody3D
+	for guard in level.get_guards():
+		if guard.name == "South west patrol":
+			target = guard
+			break
+	if target == null or not await _aim_at(target):
+		_fail("Could not establish a physical center-ray sightline to the south west patrol")
+		return
+	Input.action_press("aim")
+	for _i in range(12):
+		await physics_frame
+	if not await _aim_at(target):
+		_fail("Lost the physical patrol sightline while aiming down sights")
+		return
+	var first_ammo: int = player.ammo
 	Input.action_press("fire")
 	await physics_frame
+	Input.action_release("fire")
+	var first_hit: float = player.hit_marker
+	_log("first_shot", {"ammo": player.ammo, "kills": director.kills, "hit_marker": first_hit, "target_state": target.state})
 	await _capture("combat_02_first_shot")
-	var first_ammo: int = player.ammo
-	_log("first_shot", {"ammo": first_ammo, "kills": director.kills, "hit_marker": player.hit_marker})
-	if first_ammo >= 30:
-		Input.action_release("fire")
-		_fail("Fire input did not consume a round")
+	if player.ammo >= first_ammo or first_hit <= 0.0:
+		_fail("Aimed first shot did not consume a round and hit the physical guard body")
 		return
+	# Reacquire the moving torso after recoil. Three genuine bullet rays should
+	# kill the guard before the rest of the finite magazine is emptied.
+	var aimed_shots := 1
+	while target.state != "DEAD" and aimed_shots < 8 and not player.dead:
+		for _i in range(7):
+			await physics_frame
+		if not await _aim_at(target):
+			_fail("Lost the physical patrol sightline before a kill")
+			return
+		Input.action_press("fire")
+		await physics_frame
+		Input.action_release("fire")
+		aimed_shots += 1
+	if target.state != "DEAD":
+		_fail("Aimed physical player rays did not kill the guard")
+		return
+	_log("guard_killed", {"aimed_shots": aimed_shots, "ammo": player.ammo, "kills": director.kills})
 
+	Input.action_release("aim")
+	Input.action_press("fire")
 	var fire_seconds := 0.0
 	while player.ammo > 0 and fire_seconds < 6.0 and not player.dead:
 		await physics_frame
@@ -110,6 +143,40 @@ func _send_key(code: Key, pressed: bool) -> void:
 	event.physical_keycode = code
 	event.pressed = pressed
 	Input.parse_input_event(event)
+
+
+func _aim_at(target: CharacterBody3D) -> bool:
+	var camera := player.get_camera() as Camera3D
+	for _i in range(120):
+		if player.dead or target.state == "DEAD":
+			break
+		var to_target: Vector3 = target.global_position + Vector3.UP * 1.1 - camera.global_position
+		var desired_yaw := atan2(-to_target.x, -to_target.z)
+		var yaw_error := wrapf(desired_yaw - player.rotation.y, -PI, PI)
+		var desired_pitch := atan2(to_target.y, Vector2(to_target.x, to_target.z).length())
+		var current_pitch := asin(clampf(-camera.global_basis.z.y, -1.0, 1.0))
+		var pitch_error := desired_pitch - current_pitch
+		if absf(yaw_error) < 0.004 and absf(pitch_error) < 0.004:
+			var query := PhysicsRayQueryParameters3D.create(camera.global_position, camera.global_position - camera.global_basis.z * 90.0)
+			query.exclude = [player.get_rid()]
+			var hit := player.get_world_3d().direct_space_state.intersect_ray(query)
+			if not hit.is_empty() and hit["collider"] == target:
+				_release_look()
+				return true
+		if absf(yaw_error) >= 0.004:
+			var yaw_strength := clampf(absf(yaw_error) / (1.7 / 60.0), 0.25, 1.0)
+			Input.action_press("look_left" if yaw_error > 0.0 else "look_right", yaw_strength)
+		if absf(pitch_error) >= 0.004:
+			var pitch_strength := clampf(absf(pitch_error) / (1.7 / 60.0), 0.25, 1.0)
+			Input.action_press("look_up" if pitch_error > 0.0 else "look_down", pitch_strength)
+		await physics_frame
+		_release_look()
+	return false
+
+
+func _release_look() -> void:
+	for action in ["look_left", "look_right", "look_up", "look_down"]:
+		Input.action_release(action)
 
 
 func _guard_states() -> Array:

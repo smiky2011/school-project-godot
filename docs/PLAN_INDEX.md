@@ -1,6 +1,6 @@
 # Design Document Index
 
-Status: first-version design baseline with a locally packaged first playable Godot blockout. The expanded mission has passed an input-driven rendered zero-kill route through the exact packaged PCK; full manual human navigation and the intended ten-minute pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
+Status: the first playable mission has a packaged visual-production increment with modeled town houses, textured Sten and clothed contact, guard and scout. The current visual package passed its own exact-PCK input-driven zero-kill route; remaining acceptance checks are recorded in [QA_REPORT.md](QA_REPORT.md). Full manual human navigation and the intended ten-minute pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
 
 ## Read in This Order
 
@@ -12,7 +12,7 @@ Status: first-version design baseline with a locally packaged first playable God
 | [GAME_ARCHITECTURE.md](GAME_ARCHITECTURE.md) | Combat, health, retry and implemented system boundaries |
 | [ART_DIRECTION.md](ART_DIRECTION.md) | Selected references and proposed visual interpretation |
 | [DESIGN_REVIEW.md](DESIGN_REVIEW.md) | Audit findings and ownership of open decisions |
-| [ENVIRONMENT_PIPELINE.md](ENVIRONMENT_PIPELINE.md) | Asset-first policy, sample imports and pending production workflow |
+| [ENVIRONMENT_PIPELINE.md](ENVIRONMENT_PIPELINE.md) | Asset policy, imported materials, authored houses and remaining workflow limits |
 | [MILESTONES_AND_AGENTS.md](MILESTONES_AND_AGENTS.md) | Confirmed delegation policy and proposed milestones |
 
 ## Implementation and Evidence
@@ -25,11 +25,14 @@ Status: first-version design baseline with a locally packaged first playable God
 | [PACKAGING.md](PACKAGING.md) | Self-contained macOS build procedure and its limits |
 | [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md) | Imported free assets and usage rights |
 | [VISUAL_PRODUCTION.md](VISUAL_PRODUCTION.md) | Current town-art implementation, rendered frames and review limits |
+| [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md) | Authored houses, source materials and architecture previews |
+| [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md) | Sten and first-person grip-hand source and attribution |
+| [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md) | Contact, guard and scout visuals, editable sources and motion limits |
 | [RUNTIME_ENVIRONMENT.md](RUNTIME_ENVIRONMENT.md) | Target-machine runtime observations |
 | [QA_REPORT.md](QA_REPORT.md) | Source and packaged playthrough evidence, performance and acceptance limits |
 | [PLAYTEST_REPORT.md](PLAYTEST_REPORT.md) | Route observations and pacing interpretation |
 
-`scenes/main.tscn` now starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The expanded source direct-west route completed in 207.88 game seconds; the exact packaged PCK's covered route completed in 202.66 game seconds, with zero kills and a single-press final handoff. Both were input-driven rendered playthroughs through normal movement and collisions. These times describe known automated routes, not a measured first-time human play session or proof of the intended ten-minute pace. See [QA_REPORT.md](QA_REPORT.md).
+`scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The preceding blockout's source direct-west route completed in 207.88 game seconds; its exact packaged PCK's covered route completed in 202.66 game seconds, with zero kills and a single-press final handoff. Both used normal movement and collisions. They are known automated routes, not a measured first-time human play session or proof of the intended ten-minute pace. The current visual package also completed a covered automated route in 202.75 game seconds with zero kills; its source commit, PCK hash, performance and remaining checks are in [QA_REPORT.md](QA_REPORT.md).
 
 ## Team Configuration
 
@@ -37,7 +40,7 @@ Astra (`gpt-6-astra`) owns planning, architecture, coordination and acceptance. 
 
 ## Asset Strategy
 
-Use suitable free online assets first, with license and import checks. The user has explicitly authorized custom Blender work where available free models cannot produce the grounded, coherent 1944-town look. Godot assembles and tests the result. Two authored exterior house variants and their editable Blender source now exist; see [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md) and [ENVIRONMENT_PIPELINE.md](ENVIRONMENT_PIPELINE.md). They do not by themselves establish a finished town.
+Use suitable free online assets first, with license and import checks. The user explicitly authorized custom Blender work where free models could not produce the grounded, coherent 1944-town look. Godot assembles and tests the result. Two authored exterior house variants and their editable Blender source, a textured Sten and three clothed human visuals are now integrated; their acceptance boundaries are in the asset and QA records above. The level is still an art-in-progress mission environment.
 
 ## Latest Confirmed Constraints
 

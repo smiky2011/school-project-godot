@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-This is a Godot 4.7.2 project with a first playable, packaged blockout mission. `project.godot` points to `scenes/main.tscn`. `scripts/core/` owns startup and mission state, `scripts/player/` movement and combat, `scripts/world/` the town, `scripts/actors/` guards, and `scripts/ui/` the HUD. Required game assets live under `assets/`; `tests/` holds standalone Godot runners. `docs/PLAN_INDEX.md` links confirmed design, implementation decisions, and current evidence. Keep Godot's generated `.godot/`, local `reference/`, and `build/` out of version control.
+This is a Godot 4.7.2 project with a first playable, packaged mission with provisional visual art. `project.godot` points to `scenes/main.tscn`. `scripts/core/` owns startup and mission state, `scripts/player/` movement and combat, `scripts/world/` the town, `scripts/actors/` guards, and `scripts/ui/` the HUD. Required game assets live under `assets/`; `tests/` holds standalone Godot runners. `docs/PLAN_INDEX.md` links confirmed design, implementation decisions, and current evidence. Keep Godot's generated `.godot/`, local `reference/`, and `build/` out of version control.
 
 ## Build, Test, and Development Commands
 
@@ -14,7 +14,7 @@ Follow `.editorconfig`: UTF-8 text. For GDScript, use Godot's standard tab inden
 
 ## Testing Guidelines
 
-No external test framework or coverage target is configured. Run Godot with `--headless --path . --script res://tests/mission_regression.gd` and `--headless --path . --script res://tests/guard_regression.gd` for state and AI integration checks. `tests/rendered_playthrough.gd`, `tests/rendered_failure_retry.gd`, and `tests/rendered_combat.gd` are controlled rendered probes; run them with `--path . --script res://tests/<file>.gd` and a graphics display. For each gameplay change, state manual steps and observed result. The expanded route has passed an input-driven rendered zero-kill extraction using the exact packaged PCK; this is not a human manually navigating the whole mission. Native menu, pause, failure and retry observations and remaining acceptance limits are in `docs/QA_REPORT.md`. Headless tests alone do not prove playability.
+No external test framework or coverage target is configured. Run Godot with `--headless --path . --script res://tests/mission_regression.gd`, `guard_regression.gd` and `player_stance_regression.gd` for state, AI and stance integration checks. `tests/rendered_playthrough.gd`, `rendered_failure_retry.gd` and `rendered_combat.gd` are controlled gameplay probes; `rendered_visual_review.gd`, `character_visual_review.gd` and `rendered_guard_review.gd` inspect presentation. Run rendered scripts with `--path . --script res://tests/<file>.gd` and a graphics display. State manual steps and observed results for each gameplay change. The current visual package passed an input-driven zero-kill extraction through its exact PCK, not a human manually navigating the mission. Combat and failure/retry checks of the same PCK are still being completed; native briefing, Begin, Pause and Restart smoke passed; see `docs/QA_REPORT.md`. Headless tests alone do not prove playability.
 
 ## Commit & Pull Request Guidelines
 

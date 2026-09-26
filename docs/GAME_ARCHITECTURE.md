@@ -1,6 +1,6 @@
 # Gameplay Rules and Runtime Architecture
 
-Status: game-design baseline with an implemented Godot architecture and a packaged first playable blockout. Confirmed rules here govern the current blockout; file interfaces and tuning are recorded in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). The expanded route has completed an input-driven rendered zero-kill run through the exact packaged PCK; first-time human navigation and pacing remain to be measured.
+Status: game-design baseline with an implemented Godot architecture and a packaged first playable visual build. Confirmed rules govern the current mission; file interfaces and tuning are recorded in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). The current visual PCK completed an input-driven rendered zero-kill route; first-time human navigation and pacing remain to be measured.
 
 ## Mission and System Boundaries
 
@@ -22,7 +22,7 @@ Extraction is **tense but forgiving**. Encounters should allow recoverable mista
 
 ## Weapon and Close-Range Kills
 
-- Primary weapon: submachine gun. Historical model and asset remain unselected.
+- Primary weapon: submachine gun. The playable build uses a free, attributed Sten Mk II visual; that implementation choice does not settle the fictional town's factions or an exact historical equipment roster.
 - Firing consumes a finite magazine. An empty magazine requires a reload before firing again; reserve ammunition is unlimited.
 - No ammunition scavenging, corpse looting for ammunition or supply pickups.
 - Bypassing, shooting and close-range stealth kills are available during infiltration.
@@ -47,12 +47,12 @@ Provide a short briefing, landmarks and a simple current-objective direction cue
 | --- | --- |
 | `Main` | Startup, scene assembly, pause and result flow: `scripts/core/main.gd` |
 | `TownLevel` | Environment, collision, routes and encounter locations: `scripts/world/town_level.gd` |
-| `Player` | Movement, view, health, inputs and provisional SMG: `scripts/player/player.gd` |
-| `Guard` | Perception, duty, search, combat and damage: `scripts/actors/guard.gd` |
+| `Player` | Movement, view, health and inputs: `scripts/player/player.gd`; first-person Sten presentation: `scripts/player/weapon_presentation.gd` |
+| `Guard` | Perception, duty, search, combat and damage: `scripts/actors/guard.gd`; velocity-driven fieldwear and held Sten visuals: `scripts/characters/` |
 | `MissionDirector` | Authoritative phase, handoff, alarm and completion: `scripts/core/mission_director.gd` |
 | `HUD` | Read-only mission feedback and menus: `scripts/ui/hud.gd` |
 
-The weapon behavior currently lives in `Player`; there is no separate `Weapon` node. [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters. These module boundaries are implemented code, while future art and broader scope remain proposals.
+Weapon firing behavior currently lives in `Player`; its model and grip hands live in presentation nodes. The guard's visible walking motion uses baked mesh morphs, not skeletal animation; see [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md). [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters. These module boundaries are implemented code, while broader scope remains a proposal.
 
 ## Acceptance Checks
 
@@ -63,4 +63,4 @@ The weapon behavior currently lives in `Player`; there is no separate `Weapon` n
 - Reload is required when empty; reserves never run out. Health recovery behaves consistently with its eventual specification.
 - Death before/after the alarm and consecutive retries produce clean, completable runs.
 
-The expanded packaged route completed a rendered zero-kill extraction in 202.66 game seconds. Integration tests cover handoff interruption, alarm, combat-allowed extraction, death and repeated retry; rendered probes also covered magazine exhaustion, health recovery, failure and retry. This is input-driven route evidence, not a first-time human playthrough or proof of the intended ten-minute pace. See [QA_REPORT.md](QA_REPORT.md). A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
+The preceding blockout PCK completed a rendered zero-kill extraction in 202.66 game seconds; the current visual PCK completed the covered route in 202.75 seconds. Integration tests cover handoff interruption, alarm, combat-allowed extraction, death and repeated retry; rendered probes also covered magazine exhaustion, health recovery, failure and retry. This is input-driven route evidence, not a first-time human playthrough or proof of the intended ten-minute pace. See [QA_REPORT.md](QA_REPORT.md). A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
