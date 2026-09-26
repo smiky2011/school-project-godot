@@ -39,3 +39,15 @@ and under-clothing faces were removed using the original masks, and the 53-bone
 rig and mesh weights were retained. GuardIdle and an in-place GuardWalk were
 authored locally; no third-party animation was imported. The earlier
 guard_field_morph.glb remains as comparison evidence.
+
+26 September 2026: source/player_shadow_locomotion.blend and
+runtime/player_shadow_animated.glb derive from the retained CC0
+guard_field_locomotion.blend, with no new downloaded material. The editable
+Blender file retains the full rig and original material links. A local script,
+tools/art/build_player_shadow_body.py, authored bent-hip/knee crouch clips and
+in-place reverse/sideways gait clips from the same rig. The game renders this
+derivative only into shadow maps. Its runtime GLB therefore replaces opaque
+color/normal materials with one flat material and omits tiny eye/lash meshes;
+the original guard GLB and all original source files remain unchanged. The
+player shadow's separate weapon is the StG 44 runtime visual; its acquisition,
+source and rights are documented under the weapon_visual/stg44 asset folder.

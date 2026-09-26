@@ -2,6 +2,7 @@ extends Node3D
 
 const LevelScript = preload("res://scripts/world/town_level.gd")
 const PlayerScript = preload("res://scripts/player/player.gd")
+const PlayerBodyPresentation = preload("res://scripts/player/player_body_presentation.gd")
 const DirectorScript = preload("res://scripts/core/mission_director.gd")
 const HudScript = preload("res://scripts/ui/hud.gd")
 
@@ -23,6 +24,7 @@ func _ready() -> void:
 	player = PlayerScript.new()
 	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(player)
+	player.add_child(PlayerBodyPresentation.new())
 	director = DirectorScript.new()
 	director.name = "MissionDirector"
 	director.process_mode = Node.PROCESS_MODE_PAUSABLE
