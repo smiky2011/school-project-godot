@@ -8,6 +8,9 @@ const WEAPON_PRESENTATION_SCRIPT: Script = preload("res://scripts/player/weapon_
 const WALK_SPEED := 3.2
 const SPRINT_SPEED := 5.2
 const CROUCH_SPEED := 1.45
+const GROUND_ACCELERATION := 22.0
+const GROUND_BRAKING := 26.0
+const GROUND_REVERSAL := 38.0
 const JUMP_VELOCITY := 4.6
 const MOUSE_SENSITIVITY := 0.0022
 const KEYBOARD_LOOK_SPEED := 1.7
@@ -220,8 +223,18 @@ func _physics_process(delta: float) -> void:
 	var direction := (global_transform.basis * Vector3(direction_2d.x, 0.0, direction_2d.y)).normalized()
 	var speed := CROUCH_SPEED if is_crouching else (SPRINT_SPEED if is_sprinting else WALK_SPEED)
 	speed *= lerpf(1.0, WEAPON.ADS_MOVE_SCALE, aim_amount)
-	velocity.x = direction.x * speed
-	velocity.z = direction.z * speed
+	var horizontal := Vector2(velocity.x, velocity.z)
+	var target := Vector2(direction.x, direction.z) * speed
+	var acceleration := GROUND_ACCELERATION
+	if target.is_zero_approx():
+		acceleration = GROUND_BRAKING
+	elif horizontal.dot(target) < 0.0:
+		acceleration = GROUND_REVERSAL
+	horizontal = horizontal.move_toward(target, acceleration * delta)
+	# Changing to crouch or ADS must apply its speed cap immediately.
+	horizontal = horizontal.limit_length(speed)
+	velocity.x = horizontal.x
+	velocity.z = horizontal.y
 	if not is_on_floor():
 		velocity.y -= float(ProjectSettings.get_setting("physics/3d/default_gravity")) * delta
 	elif Input.is_action_just_pressed("jump") and not is_crouching:
@@ -230,7 +243,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y = minf(velocity.y, 0.0)
 	var before_move := global_position
 	move_and_slide()
-	_update_footsteps(before_move, delta)
+	var ground_travel := Vector2(global_position.x - before_move.x, global_position.z - before_move.z).length() if is_on_floor() else 0.0
+	_update_footsteps(ground_travel)
 	if wants_fire and _fire_timer <= 0.0 and not is_sprinting and _sprint_block <= 0.0:
 		_fire()
 	if not wants_fire:
@@ -239,7 +253,7 @@ func _physics_process(delta: float) -> void:
 		director.try_stealth_kill()
 	_update_recoil(delta)
 	_camera.fov = lerpf(WEAPON.HIP_FOV, WEAPON.ADS_FOV, _ease(aim_amount))
-	_weapon.call("update_pose", delta, aim_amount, direction_2d.length() > 0.01, is_sprinting, is_reloading, get_reload_progress(), reload_is_empty, suppression, is_crouching)
+	_weapon.call("update_pose", delta, aim_amount, ground_travel, is_sprinting, is_reloading, get_reload_progress(), reload_is_empty, suppression, is_crouching)
 
 
 func _update_reload(delta: float) -> void:
@@ -495,15 +509,14 @@ func _play_foley(key: String) -> void:
 	_foley_player.play()
 
 
-func _update_footsteps(before: Vector3, _delta: float) -> void:
-	if not is_on_floor():
+func _update_footsteps(ground_travel: float) -> void:
+	if ground_travel <= 0.0:
 		return
-	var moved := Vector2(global_position.x - before.x, global_position.z - before.z).length()
-	_step_distance += moved
+	_step_distance += ground_travel
 	var stride := 1.55 if is_sprinting else (0.95 if is_crouching else 1.25)
 	if _step_distance < stride:
 		return
-	_step_distance = 0.0
+	_step_distance = fmod(_step_distance, stride)
 	var surface := "step_mud"
 	var level := get_parent().get_node_or_null("TownLevel")
 	if level != null and level.has_method("get_ground_surface"):

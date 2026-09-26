@@ -29,6 +29,7 @@ var _support_from_magazine := Transform3D.IDENTITY
 var _aim := 0.0
 var _flash_timer := 0.0
 var _walk_cycle := 0.0
+var _gait_weight := 0.0
 var _breath := 0.0
 var _wall_tuck := 0.0
 var _sprint := 0.0
@@ -89,7 +90,7 @@ func get_ejection_transform() -> Transform3D:
 	return _ejection.global_transform
 
 
-func update_pose(delta: float, aim_amount: float, moving: bool, sprinting: bool, reloading: bool, reload_progress: float, reload_empty: bool = false, suppression: float = 0.0, crouching: bool = false) -> void:
+func update_pose(delta: float, aim_amount: float, ground_travel: float, sprinting: bool, reloading: bool, reload_progress: float, reload_empty: bool = false, suppression: float = 0.0, crouching: bool = false) -> void:
 	_wall_tuck = move_toward(_wall_tuck, clampf((0.82 - _wall_distance()) / 0.50, 0.0, 1.0), delta * 7.0)
 	_aim = aim_amount if _wall_tuck < 0.15 else move_toward(_aim, 0.0, delta * 8.0)
 	_sprint = move_toward(_sprint, 1.0 if sprinting else 0.0, delta * 6.0)
@@ -106,13 +107,17 @@ func update_pose(delta: float, aim_amount: float, moving: bool, sprinting: bool,
 	_sway_target = _sway_target.lerp(Vector2.ZERO, minf(1.0, delta * 9.0))
 	_sway = _sway.lerp(_sway_target, minf(1.0, delta * 14.0))
 	var sway_scale := lerpf(1.0, 0.25, _aim)
+	var moving := ground_travel > 0.001
+	_gait_weight = move_toward(_gait_weight, 1.0 if moving else 0.0, delta * (9.0 if moving else 12.0))
 	if moving:
-		_walk_cycle += delta * (11.0 if sprinting else (5.5 if crouching else 7.5))
+		# Half a cycle per footstep, using the same distance as the footstep cue.
+		var stride := 1.55 if sprinting else (0.95 if crouching else 1.25)
+		_walk_cycle = fmod(_walk_cycle + PI * ground_travel / stride, TAU)
 	_breath += delta * (1.2 + suppression * 2.5)
 	var bob := Vector3.ZERO
-	if moving:
+	if _gait_weight > 0.0:
 		var amp := lerpf(1.0, 0.25, _aim) * (2.2 if sprinting else 1.0)
-		bob = Vector3(sin(_walk_cycle) * 0.004, absf(cos(_walk_cycle)) * 0.005, 0.0) * amp
+		bob = Vector3(sin(_walk_cycle) * 0.004, absf(cos(_walk_cycle)) * 0.005, 0.0) * amp * _gait_weight
 	var breath := Vector3(sin(_breath * 0.9) * 0.0012, sin(_breath * 1.8) * 0.0016, 0.0) * lerpf(1.0, 0.4, _aim) * (1.0 + suppression * 2.0)
 	var lower := 0.0
 	var roll := 0.0
