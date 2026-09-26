@@ -11,6 +11,7 @@ const CROUCH_SPEED := 1.45
 const GROUND_ACCELERATION := 22.0
 const GROUND_BRAKING := 26.0
 const GROUND_REVERSAL := 38.0
+const SHOT_TAIL_VOICES := 16
 const JUMP_VELOCITY := 4.6
 const MOUSE_SENSITIVITY := 0.0022
 const KEYBOARD_LOOK_SPEED := 1.7
@@ -48,7 +49,8 @@ var _collider: CollisionShape3D
 var _capsule: CapsuleShape3D
 var _shot_players: Array[AudioStreamPlayer] = []
 var _shot_index := 0
-var _tail_player: AudioStreamPlayer
+var _tail_players: Array[AudioStreamPlayer] = []
+var _tail_index := 0
 var _foley_player: AudioStreamPlayer
 var _step_player: AudioStreamPlayer
 var _near_miss_player: AudioStreamPlayer3D
@@ -437,10 +439,14 @@ func _build_audio() -> void:
 		p.volume_db = -7.0
 		add_child(p)
 		_shot_players.append(p)
-	_tail_player = AudioStreamPlayer.new()
-	_tail_player.name = "StenTail"
-	_tail_player.volume_db = -11.0
-	add_child(_tail_player)
+	# Automatic fire is faster than the longest (open-air) reflection. Keep
+	# enough fixed voices for each shot's tail to finish without retriggering it.
+	for i in range(SHOT_TAIL_VOICES):
+		var tail := AudioStreamPlayer.new()
+		tail.name = "StenTail%d" % i
+		tail.volume_db = -11.0
+		add_child(tail)
+		_tail_players.append(tail)
 	_foley_player = AudioStreamPlayer.new()
 	_foley_player.name = "WeaponFoley"
 	_foley_player.volume_db = -12.0
@@ -470,10 +476,12 @@ func _play_shot() -> void:
 	if _space_timer <= 0.0:
 		_space_timer = 0.3
 		_space = _probe_space()
-	_tail_player.stream = SYNTH.get_stream("tail_" + _space)
-	_tail_player.volume_db = {"open": -10.0, "street": -9.0, "interior": -12.0}[_space]
-	_tail_player.pitch_scale = _rng.randf_range(0.97, 1.03)
-	_tail_player.play()
+	var tail := _tail_players[_tail_index]
+	_tail_index = (_tail_index + 1) % _tail_players.size()
+	tail.stream = SYNTH.get_stream("tail_" + _space)
+	tail.volume_db = {"open": -10.0, "street": -9.0, "interior": -12.0}[_space]
+	tail.pitch_scale = _rng.randf_range(0.97, 1.03)
+	tail.play()
 
 
 func _probe_space() -> String:
