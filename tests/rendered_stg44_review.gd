@@ -52,6 +52,17 @@ func _run() -> void:
 	Input.action_release("aim")
 	for _i in range(18):
 		await physics_frame
+	Input.action_press("fire")
+	await physics_frame
+	Input.action_release("fire")
+	if not viewmodel.muzzle_flash.visible:
+		_fail("Shot did not light the rifle muzzle flash")
+		return
+	var bore: Vector3 = viewmodel.model.to_global(Vector3(0.0, 0.1415, -0.464))
+	if viewmodel.get_muzzle_position().distance_to(bore) > 0.001:
+		_fail("FX muzzle marker does not match the imported bore")
+		return
+	await _capture("stg44_04_muzzle")
 	player.ammo = 0
 	player.call("_start_reload")
 	if not player.is_reloading or not player.reload_is_empty:
@@ -93,5 +104,6 @@ func _capture(label: String) -> void:
 
 func _fail(reason: String) -> void:
 	Input.action_release("aim")
+	Input.action_release("fire")
 	print("RENDERED_STG44 " + JSON.stringify({"event":"failed", "reason":reason}))
 	quit(1)

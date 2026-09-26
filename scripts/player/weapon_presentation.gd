@@ -12,7 +12,7 @@ const SPRINT_OFFSET := Vector3(0.05, -0.1, 0.04)
 const SPRINT_ROTATION := Vector3(-0.32, 0.55, 0.28)
 const VIEWMODEL_LAYER := 2
 # Markers measured in the imported rifle's Godot coordinates.
-const MUZZLE_LOCAL := Vector3(0.0, 0.163, -0.47)
+const MUZZLE_LOCAL := Vector3(0.0, 0.1415, -0.464)
 const EJECTION_LOCAL := Vector3(0.026, 0.137, -0.015)
 
 var model: Node3D
