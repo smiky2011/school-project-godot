@@ -10,12 +10,20 @@ var support_hand: Node3D
 
 func _ready() -> void:
 	name = "FirstPersonHands"
+	# Woven wool: the CC0 hessian scan's normal map at a fine scale gives the
+	# weave; albedo stays a plain olive drab so no faction is implied.
+	var weave: Texture2D = load("res://assets/vendor/polyhaven_cc0/texture/hessian_230/hessian_230_nor_gl_1k.jpg")
+	var fibre: Texture2D = load("res://assets/vendor/polyhaven_cc0/texture/hessian_230/hessian_230_diff_1k.jpg")
 	var cloth := StandardMaterial3D.new()
-	cloth.albedo_color = Color(0.22, 0.235, 0.19)
-	cloth.roughness = 0.98
-	var cuff := StandardMaterial3D.new()
-	cuff.albedo_color = Color(0.135, 0.145, 0.115)
-	cuff.roughness = 0.94
+	cloth.albedo_texture = fibre
+	cloth.albedo_color = Color(0.36, 0.36, 0.27)
+	cloth.normal_enabled = weave != null
+	cloth.normal_texture = weave
+	cloth.normal_scale = 0.8
+	cloth.uv1_scale = Vector3(3.0, 5.0, 1.0)
+	cloth.roughness = 1.0
+	var cuff := cloth.duplicate() as StandardMaterial3D
+	cuff.albedo_color = Color(0.24, 0.24, 0.18)
 
 	var trigger := Node3D.new()
 	trigger.name = "TriggerHand"
@@ -59,11 +67,15 @@ func _configure_viewmodel_hand(node: Node) -> void:
 
 
 func _tube(parent: Node3D, label: String, points: Array, radii: Array, material: Material) -> void:
-	const SIDES := 12
+	const SIDES := 18
 	var vertices := PackedVector3Array()
 	var normals := PackedVector3Array()
+	var uvs := PackedVector2Array()
 	var indices := PackedInt32Array()
+	var along := 0.0
 	for ring in range(points.size()):
+		if ring > 0:
+			along += (points[ring] - points[ring - 1]).length()
 		var tangent: Vector3
 		if ring == 0:
 			tangent = (points[1] - points[0]).normalized()
@@ -74,22 +86,26 @@ func _tube(parent: Node3D, label: String, points: Array, radii: Array, material:
 		var reference := Vector3.UP if absf(tangent.dot(Vector3.UP)) < 0.92 else Vector3.RIGHT
 		var axis_a := tangent.cross(reference).normalized()
 		var axis_b := tangent.cross(axis_a).normalized()
-		for side in range(SIDES):
+		for side in range(SIDES + 1):
 			var angle := TAU * float(side) / float(SIDES)
-			var radial: Vector3 = axis_a * cos(angle) * radii[ring].x + axis_b * sin(angle) * radii[ring].y
+			# Gentle creases so the sleeve reads as cloth, not a pipe.
+			var fold := 1.0 + 0.06 * sin(angle * 3.0 + along * 21.0) * (1.0 if ring > 0 else 0.4)
+			var radial: Vector3 = (axis_a * cos(angle) * radii[ring].x + axis_b * sin(angle) * radii[ring].y) * fold
 			vertices.append(points[ring] + radial)
 			normals.append(radial.normalized())
+			uvs.append(Vector2(float(side) / float(SIDES), along))
 	for ring in range(points.size() - 1):
 		for side in range(SIDES):
-			var a := ring * SIDES + side
-			var b := ring * SIDES + (side + 1) % SIDES
-			var c := (ring + 1) * SIDES + side
-			var d := (ring + 1) * SIDES + (side + 1) % SIDES
+			var a := ring * (SIDES + 1) + side
+			var b := ring * (SIDES + 1) + side + 1
+			var c := (ring + 1) * (SIDES + 1) + side
+			var d := (ring + 1) * (SIDES + 1) + side + 1
 			indices.append_array(PackedInt32Array([a, c, b, b, c, d]))
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
 	arrays[Mesh.ARRAY_INDEX] = indices
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)

@@ -1,0 +1,21 @@
+{
+  "asset_id": "kloofendal_38d_partly_cloudy_puresky",
+  "name": "Kloofendal 38d Partly Cloudy (Pure Sky)",
+  "source_page": "https://polyhaven.com/a/kloofendal_38d_partly_cloudy_puresky",
+  "authors": {
+    "Greg Zaal": "Original",
+    "Jarod Guest": "Sky edits"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "2k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "kloofendal_38d_partly_cloudy_puresky_2k.hdr",
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_38d_partly_cloudy_puresky_2k.hdr",
+      "md5": "38ee83ed18b97311af058e41056999ea",
+      "bytes": 5294817
+    }
+  ]
+}

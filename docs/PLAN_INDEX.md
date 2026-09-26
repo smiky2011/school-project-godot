@@ -30,6 +30,8 @@ Status: the first playable mission has a packaged visual-production increment wi
 | [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md) | Contact, guard and scout visuals, editable sources and motion limits |
 | [RUNTIME_ENVIRONMENT.md](RUNTIME_ENVIRONMENT.md) | Target-machine runtime observations |
 | [QA_REPORT.md](QA_REPORT.md) | Source and packaged playthrough evidence, performance and acceptance limits |
+| [SHOOTER_BENCHMARKS.md](SHOOTER_BENCHMARKS.md) | AAA weapon and asset practice compared with this project |
+| [CLAUDE_HANDOFF.md](CLAUDE_HANDOFF.md) | Claude Code session (26 Sep): weapon feel, visual style pass, validation and open items |
 | [PLAYTEST_REPORT.md](PLAYTEST_REPORT.md) | Route observations and pacing interpretation |
 
 `scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The preceding blockout's source direct-west route completed in 207.88 game seconds; its exact packaged PCK's covered route completed in 202.66 game seconds, with zero kills and a single-press final handoff. Both used normal movement and collisions. They are known automated routes, not a measured first-time human play session or proof of the intended ten-minute pace. The current visual package also completed a covered automated route in 202.75 game seconds with zero kills; its source commit, PCK hash, performance and remaining checks are in [QA_REPORT.md](QA_REPORT.md).

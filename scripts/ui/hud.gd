@@ -126,16 +126,17 @@ func _build_gameplay() -> void:
 	_damage_tint.color = Color.TRANSPARENT
 	_damage_tint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_game_layer.add_child(_damage_tint)
-	var objective_panel := _panel(_game_layer, 25, 24, 450, 104, false)
-	_objective_title = _label(objective_panel, "MEET THE CONTACT", 22, Color(0.96, 0.9, 0.7), Vector2(18, 14), Vector2(410, 28))
-	_objective_detail = _label(objective_panel, "AHEAD", 15, Color(0.78, 0.84, 0.79), Vector2(19, 48), Vector2(405, 24))
-	var status_panel := _panel(_game_layer, -340, 24, 315, 105, true)
-	_awareness = _label(status_panel, "CLEAR", 16, Color(0.72, 0.87, 0.79), Vector2(14, 14), Vector2(295, 26))
-	_noise = _label(status_panel, "NOISE  QUIET     TOWN  NORMAL", 13, Color(0.78, 0.83, 0.76), Vector2(14, 51), Vector2(295, 35))
-	var health_panel := _panel(_game_layer, 25, -93, 276, 67, false, true)
-	_health = _label(health_panel, "HEALTH  100 / 100", 20, Color(0.91, 0.95, 0.86), Vector2(15, 18), Vector2(251, 29))
-	var ammo_panel := _panel(_game_layer, -375, -93, 350, 67, true, true)
-	_ammo = _label(ammo_panel, "SMG  30 / 30", 17, Color(0.91, 0.95, 0.86), Vector2(15, 20), Vector2(325, 28))
+	# Compact plates hugging the corners; the scene carries the frame.
+	var objective_panel := _panel(_game_layer, 22, 20, 330, 66, false)
+	_objective_title = _label(objective_panel, "MEET THE CONTACT", 22, Color(0.96, 0.9, 0.7), Vector2(14, 8), Vector2(305, 28))
+	_objective_detail = _label(objective_panel, "AHEAD", 15, Color(0.78, 0.84, 0.79), Vector2(15, 37), Vector2(305, 22))
+	var status_panel := _panel(_game_layer, -292, 20, 270, 66, true)
+	_awareness = _label(status_panel, "CLEAR", 16, Color(0.72, 0.87, 0.79), Vector2(12, 9), Vector2(250, 24))
+	_noise = _label(status_panel, "NOISE  QUIET     TOWN  NORMAL", 13, Color(0.78, 0.83, 0.76), Vector2(12, 38), Vector2(250, 22))
+	var health_panel := _panel(_game_layer, 22, -64, 210, 44, false, true)
+	_health = _label(health_panel, "HEALTH  100 / 100", 20, Color(0.91, 0.95, 0.86), Vector2(13, 9), Vector2(190, 28))
+	var ammo_panel := _panel(_game_layer, -312, -64, 290, 44, true, true)
+	_ammo = _label(ammo_panel, "SMG  30 / 30", 17, Color(0.91, 0.95, 0.86), Vector2(13, 11), Vector2(270, 24))
 	_crosshair = _label(_game_layer, "+", 26, Color(0.91, 0.94, 0.9), Vector2.ZERO, Vector2(30, 30))
 	_crosshair.anchor_left = 0.5
 	_crosshair.anchor_right = 0.5
@@ -251,7 +252,11 @@ func _panel(parent: Control, left: float, top: float, width: float, height: floa
 	panel.offset_top = top
 	panel.offset_bottom = top + height
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_theme_stylebox_override("panel", _style(Color(0.065, 0.08, 0.075, 0.82), Color(0.35, 0.39, 0.33, 0.82)))
+	# Light, film-like HUD: translucent plates without hard borders.
+	var plate := _style(Color(0.02, 0.025, 0.022, 0.34), Color(0, 0, 0, 0))
+	plate.set_border_width_all(0)
+	plate.set_corner_radius_all(2)
+	panel.add_theme_stylebox_override("panel", plate)
 	parent.add_child(panel)
 	return panel
 
@@ -271,7 +276,10 @@ func _label(parent: Control, content: String, font_size: int, color: Color, at: 
 	label.position = at
 	label.size = dimensions
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_font_size_override("font_size", maxi(11, roundi(font_size * 0.86)))
 	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.75))
+	label.add_theme_constant_override("shadow_offset_x", 1)
+	label.add_theme_constant_override("shadow_offset_y", 1)
 	parent.add_child(label)
 	return label

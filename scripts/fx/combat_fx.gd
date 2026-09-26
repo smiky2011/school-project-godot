@@ -174,8 +174,12 @@ func eject_shell(at: Transform3D, velocity: Vector3) -> void:
 
 
 func place_static_decal(at: Vector3, normal: Vector3, key: String, size: float, modulate: Color = Color.WHITE) -> void:
-	# Pre-placed war damage (not pooled, never recycled).
+	# Pre-placed war damage (not pooled, never recycled). Distance fade keeps
+	# hundreds of small scars from costing anything far away.
 	var decal := _make_decal(key, size, modulate)
+	decal.distance_fade_enabled = true
+	decal.distance_fade_begin = 45.0 if size < 0.5 else 110.0
+	decal.distance_fade_length = 10.0
 	add_child(decal)
 	_orient_decal(decal, at, normal)
 

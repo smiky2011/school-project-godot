@@ -5,13 +5,14 @@ extends RefCounted
 # filmic tone mapping, aerial haze and distant smoke. The sun direction is
 # derived from the HDRI's brightest pixel so sky and shadows agree.
 
-const SKY_HDR: Texture2D = preload("res://assets/vendor/polyhaven_cc0/hdri/kloofendal_48d_partly_cloudy_puresky/kloofendal_48d_partly_cloudy_puresky_2k.hdr")
-# Sun in the HDRI: brightest pixel at u=0.5947, v=0.2344 (47.8 degrees up).
+const SKY_HDR: Texture2D = preload("res://assets/vendor/polyhaven_cc0/hdri/kloofendal_38d_partly_cloudy_puresky/kloofendal_38d_partly_cloudy_puresky_2k.hdr")
+# Sun in the HDRI: brightest pixel at u=0.5996, v=0.2891 (38 degrees up, for
+# long raking shadows like G01-10).
 # Godot samples panoramas at u = atan2(x, -z) / TAU, v = acos(y) / PI, and a
 # positive sky yaw turns the sun the same way as Vector3.rotated(UP, yaw);
 # both were verified by rendering the sky at the computed direction.
-const SUN_U := 0.5947
-const SUN_V := 0.2344
+const SUN_U := 0.5996
+const SUN_V := 0.2891
 # Sky yaw chosen so light arrives from the south-west across the N-S streets.
 const SKY_YAW_DEG := -19.0
 

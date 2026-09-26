@@ -25,6 +25,8 @@ static func get_texture(key: String) -> Texture2D:
 			image = _scorch()
 		"tracer":
 			image = _tracer()
+		"shell_hole":
+			image = _shell_hole()
 		_:
 			image = Image.create(4, 4, false, Image.FORMAT_RGBA8)
 	image.generate_mipmaps()
@@ -134,6 +136,40 @@ static func _scorch() -> Image:
 			var n := _value_noise(float(x) / size, float(y) / size, 6.0, 13)
 			var a := clampf((1.0 - r) * 1.3 + (n - 0.5) * 0.8 - 0.1, 0.0, 1.0)
 			image.set_pixel(x, y, Color(0.04, 0.035, 0.03, a * 0.85))
+	return image
+
+
+static func _shell_hole() -> Image:
+	# Exposed brick inside a ragged burst of render, with a soot halo.
+	var size := 256
+	var image := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	var brick_tex: Texture2D = load("res://assets/vendor/polyhaven_cc0/texture/broken_brick_wall/broken_brick_wall_diff_1k.jpg")
+	var brick: Image = brick_tex.get_image() if brick_tex != null else null
+	if brick != null and brick.is_compressed():
+		brick.decompress()
+	for y in range(size):
+		for x in range(size):
+			var p := Vector2(x + 0.5, y + 0.5) / size * 2.0 - Vector2.ONE
+			var r := p.length()
+			var angle := atan2(p.y, p.x)
+			var edge := 0.5 + 0.16 * (_value_noise(angle / TAU + 0.5, 0.2, 9.0, 41) - 0.5) * 2.0 + 0.07 * (_value_noise(angle / TAU + 0.5, 0.7, 23.0, 43) - 0.5) * 2.0
+			var inside := 1.0 - smoothstep(edge - 0.03, edge + 0.01, r)
+			var rim := (1.0 - smoothstep(edge, edge + 0.12, r)) * (1.0 - inside)
+			var soot := (1.0 - smoothstep(edge + 0.05, 1.0, r)) * (0.55 + 0.45 * _value_noise(float(x) / size, float(y) / size, 7.0, 47))
+			var color := Color(0.05, 0.045, 0.04)
+			var alpha := soot * 0.55
+			if inside > 0.0:
+				var b := Color(0.45, 0.25, 0.18)
+				if brick != null:
+					b = brick.get_pixel(int(float(x) / size * brick.get_width() * 0.5) % brick.get_width(), int(float(y) / size * brick.get_height() * 0.5) % brick.get_height())
+				var depth := clampf(1.0 - r / maxf(edge, 0.01), 0.0, 1.0)
+				b = b * lerpf(0.9, 0.35, depth)
+				color = color.lerp(b, inside)
+				alpha = maxf(alpha, inside)
+			if rim > 0.0:
+				color = color.lerp(Color(0.78, 0.75, 0.7), rim * 0.8)
+				alpha = maxf(alpha, rim * 0.9)
+			image.set_pixel(x, y, Color(color.r, color.g, color.b, clampf(alpha, 0.0, 1.0)))
 	return image
 
 

@@ -22,6 +22,19 @@ static func material(id: String, meters_per_tile: float = 2.0, tint: Color = Col
 	var key := "%s|%s|%s|%s|%s" % [id, meters_per_tile, tint.to_html(), triplanar, key_suffix]
 	if _materials.has(key):
 		return _materials[key]
+	if id == "cobblestone_floor_001_flags":
+		# Larger pale setts from the earlier CC0 import read as pavement.
+		var f := StandardMaterial3D.new()
+		f.albedo_texture = load("res://assets/vendor/environment_visual/polyhaven/cobblestone_floor_001/cobblestone_floor_001_diff_1k.jpg")
+		f.albedo_color = Color(0.62, 0.61, 0.58)
+		f.normal_enabled = true
+		f.normal_texture = load("res://assets/vendor/environment_visual/polyhaven/cobblestone_floor_001/cobblestone_floor_001_nor_gl_1k.png")
+		f.roughness_texture = load("res://assets/vendor/environment_visual/polyhaven/cobblestone_floor_001/cobblestone_floor_001_rough_1k.png")
+		f.uv1_triplanar = true
+		f.uv1_world_triplanar = true
+		f.uv1_scale = Vector3.ONE / 1.6
+		_materials[key] = f
+		return f
 	var m := StandardMaterial3D.new()
 	m.resource_name = id
 	m.albedo_texture = texture(id, "diff")

@@ -34,7 +34,11 @@ static func add_plot_shell(parent: Node3D, label: String, base: Vector3, size: V
 		return false
 	visual.name = label + " architectural shell"
 	visual.position = base
-	visual.scale = Vector3(size.x / 9.0, 1.0, size.z / 16.0)
+	# Up to 12% taller or 5% lower so rooflines step along a street; door
+	# and window heights stay within normal human scale.
+	var height_rng := RandomNumberGenerator.new()
+	height_rng.seed = hash(label + "height")
+	visual.scale = Vector3(size.x / 9.0, height_rng.randf_range(0.95, 1.12), size.z / 16.0)
 	parent.add_child(visual)
 	FACADE.apply(visual, hash(label), plaster, true)
 	return true

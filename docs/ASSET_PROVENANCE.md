@@ -31,7 +31,7 @@ All rows below are [Poly Haven](https://polyhaven.com/license) CC0 assets, downl
 
 | Asset | Authors | Folder | Note |
 | --- | --- | --- | --- |
-| Kloofendal 48d Partly Cloudy (Pure Sky) (`kloofendal_48d_partly_cloudy_puresky`, hdri) | Greg Zaal (original), Jarod Guest (sky edits) | `assets/vendor/polyhaven_cc0/hdri/kloofendal_48d_partly_cloudy_puresky/` |  |
+| Kloofendal 38d Partly Cloudy (Pure Sky) (`kloofendal_38d_partly_cloudy_puresky`, hdri) | Greg Zaal (original), Jarod Guest (sky edits) | `assets/vendor/polyhaven_cc0/hdri/kloofendal_38d_partly_cloudy_puresky/` |  |
 | Jacaranda Tree (`jacaranda_tree`, model) | Rob Tuytel (guidance), Rico Cilliers (all) | `assets/vendor/polyhaven_cc0/model/jacaranda_tree/` | Source only (Git- and import-ignored, re-fetch with the script); reduced to `assets/environment/trees/town_tree.glb` and `town_tree_card.png` by `tools/art/build_tree_lod.py`. |
 | Metal Jerrycan Green (`metal_jerrycan_green`, model) | Ulan Cabanilla (all) | `assets/vendor/polyhaven_cc0/model/metal_jerrycan_green/` |  |
 | Nettle Plant (`nettle_plant`, model) | Rob Tuytel (photography), Rico Cilliers (modeling) | `assets/vendor/polyhaven_cc0/model/nettle_plant/` |  |

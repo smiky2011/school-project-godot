@@ -40,7 +40,8 @@ func _run() -> void:
 	main.start_mission()
 	var player: CharacterBody3D = main.player
 	player.set_controls_enabled(false)
-	main.hud.visible = false if "visible" in main.hud else true
+	# STYLE_HUD=1 keeps the gameplay HUD in the frame.
+	main.hud.visible = OS.get_environment("STYLE_HUD") == "1"
 	for view in VIEWS:
 		if only != "" and not String(view[0]).begins_with(only):
 			continue

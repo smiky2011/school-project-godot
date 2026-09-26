@@ -40,6 +40,8 @@ var _weed_meshes: Array = []
 var _weed_heights: Array[float] = []
 var _tufts: Array[Transform3D] = []
 var _doors: Array[Vector3] = []
+var _pavements: Array[Transform3D] = []
+var _curbs: Array[Transform3D] = []
 
 
 func build(town: Node3D, navigation_obstacles: Array[Rect2]) -> void:
@@ -57,6 +59,8 @@ func build(town: Node3D, navigation_obstacles: Array[Rect2]) -> void:
 		_weed_heights.append(maxf(0.02, (local.basis * entry.mesh.get_aabb().size).abs().y))
 	for plot in level.plots:
 		_dress_plot(plot)
+		_wall_damage(plot)
+		_pavement(plot)
 	_boundary_weeds()
 	_street_rubble()
 	_checkpoints()
@@ -65,6 +69,7 @@ func build(town: Node3D, navigation_obstacles: Array[Rect2]) -> void:
 	_telegraph_line(Vector3(-45.6, 0.0, -60.0), Vector3(-45.6, 0.0, -190.0), 5, 1.0)
 	_ruin(Rect2(27.2, 70.2, 8.0, 13.6), ["west", "south", "north_half"], Vector3(31.0, 0, 76.0))
 	_ruin(Rect2(-43.6, -156.8, 7.2, 12.8), ["north", "west_half"], Vector3(-40.0, 0, -151.0))
+	_squares()
 	_trees()
 	_contact_room()
 	_flush_multimeshes()
@@ -122,6 +127,75 @@ func _dress_plot(plot: Dictionary) -> void:
 		# Cast-iron bracket lamp beside the door.
 		var lamp_pos := door + Vector3(1.0 if plot.plaster else -1.0, 2.75, 0.2)
 		_place_model("street_lamp_02", lamp_pos, 0.0, 1.0)
+
+
+func _pavement(plot: Dictionary) -> void:
+	# Visual flagstone pavement and a low curb along each facade that faces a
+	# real street (not the 1-2 m gaps between plots). No collision: the curb
+	# is 6 cm, so movement and guard paths are unchanged.
+	var base: Vector3 = plot.base
+	var size: Vector3 = plot.size
+	var width := 1.7
+	var faces := [
+		[Vector3(0, 0, 1), size.x, size.z * 0.5],
+		[Vector3(0, 0, -1), size.x, size.z * 0.5],
+		[Vector3(1, 0, 0), size.z, size.x * 0.5],
+		[Vector3(-1, 0, 0), size.z, size.x * 0.5],
+	]
+	for face in faces:
+		var normal: Vector3 = face[0]
+		var length: float = face[1]
+		var offset: float = face[2]
+		var probe := base + normal * (offset + 3.2)
+		if _inside_obstacle(probe, 0.0) or absf(probe.x) > 63.0 or absf(probe.z) > 203.0:
+			continue
+		var center := base + normal * (offset + width * 0.5)
+		var yaw := atan2(normal.x, normal.z)
+		var basis := Basis(Vector3.UP, yaw)
+		_pavements.append(Transform3D(basis.scaled(Vector3(length + width * 2.0, 1.0, width)), center + Vector3(0, 0.024, 0)))
+		_curbs.append(Transform3D(basis.scaled(Vector3(length + width * 2.0, 1.0, 1.0)), base + normal * (offset + width) + Vector3(0, 0.03, 0)))
+		# Loose brick and grit drift against the wall along part of the face.
+		if rng.randf() < 0.45:
+			var along := basis * Vector3(1, 0, 0)
+			var start := rng.randf_range(-0.45, 0.2) * length
+			var run := rng.randf_range(0.2, 0.5) * length
+			for i in range(int(run * 5.0)):
+				var p := base + normal * (offset + rng.randf_range(0.15, 1.1)) + along * (start + rng.randf() * run)
+				p.y = 0.04
+				var b := Basis.from_euler(Vector3(rng.randf_range(-0.5, 0.5), rng.randf() * TAU, rng.randf_range(-0.5, 0.5)))
+				if rng.randf() < 0.65:
+					_bricks.append(Transform3D(b, p))
+				else:
+					_stones.append(Transform3D(b.scaled(Vector3.ONE * rng.randf_range(0.5, 1.4)), p))
+
+
+func _wall_damage(plot: Dictionary) -> void:
+	# Shell strikes and bullet pocks on some facades (G01-08, G01-10): a
+	# decal of exposed brick behind burst render, plus fragment scars.
+	if rng.randf() > 0.3 or plot.size.x < 8.5 or plot.size.z < 12.5:
+		return
+	var fx := level.get_node_or_null("CombatFx")
+	if fx == null:
+		return
+	var base: Vector3 = plot.base
+	var size: Vector3 = plot.size
+	var faces := [
+		[Vector3(0, 0, 1), Vector3(1, 0, 0), size.z * 0.5 * 1.021, size.x * 0.42],
+		[Vector3(0, 0, -1), Vector3(1, 0, 0), size.z * 0.5 * 1.021, size.x * 0.42],
+		[Vector3(1, 0, 0), Vector3(0, 0, 1), size.x * 0.5 * 1.038, size.z * 0.44],
+		[Vector3(-1, 0, 0), Vector3(0, 0, 1), size.x * 0.5 * 1.038, size.z * 0.44],
+	]
+	for strike in range(rng.randi_range(1, 2)):
+		var face: Array = faces[rng.randi() % faces.size()]
+		var normal: Vector3 = face[0]
+		var along: Vector3 = face[1]
+		var p := base + normal * float(face[2]) + along * rng.randf_range(-float(face[3]), float(face[3]))
+		p.y = rng.randf_range(1.2, 4.6)
+		fx.place_static_decal(p, normal, "shell_hole", rng.randf_range(1.3, 2.4))
+		for pock in range(rng.randi_range(6, 16)):
+			var q := p + along * rng.randf_range(-2.2, 2.2) + Vector3(0, rng.randf_range(-1.6, 1.6), 0)
+			if q.y > 0.4:
+				fx.place_static_decal(q, normal, "bullet_hole", rng.randf_range(0.1, 0.22))
 
 
 # ----------------------------------------------------------------- scatter
@@ -534,6 +608,99 @@ func _smoulder(at: Vector3) -> void:
 	level.add_child(smoke)
 
 
+func _squares() -> void:
+	# Open squares get the most war traffic: wrecked carts, dumps and bags.
+	_cart(Vector3(44.0, 0, 73.5), 0.4, true)
+	_cart(Vector3(-50.5, 0, 57.0), -1.2, false)
+	_cart(Vector3(54.0, 0, -165.0), 2.6, true)
+	_supply_dump(Vector3(47.2, 0, 83.0), PI * 0.5)
+	_sandbag_wall([Vector3(37.4, 0, 88.0), Vector3(42.4, 0, 88.0), Vector3(43.8, 0, 86.8)])
+	_sandbag_wall([Vector3(-60.2, 0, 43.0), Vector3(-60.2, 0, 36.0)])
+	# The central courtyard hosts tests, so only loose, non-solid debris.
+	for i in range(160):
+		var p := Vector3(rng.randf_range(-9.0, 9.0), 0.03, rng.randf_range(-12.0, 30.0))
+		if _inside_obstacle(p, 0.1):
+			continue
+		var b := Basis.from_euler(Vector3(rng.randf_range(-0.3, 0.3), rng.randf() * TAU, rng.randf_range(-0.3, 0.3)))
+		_bricks.append(Transform3D(b, p))
+	for i in range(8):
+		var p := Vector3(rng.randf_range(-8.0, 8.0), 0.05, rng.randf_range(-10.0, 28.0))
+		if not _inside_obstacle(p, 0.3):
+			_planks.append(Transform3D(Basis.from_euler(Vector3(0.05, rng.randf() * TAU, 0.08)).scaled(Vector3(1, 1, rng.randf_range(0.5, 1.0))), p))
+
+
+func _cart(at: Vector3, yaw: float, overturned: bool) -> void:
+	# A farm cart caught in the fighting: plank bed, spoked wheels, shafts.
+	if _inside_obstacle(at, 1.2) or not _clear_of_keep(at, 1.5):
+		return
+	var wood := PBR.material("old_planks_02", 1.2, Color(0.55, 0.48, 0.4), true, "cart")
+	var iron := StandardMaterial3D.new()
+	iron.albedo_color = Color(0.12, 0.11, 0.1)
+	iron.roughness = 0.7
+	iron.metallic = 0.6
+	var root := Node3D.new()
+	root.name = "Wrecked cart"
+	root.position = at
+	root.rotation.y = yaw
+	level.add_child(root)
+	var body := Node3D.new()
+	root.add_child(body)
+	if overturned:
+		body.rotation.z = 1.2
+		body.position.y = 0.55
+	else:
+		body.rotation.x = -0.18 # One wheel lost, the bed rests on the axle.
+		body.position.y = 0.2
+	_part(body, BoxMesh.new(), Vector3(2.6, 0.08, 1.35), Vector3(0, 0.62, 0), wood)
+	for side in [-1.0, 1.0]:
+		_part(body, BoxMesh.new(), Vector3(2.6, 0.38, 0.06), Vector3(0, 0.84, side * 0.66), wood)
+	_part(body, BoxMesh.new(), Vector3(0.06, 0.38, 1.35), Vector3(1.28, 0.84, 0), wood)
+	for side in [-1.0, 1.0]:
+		_part(body, BoxMesh.new(), Vector3(2.2, 0.08, 0.08), Vector3(2.2, 0.5, side * 0.45), wood)
+	var wheels := [1.0, -1.0] if overturned else [1.0]
+	for side in wheels:
+		var wheel := Node3D.new()
+		wheel.position = Vector3(0.1, 0.55, side * 0.8)
+		wheel.rotation.x = PI * 0.5
+		body.add_child(wheel)
+		var rim := MeshInstance3D.new()
+		var torus := TorusMesh.new()
+		torus.inner_radius = 0.46
+		torus.outer_radius = 0.55
+		torus.rings = 24
+		torus.ring_segments = 6
+		rim.mesh = torus
+		rim.material_override = iron
+		wheel.add_child(rim)
+		for k in range(10):
+			var spoke := MeshInstance3D.new()
+			var sm := BoxMesh.new()
+			sm.size = Vector3(0.05, 0.05, 0.9)
+			spoke.mesh = sm
+			spoke.material_override = wood
+			spoke.rotation.y = PI * float(k) / 10.0
+			wheel.add_child(spoke)
+	if not overturned:
+		var lost := MeshInstance3D.new()
+		var torus2 := TorusMesh.new()
+		torus2.inner_radius = 0.46
+		torus2.outer_radius = 0.55
+		lost.mesh = torus2
+		lost.material_override = iron
+		lost.position = Vector3(-1.2, 0.05, -1.6)
+		root.add_child(lost)
+	_solid_box("Wrecked cart", at + Vector3(0, 0.6, 0), Vector3(2.8, 1.2, 1.6), yaw)
+
+
+func _part(parent: Node3D, mesh: BoxMesh, size: Vector3, at: Vector3, material: Material) -> void:
+	var node := MeshInstance3D.new()
+	mesh.size = size
+	node.mesh = mesh
+	node.material_override = material
+	node.position = at
+	parent.add_child(node)
+
+
 func _contact_room() -> void:
 	# The upstairs contact's desk gains a field radio and an oil lamp.
 	_place_model("vintage_radio_transceiver", Vector3(2.85, 3.825, -29.55), 0.25, 1.0)
@@ -624,6 +791,12 @@ func _flush_multimeshes() -> void:
 	var plank_mesh := BoxMesh.new()
 	plank_mesh.size = Vector3(0.2, 0.035, 2.2)
 	_multimesh("Broken planks", plank_mesh, PBR.material("old_planks_02", 1.0, Color(0.6, 0.55, 0.5)), _planks, 160.0)
+	var slab := PlaneMesh.new()
+	slab.size = Vector2(1, 1)
+	_multimesh("Flagstone pavement", slab, PBR.material("cobblestone_floor_001_flags", 1.0), _pavements, 150.0, false)
+	var curb := BoxMesh.new()
+	curb.size = Vector3(1.0, 0.07, 0.2)
+	_multimesh("Curb stones", curb, PBR.material("rock_wall_13", 1.2, Color(0.8, 0.79, 0.76)), _curbs, 150.0, false)
 	var bag_material := PBR.material("hessian_230", 0.5, Color(0.7, 0.62, 0.48), true, "sandbag")
 	_multimesh("Sandbags", _sandbag_mesh(), bag_material, _sandbags, 220.0)
 	_multimesh("Grass tufts", _tuft_mesh(), _tuft_material(), _tufts, 60.0, false)
