@@ -9,6 +9,7 @@ Original design review: 25 September 2026. Production has since delivered an exp
 - Distinguished secret contact from final extraction: local pursuit/search must end only for the upstairs meeting.
 - Preserved the distinction between NPC protection, player detection and the later intrusion-discovery event.
 - Follow-up decisions: a fictional European town in 1944; free assets only; no fixed deadline; a locally playable Mac game; combat is not mandatory. Exact region/month and factions remain open.
+- On 26 September, the user chose the StG 44 silhouette after viewing several rifles. Replace the player's Sten with a free, rights-verified StG 44 model while keeping 1944 and the current 30-round/unlimited-reserve rule. The existing handling feel is accepted as a provisional base; rifle-specific tuning remains to be tested. This choice does not set the player's faction.
 - Kept technical names, maps and production experiments as deferred proposals.
 
 ## User Decisions Still Needed
@@ -16,7 +17,6 @@ Original design review: 25 September 2026. Production has since delivered an exp
 | Decision | Why it matters |
 | --- | --- |
 | Region/month and factions | The town is fictional and European in 1944; Normandy/France and specific forces were not selected |
-| Weapon silhouette and identity | The user dislikes the current Sten and asked for an AK47-like rifle look, then asked to see several candidate appearances before choosing. No weapon replacement or change to the confirmed 1944 submachine-gun rule is selected yet. |
 
 Budget and delivery are settled: free assets only, notify the user about registration-gated free resources, no fixed deadline, and a locally playable Mac game. Combat-free completion is allowed; no kill gate may be added.
 

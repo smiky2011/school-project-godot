@@ -22,7 +22,8 @@ Extraction is **tense but forgiving**. Encounters should allow recoverable mista
 
 ## Weapon and Close-Range Kills
 
-- Primary weapon: submachine gun. The playable build uses a free, attributed Sten Mk II visual; that implementation choice does not settle the fictional town's factions or an exact historical equipment roster.
+- Primary weapon direction: the user selected the 1944 StG 44 rifle silhouette to replace the player's Sten. The playable build still uses the free, attributed Sten Mk II until the new model is acquired, adapted and validated. Weapon origin does not determine the player's faction; the fictional town's factions remain open.
+- Keep the current 30-round magazine, unlimited reserve and accepted weapon feel as a provisional implementation baseline while adapting the rifle. Revisit rifle-specific ballistics, audio and reload timing only after the new viewmodel is playable.
 - Firing consumes a finite magazine. An empty magazine requires a reload before firing again; reserve ammunition is unlimited.
 - No ammunition scavenging, corpse looting for ammunition or supply pickups.
 - Bypassing, shooting and close-range stealth kills are available during infiltration.
@@ -47,7 +48,7 @@ Provide a short briefing, landmarks and a simple current-objective direction cue
 | --- | --- |
 | `Main` | Startup, scene assembly, pause and result flow: `scripts/core/main.gd` |
 | `TownLevel` | Environment, collision, routes and encounter locations: `scripts/world/town_level.gd` |
-| `Player` | Movement, view, health and inputs: `scripts/player/player.gd`; first-person Sten presentation: `scripts/player/weapon_presentation.gd` |
+| `Player` | Movement, view, health and inputs: `scripts/player/player.gd`; first-person weapon presentation (currently Sten, selected StG 44 replacement pending): `scripts/player/weapon_presentation.gd` |
 | `Guard` | Perception, duty, search, combat and damage: `scripts/actors/guard.gd`; velocity-driven fieldwear and held Sten visuals: `scripts/characters/` |
 | `MissionDirector` | Authoritative phase, handoff, alarm and completion: `scripts/core/mission_director.gd` |
 | `HUD` | Read-only mission feedback and menus: `scripts/ui/hud.gd` |

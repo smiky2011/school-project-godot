@@ -19,7 +19,7 @@ A short, atmospheric first-person WWII mission set in a small interconnected occ
 | Victory | At the fellow scout's sheltered position, deliver the packet with one interaction press; remaining pursuers or alert do not prevent completion |
 | Guards | One ordinary archetype in patrol, sentry and reinforcement roles; one finite reinforcement contingent, without endless replacement |
 | Detection feedback | Short forward ground-level vision cones, gradual suspicion, local combat, last-seen-position search, then return to patrol if unsuccessful |
-| Weapon | Submachine gun, finite magazine, required reload when empty, unlimited reserve ammunition |
+| Weapon | StG 44-style 1944 assault rifle, finite 30-round magazine, required reload when empty, unlimited reserve ammunition. Current handling values remain a provisional feel baseline. |
 | Recovery | Automatic out-of-combat health regeneration; death restarts the entire mission, without checkpoints |
 | Mission NPCs | Both are invulnerable and do not independently attract enemies; player actions remain detectable |
 | Guidance | Briefing, environmental landmarks and a simple objective-direction cue; the player chooses routes |
