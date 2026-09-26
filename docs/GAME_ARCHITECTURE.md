@@ -1,6 +1,6 @@
 # Gameplay Rules and Runtime Architecture
 
-Status: game-design baseline with an implemented Godot architecture and a packaged first playable visual build. Confirmed rules govern the current mission; file interfaces and tuning are recorded in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). The current animated-guard PCK completed a corrected input-driven rendered zero-kill route; first-time human full-mission navigation and pacing remain to be measured.
+Status: game-design baseline with an implemented Godot mission architecture and a packaged presentation update. The clean `be1ca7d` build contains the selected StG 44 viewmodel, an animated player-body shadow and revised combat effects (`Game.pck` SHA-256 `5895e9a8ac09ed1a28518deafd729ccf3c5ce62e9f6d87e6fc24528c1a9a110a`, 624 MB app). Exact-PCK core, input-driven zero-kill route, combat, failure/retry and native outer-app menu checks passed. Confirmed rules govern the mission; file interfaces and provisional tuning are in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). First-time human full-mission navigation and pacing remain to be measured.
 
 ## Mission and System Boundaries
 
@@ -22,8 +22,8 @@ Extraction is **tense but forgiving**. Encounters should allow recoverable mista
 
 ## Weapon and Close-Range Kills
 
-- Primary weapon direction: the user selected the 1944 StG 44 rifle silhouette to replace the player's Sten. The playable build still uses the free, attributed Sten Mk II until the new model is acquired, adapted and validated. Weapon origin does not determine the player's faction; the fictional town's factions remain open.
-- Keep the current 30-round magazine, unlimited reserve and accepted weapon feel as a provisional implementation baseline while adapting the rifle. Revisit rifle-specific ballistics, audio and reload timing only after the new viewmodel is playable.
+- Primary weapon direction: the user selected the 1944 StG 44 silhouette after reviewing candidates. The attributed model is now the player's first-person and world-shadow weapon; guards retain their Sten visual. Weapon origin does not determine the player's faction; the fictional town's factions remain open. See [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md).
+- The 30-round magazine, unlimited reserve, damage, firing interval and accepted handling/reload feel remain provisional values from the previous implementation. Firing resolves damage with an immediate raycast; the visible travelling tracer is cosmetic, not a simulated projectile with flight time or drop. Rifle-specific ballistic and audio decisions remain open.
 - Firing consumes a finite magazine. An empty magazine requires a reload before firing again; reserve ammunition is unlimited.
 - No ammunition scavenging, corpse looting for ammunition or supply pickups.
 - Bypassing, shooting and close-range stealth kills are available during infiltration.
@@ -48,12 +48,13 @@ Provide a short briefing, landmarks and a simple current-objective direction cue
 | --- | --- |
 | `Main` | Startup, scene assembly, pause and result flow: `scripts/core/main.gd` |
 | `TownLevel` | Environment, collision, routes and encounter locations: `scripts/world/town_level.gd` |
-| `Player` | Movement, view, health and inputs: `scripts/player/player.gd`; first-person weapon presentation (currently Sten, selected StG 44 replacement pending): `scripts/player/weapon_presentation.gd` |
+| `Player` | Movement, view, health and inputs: `scripts/player/player.gd`; StG 44 viewmodel: `scripts/player/weapon_presentation.gd`; world-space body and weapon shadow: `scripts/player/player_body_presentation.gd` |
 | `Guard` | Perception, duty, search, combat and damage: `scripts/actors/guard.gd`; velocity-driven fieldwear and held Sten visuals: `scripts/characters/` |
+| `CombatFx` | Cosmetic travelling tracers, surface impacts and decals: `scripts/fx/combat_fx.gd`; authored townhouse facade projection: `scripts/world/townhouse_impact_geometry.gd` |
 | `MissionDirector` | Authoritative phase, handoff, alarm and completion: `scripts/core/mission_director.gd` |
 | `HUD` | Read-only mission feedback and menus: `scripts/ui/hud.gd` |
 
-Weapon firing behavior currently lives in `Player`; its model and grip hands live in presentation nodes. Guards now use an in-place skinned walk and idle on a MakeHuman-derived rig, driven by actual horizontal speed; see [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md). The player has a camera-bound weapon and hands but no full world-body presentation, leaving the reported walking-shadow mismatch to diagnose. [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters. These module boundaries are implemented code, while broader scope remains a proposal.
+Weapon firing and hit resolution live in `Player`; model, grip hands and cosmetic effects live in presentation nodes. Guards use an in-place skinned walk and idle on a MakeHuman-derived rig, driven by actual horizontal speed; see [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md). The player now has a shadow-only, rigged world body with movement-direction and crouch poses, and its world StG 44 follows a hand bone. Camera-bound hands, sleeves and rifle do not cast a second detached shadow. Upper-body aim/reload and large camera-pitch matching remain open; see [PLAYER_BODY_PRESENTATION.md](PLAYER_BODY_PRESENTATION.md). The townhouse impact receiver projects cosmetic marks from coarse collision to visible masonry while avoiding openings; it does not change collision, hit damage or guard decisions. [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters.
 
 ## Acceptance Checks
 
@@ -64,4 +65,4 @@ Weapon firing behavior currently lives in `Player`; its model and grip hands liv
 - Reload is required when empty; reserves never run out. Health recovery behaves consistently with its eventual specification.
 - Death before/after the alarm and consecutive retries produce clean, completable runs.
 
-The current animated-guard PCK completed a corrected covered zero-kill extraction in 204.225 game seconds. Integration tests cover handoff interruption, alarm, combat-allowed extraction, death and repeated retry; exact-PCK rendered probes also covered magazine exhaustion, failure and retry. This is input-driven route evidence, not a first-time human full-mission playthrough or proof of the intended ten-minute pace. Earlier package results remain in [QA_REPORT.md](QA_REPORT.md). A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
+The current `be1ca7d` PCK completed a covered input-driven zero-kill extraction in 204.233 game seconds, 568.37 m of travel, no sprint and 100 health; a separate exact-PCK combat probe passed aimed hits, magazine exhaustion, dry fire and R reload. A live-sentry failure followed by CUA-operated Retry restored a fresh briefing, 100 health, 30 rounds and eight guards. The native release app displayed the briefing, game HUD with StG 44, pause screen and fresh briefing after Restart; see [QA_REPORT.md](QA_REPORT.md). The preceding animated-guard PCK's similar 204.225-second result is historical evidence, not this run. Source Metal reviews show the StG viewmodel, player shadow and a visible tracer/wall mark under controlled conditions. These checks are not a first-time human full-mission playthrough or proof of the intended ten-minute pace. School-PC performance, final art and human acceptance remain open. A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).

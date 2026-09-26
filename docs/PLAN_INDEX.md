@@ -1,6 +1,6 @@
 # Design Document Index
 
-Status: the first playable mission has a packaged visual-production increment with modeled town houses, textured Sten, clothed contact and scout, and an animated guard gait. The current package passed exact-PCK input-driven zero-kill extraction, combat, failure/retry and native menu checks; [QA_REPORT.md](QA_REPORT.md) records the package identity and performance caveat. The user reports good overall feel and sound from trying it, while a documented first-time full-mission clear and the intended ten-minute human pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
+Status: the first playable mission has an implemented architecture and a new packaged presentation increment: modeled houses, clothed characters, animated guard and player shadow, selected StG 44 viewmodel, and revised impact feedback. The clean `be1ca7d` package is 624 MB with `Game.pck` SHA-256 `5895e9a8ac09ed1a28518deafd729ccf3c5ce62e9f6d87e6fc24528c1a9a110a`; exact-PCK core, input-driven zero-kill route, combat, failure/retry and native outer-app menu checks passed. The preceding animated-guard package also passed input-driven checks; see [QA_REPORT.md](QA_REPORT.md). The user reported good feel and sound in that earlier build. A documented first-time human full-mission clear and intended ten-minute pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
 
 ## Read in This Order
 
@@ -26,26 +26,27 @@ Status: the first playable mission has a packaged visual-production increment wi
 | [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md) | Imported free assets and usage rights |
 | [VISUAL_PRODUCTION.md](VISUAL_PRODUCTION.md) | Current town-art implementation, rendered frames and review limits |
 | [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md) | Authored houses, source materials and architecture previews |
-| [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md) | Sten and first-person grip-hand source and attribution |
+| [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md) | Selected StG 44 viewmodel/source/attribution, grip hands and historical Sten |
 | [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md) | Contact, guard and scout visuals, editable sources and motion limits |
-| [FIRST_PERSON_MOTION.md](FIRST_PERSON_MOTION.md) | Grounded player acceleration, viewmodel gait and overlapping Sten reflection tails |
+| [PLAYER_BODY_PRESENTATION.md](PLAYER_BODY_PRESENTATION.md) | Player world-body shadow, gait/crouch evidence and upper-body limitations |
+| [FIRST_PERSON_MOTION.md](FIRST_PERSON_MOTION.md) | Grounded player acceleration, viewmodel gait and overlapping weapon reflection tails |
 | [RUNTIME_ENVIRONMENT.md](RUNTIME_ENVIRONMENT.md) | Target-machine runtime observations |
 | [QA_REPORT.md](QA_REPORT.md) | Source and packaged playthrough evidence, performance and acceptance limits |
 | [SHOOTER_BENCHMARKS.md](SHOOTER_BENCHMARKS.md) | AAA weapon and asset practice compared with this project |
 | [CLAUDE_HANDOFF.md](CLAUDE_HANDOFF.md) | Claude Code session (26 Sep): weapon feel, visual style pass, validation and open items |
 | [PLAYTEST_REPORT.md](PLAYTEST_REPORT.md) | Route observations and pacing interpretation |
 
-`scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The preceding blockout's source direct-west route completed in 207.88 game seconds; its exact packaged PCK's covered route completed in 202.66 game seconds. The later visual PCK completed in 202.75 seconds. The current animated-guard PCK completed a corrected covered route in 204.225 game seconds, with zero kills, no sprint and a single-press final handoff. These used mapped movement and real collision; they are known automated routes, not measured first-time human play sessions or proof of the intended ten-minute pace. Current source commit, PCK hash, performance and acceptance limits are in [QA_REPORT.md](QA_REPORT.md).
+`scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player, player-body presentation and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The current `be1ca7d` PCK completed a known input-driven zero-kill covered route in 204.233 game seconds, after 568.367 m, with no sprint and 100 health. Earlier PCKs took 202.66 seconds for the blockout, 202.75 for the later visual build and 204.225 for the animated-guard build's corrected route. These used mapped movement and real collision; none is a first-time human play session or proof of ten-minute pacing. See [QA_REPORT.md](QA_REPORT.md) for exact package identities and acceptance limits.
 
 ## Current architecture and quality boundary
 
 | State | Area | Evidence or remaining work |
 | --- | --- | --- |
-| Implemented and verified | Single mission state, contact handoff, lockdown, finite guards, zero-kill extraction, retry and native menu flow | Exact-PCK regressions and rendered routes passed; [QA_REPORT.md](QA_REPORT.md) separates automated inputs from human play. |
-| Implemented and verified | Player stance/movement caps, Sten firing/reload, guard AI, layered shot tails and skinned guard gait | Focused regressions and rendered combat/guard probes passed. The user reports favorable feel and sound from trying the package. |
-| Implemented but below user expectation | Current Sten appearance, tracer and impact-hole visibility, and walking shadow | User feedback identifies these gaps. Visual tracers and decals exist in `scripts/fx/combat_fx.gd`; their on-screen readability and the shadow source need focused rendered review. |
-| Missing or unverified | A matching player world-body visual, documented first-time full-mission human clear, intended ten-minute human pacing and representative finished art quality | The playable character currently has a collider and camera-bound hands/weapon. P5 quality acceptance remains open in [MILESTONES_AND_AGENTS.md](MILESTONES_AND_AGENTS.md). |
-| User decision | Weapon identity and silhouette | The user wants to review several candidate appearances first. An AK47-like rifle look is a preference, while [GAME_VISION.md](GAME_VISION.md) still confirms a 1944 submachine gun. No replacement or rule change is selected; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md). |
+| Implemented; current PCK route and retry verified | Single mission state, contact handoff, lockdown, finite guards, zero-kill extraction and full retry | Current exact-PCK core regressions, rendered route, CUA-operated failure/retry and native outer-app menu checks passed. [QA_REPORT.md](QA_REPORT.md) separates automated inputs from human play. |
+| Implemented in current source/package | Player stance and movement, StG 44 first-person model and magazine/bolt presentation, guard AI, layered shot tails and skinned guard gait | Focused source Metal reviews and current exact-PCK combat passed; the 30-round, hitscan combat values remain provisional. [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md) gives source and review evidence. |
+| Implemented in current source/package | Shadow-only player world body and world StG mount; travelling cosmetic tracer and revised wall impact placement | Focused rendered/geometry checks, packaged visual-resource and near-wall probes, and exact-PCK combat integration passed; see [PLAYER_BODY_PRESENTATION.md](PLAYER_BODY_PRESENTATION.md) and [QA_REPORT.md](QA_REPORT.md). Human perception of the effects during ordinary play remains open. |
+| Open quality acceptance | Documented first-time full-mission human clear, intended ten-minute human pace, school-PC performance and final art | Upper-body ADS/reload and large pitch motion are not yet reflected in the player shadow. P5 quality acceptance remains open in [MILESTONES_AND_AGENTS.md](MILESTONES_AND_AGENTS.md). |
+| Confirmed user decision | Weapon identity and silhouette | After reviewing candidates, the user selected the period StG 44; it is integrated for the player and recorded in [GAME_VISION.md](GAME_VISION.md). Guards retain Sten visuals. |
 
 ## Team Configuration
 
@@ -53,7 +54,7 @@ Astra (`gpt-6-astra`) owns planning, architecture, coordination and acceptance. 
 
 ## Asset Strategy
 
-Use suitable free online assets first, with license and import checks. The user explicitly authorized custom Blender work where free models could not produce the grounded, coherent 1944-town look. Godot assembles and tests the result. Two authored exterior house variants and their editable Blender source, a textured Sten and three clothed human visuals are now integrated; their acceptance boundaries are in the asset and QA records above. The level is still an art-in-progress mission environment.
+Use suitable free online assets first, with license and import checks. The user explicitly authorized custom Blender work where free models could not produce the grounded, coherent 1944-town look. Godot assembles and tests the result. Two authored exterior house variants, the attributed player StG 44 and guard Sten, clothed mission/guard characters and a shadow-only player body have editable sources and rights records. Their acceptance boundaries are in the asset and QA records above. The level remains an art-in-progress mission environment.
 
 ## Latest Confirmed Constraints
 
