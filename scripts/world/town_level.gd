@@ -2,6 +2,7 @@ extends Node3D
 
 const GUARD_SCRIPT := preload("res://scripts/actors/guard.gd")
 const TOWN_PRESENTATION := preload("res://scripts/world/town_presentation.gd")
+const COMBAT_FX := preload("res://scripts/fx/combat_fx.gd")
 const CONTACT_VISUAL: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/contact_idle.glb")
 const SCOUT_VISUAL: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/scout_idle.glb")
 const CONTACT_DESK_SURFACE_Y := 3.825
@@ -31,6 +32,8 @@ var _mud_track: StandardMaterial3D
 func setup(mission_director: Node, mission_player: CharacterBody3D) -> void:
 	director = mission_director
 	player = mission_player
+	var fx := COMBAT_FX.new()
+	add_child(fx)
 	_build_materials()
 	_build_town()
 	_build_path_grid()
@@ -63,6 +66,17 @@ func spawn_reinforcements() -> void:
 	_spawn_guard("Courtyard reinforcement", Vector3(5.0, 0.08, -8.0), [Vector3(5.0, 0.0, -8.0), Vector3(-2.0, 0.0, -5.0), Vector3(4.0, 0.0, 2.0)], false, Color(0.55, 0.35, 0.28))
 	_spawn_guard("Workers junction reinforcement", Vector3(15.0, 0.08, -105.0), [Vector3(15.0, 0.0, -105.0), Vector3(-16.0, 0.0, -105.0)], false, Color(0.55, 0.35, 0.28))
 	_spawn_guard("North edge reinforcement", Vector3(44.0, 0.08, -165.0), [Vector3(44.0, 0.0, -165.0)], true, Color(0.55, 0.35, 0.28))
+
+
+func get_ground_surface(at: Vector3) -> String:
+	# Footstep surface: timber upstairs, setts on the paved streets, else mud.
+	if at.y > 0.6:
+		return "wood"
+	if absf(at.x - 12.0) < 3.1 or absf(at.x + 48.0) < 2.9:
+		return "stone"
+	if absf(at.x + 3.0) < 15.5 and (absf(at.z - 34.0) < 2.8 or absf(at.z + 44.0) < 2.6):
+		return "stone"
+	return "mud"
 
 
 func get_ground_path(from_position: Vector3, to_position: Vector3) -> Array[Vector3]:
@@ -565,6 +579,15 @@ func _box(label: String, center: Vector3, size: Vector3, material: Material, nav
 	body.add_child(mesh_instance)
 	if navigation_blocker:
 		_obstacles.append(Rect2(Vector2(center.x - size.x * 0.5, center.z - size.z * 0.5), Vector2(size.x, size.z)))
+	# Impact effects read this to pick dust, chips and sound.
+	if material == _wood or material == _roof:
+		body.set_meta("surface", "wood")
+	elif material == _earth:
+		body.set_meta("surface", "dirt")
+	elif material == _plaster:
+		body.set_meta("surface", "plaster")
+	else:
+		body.set_meta("surface", "stone")
 	return body
 
 

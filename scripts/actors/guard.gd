@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 const FIELD_BODY = preload("res://scripts/characters/field_body_presentation.gd")
 const FIELD_WEAPON = preload("res://scripts/characters/field_weapon_presentation.gd")
+const COMBAT_FX := preload("res://scripts/fx/combat_fx.gd")
+const SYNTH := preload("res://scripts/audio/sound_synth.gd")
 
 const VISION_RANGE := 13.0
 const HALF_CONE := deg_to_rad(38.0)
@@ -46,10 +48,13 @@ var _cone_instance: MeshInstance3D
 var _cone_mesh: ArrayMesh
 var _cone_material: StandardMaterial3D
 var _initialized := false
+var _flinch := 0.0
+var _rng := RandomNumberGenerator.new()
 
 
 func setup(town: Node3D, mission_director: Node, mission_player: CharacterBody3D, duty_points: Array[Vector3], sentry: bool, coat_color: Color) -> void:
 	_level = town
+	_rng.seed = hash(String(name))
 	_director = mission_director
 	_player = mission_player
 	_duty_points = duty_points.duplicate()
@@ -85,14 +90,20 @@ func receive_alert(at: Vector3) -> void:
 	_start_search(at)
 
 
-func take_damage(amount: float, source_pos: Vector3 = Vector3.ZERO) -> void:
+func take_damage(amount: float, source_pos: Vector3 = Vector3.ZERO, _hit: Dictionary = {}) -> void:
 	if state == "DEAD":
 		return
 	_health -= amount
 	if _health <= 0.0:
 		_die()
 	else:
+		# Visual flinch only; AI timing and damage rules are unchanged.
+		_flinch = 1.0
 		_enter_combat(source_pos)
+
+
+func get_head_center() -> Vector3:
+	return global_position + Vector3.UP * (1.62 if state != "DEAD" else 0.2)
 
 
 func can_stealth_kill(player_pos: Vector3) -> bool:
@@ -160,6 +171,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	var actual_motion := get_real_velocity()
 	_body_presentation.call("update_locomotion", Vector2(actual_motion.x, actual_motion.z).length(), delta)
+	if _flinch > 0.0:
+		_flinch = maxf(0.0, _flinch - delta * 5.0)
+		_visual.rotation.x = -0.12 * sin(_flinch * PI)
 	if _shot_flash_timer > 0.0:
 		_shot_flash_timer -= delta
 		_flash.visible = _shot_flash_timer > 0.0
@@ -327,11 +341,33 @@ func _fire_at_player() -> void:
 	var target := _player.global_position + Vector3.UP * (0.9 if _player.is_crouching else 1.15)
 	var query := PhysicsRayQueryParameters3D.create(eye, target)
 	query.exclude = [get_rid()]
-	if get_world_3d().direct_space_state.intersect_ray(query).get("collider") == _player:
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+	var hit_player: bool = result.get("collider") == _player
+	if hit_player:
 		_player.take_damage(9.0)
+	_show_shot(eye, target, hit_player, result)
 	_flash.visible = true
 	_shot_flash_timer = 0.13
 	_shot_audio.play()
+
+
+func _show_shot(eye: Vector3, target: Vector3, hit_player: bool, result: Dictionary) -> void:
+	# Presentation for the unchanged hit rule: a visible tracer toward the
+	# player, an impact where the round stopped, and a report to the player
+	# for the damage-direction and near-miss feedback.
+	var muzzle := _flash.global_position if _flash.is_inside_tree() else eye
+	var end: Vector3 = result.get("position", target)
+	if not hit_player:
+		# Blocked by cover: carry the round slightly past so it reads as a miss.
+		end = result.get("position", target + (target - eye).normalized() * 30.0)
+	var fx := COMBAT_FX.find(get_tree())
+	if fx != null:
+		fx.tracer(muzzle, end, Color(1.0, 0.8, 0.55, 0.5), 360.0, 0.02, 3.0)
+		if not hit_player and not result.is_empty():
+			fx.impact(result.position, result.normal, "stone", true)
+	if _player.has_method("notify_incoming_fire"):
+		var passing := target + Vector3(_rng.randf_range(-0.6, 0.6), 0.3, _rng.randf_range(-0.6, 0.6))
+		_player.call("notify_incoming_fire", eye, hit_player, passing)
 
 
 func _notice_bodies() -> void:
@@ -455,7 +491,9 @@ func _build_visuals(coat_color: Color) -> void:
 	_shot_audio.name = "GunshotCue"
 	_shot_audio.max_distance = 42.0
 	_shot_audio.volume_db = -6.0
-	_shot_audio.stream = _build_shot_sound()
+	_shot_audio.stream = SYNTH.get_stream("guard_shot")
+	_shot_audio.unit_size = 6.0
+	_shot_audio.max_distance = 120.0
 	if muzzle != null:
 		muzzle.add_child(_shot_audio)
 	else:

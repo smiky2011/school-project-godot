@@ -99,7 +99,7 @@ func _process(_delta: float) -> void:
 	_health.text = "HEALTH  %d / 100" % ceili(player.health)
 	_health.add_theme_color_override("font_color", Color(1.0, 0.48, 0.42) if player.damage_flash > 0.0 or player.health <= 30.0 else Color(0.91, 0.95, 0.86))
 	_damage_tint.color = Color(0.8, 0.045, 0.025, player.damage_flash * 0.35)
-	var ammo_status := "RELOADING %d%%" % roundi(player.get_reload_progress() * 100.0) if player.is_reloading else ("RELOAD [R]" if player.ammo == 0 else "UNLIMITED RESERVE")
+	var ammo_status := ("RELOADING %d%%" % roundi(player.get_reload_progress() * 100.0)) if player.is_reloading else ("RELOAD [R]" if player.ammo == 0 else "UNLIMITED RESERVE")
 	_ammo.text = "SMG  %02d / 30   %s" % [player.ammo, ammo_status]
 	var awareness: Dictionary = director.get_local_awareness()
 	_awareness.text = "%s  ·  SUSPICION %d%%" % [awareness["state"], roundi(float(awareness["suspicion"]) * 100.0)]
@@ -110,7 +110,14 @@ func _process(_delta: float) -> void:
 	_progress.value = director.handoff_progress * 100.0
 	_subtitle.text = director.subtitle_text
 	_crosshair.text = "×" if player.hit_marker > 0.0 else "+"
-	_crosshair.add_theme_color_override("font_color", Color(1.0, 0.79, 0.48) if player.shot_flash > 0.0 else Color(0.91, 0.94, 0.9))
+	var marker_color := Color(0.91, 0.94, 0.9)
+	if player.hit_marker > 0.0:
+		marker_color = Color(1.0, 0.3, 0.25) if player.hit_kind == "kill" else (Color(1.0, 0.82, 0.35) if player.hit_kind == "head" else Color(1.0, 1.0, 1.0))
+	elif player.shot_flash > 0.0:
+		marker_color = Color(1.0, 0.79, 0.48)
+	_crosshair.add_theme_color_override("font_color", marker_color)
+	# Iron sights replace the crosshair while aiming; hit markers still show.
+	_crosshair.modulate.a = 1.0 if player.hit_marker > 0.0 else clampf(1.0 - player.aim_amount * 1.4, 0.0, 1.0)
 
 
 func _build_gameplay() -> void:
