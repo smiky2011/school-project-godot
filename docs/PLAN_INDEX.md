@@ -1,6 +1,6 @@
 # Design Document Index
 
-Status: the first playable mission has a packaged visual-production increment with modeled town houses, textured Sten, clothed contact and scout, and an animated guard gait. The current package passed exact-PCK input-driven zero-kill extraction, combat, failure/retry and native menu checks; [QA_REPORT.md](QA_REPORT.md) records the package identity and performance caveat. First-time human navigation, listening, weapon feel and the intended ten-minute pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
+Status: the first playable mission has a packaged visual-production increment with modeled town houses, textured Sten, clothed contact and scout, and an animated guard gait. The current package passed exact-PCK input-driven zero-kill extraction, combat, failure/retry and native menu checks; [QA_REPORT.md](QA_REPORT.md) records the package identity and performance caveat. The user reports good overall feel and sound from trying it, while a documented first-time full-mission clear and the intended ten-minute human pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
 
 ## Read in This Order
 
@@ -36,6 +36,16 @@ Status: the first playable mission has a packaged visual-production increment wi
 | [PLAYTEST_REPORT.md](PLAYTEST_REPORT.md) | Route observations and pacing interpretation |
 
 `scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The preceding blockout's source direct-west route completed in 207.88 game seconds; its exact packaged PCK's covered route completed in 202.66 game seconds. The later visual PCK completed in 202.75 seconds. The current animated-guard PCK completed a corrected covered route in 204.225 game seconds, with zero kills, no sprint and a single-press final handoff. These used mapped movement and real collision; they are known automated routes, not measured first-time human play sessions or proof of the intended ten-minute pace. Current source commit, PCK hash, performance and acceptance limits are in [QA_REPORT.md](QA_REPORT.md).
+
+## Current architecture and quality boundary
+
+| State | Area | Evidence or remaining work |
+| --- | --- | --- |
+| Implemented and verified | Single mission state, contact handoff, lockdown, finite guards, zero-kill extraction, retry and native menu flow | Exact-PCK regressions and rendered routes passed; [QA_REPORT.md](QA_REPORT.md) separates automated inputs from human play. |
+| Implemented and verified | Player stance/movement caps, Sten firing/reload, guard AI, layered shot tails and skinned guard gait | Focused regressions and rendered combat/guard probes passed. The user reports favorable feel and sound from trying the package. |
+| Implemented but below user expectation | Current Sten appearance, tracer and impact-hole visibility, and walking shadow | User feedback identifies these gaps. Visual tracers and decals exist in `scripts/fx/combat_fx.gd`; their on-screen readability and the shadow source need focused rendered review. |
+| Missing or unverified | A matching player world-body visual, documented first-time full-mission human clear, intended ten-minute human pacing and representative finished art quality | The playable character currently has a collider and camera-bound hands/weapon. P5 quality acceptance remains open in [MILESTONES_AND_AGENTS.md](MILESTONES_AND_AGENTS.md). |
+| User decision | Weapon identity and silhouette | The user wants to review several candidate appearances first. An AK47-like rifle look is a preference, while [GAME_VISION.md](GAME_VISION.md) still confirms a 1944 submachine gun. No replacement or rule change is selected; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md). |
 
 ## Team Configuration
 

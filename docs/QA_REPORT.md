@@ -1,6 +1,6 @@
 # QA Report
 
-Status: the current local Mac package built from clean commit `c568fd2ad21720505e925964e36485b1c278f89e` passed exact-PCK mission, guard, stance, motion and weapon-audio checks, two input-driven rendered zero-kill routes, combat smoke, failure with CUA-operated Retry, and native briefing/Begin/Pause/Restart smoke. A first-time human playthrough and listening review remain open. Tests ran on the target MacBook Pro M4 Pro (24 GB), macOS 26.6.2, Godot 4.7.2, Metal Forward+, 1280 × 720.
+Status: the current local Mac package built from clean commit `c568fd2ad21720505e925964e36485b1c278f89e` passed exact-PCK mission, guard, stance, motion and weapon-audio checks, two input-driven rendered covered-route runs with zero kills, combat smoke, failure with CUA-operated Retry, and native briefing/Begin/Pause/Restart smoke. The user approved this package's overall feel and sound from trying it; a documented first-time full-mission clear and human pacing remain unverified. Tests ran on the target MacBook Pro M4 Pro (24 GB), macOS 26.6.2, Godot 4.7.2, Metal Forward+, 1280 × 720.
 
 ## Current package: animated guard, movement and audio tails
 
@@ -19,6 +19,12 @@ An exact-PCK rendered combat probe initially failed before firing when its forwa
 For failure/retry, the first external route tried to cross at z=164 and stopped against the same sandbag. Moving its crossing north to z=160.5 allowed the unchanged PCK to reach the sentry. Live guard fire caused visible [MISSION FAILED](media/pck_7003bd78_failed.png) at game time 40.83 seconds, with zero kills. A CUA click on the visible Retry Mission button loaded a [new ORDERS / 1944 briefing](media/pck_7003bd78_retry.png); the runner verified `INFILTRATE`, 100 health, 30 rounds and eight guards. This was CUA-operated UI, not a human gameplay session. The log is `build/qa/resume_20260926/pck_failure_retry_clearance.log`; failed/retry frames are in `pck_failure_retry_clearance/` beside it. The initial driver failure is retained separately.
 
 Opening the current outer `.app` through ordinary macOS `open` displayed its fresh ORDERS / 1944 briefing. CUA clicked Begin and saw the rendered street with 100 health and 30 rounds, pressed Escape and saw MISSION PAUSED, then clicked Restart Mission and saw a fresh briefing again. The app was left open at that briefing for the user. This native UI smoke does not establish a human-held movement, shooting or listening session; the exact-PCK rendered runners above cover continuous mapped gameplay inputs.
+
+## User review and presentation gaps
+
+The user reports favorable overall feel and sound from playing the current package. They find the Sten visually unattractive and prefer an AK47-like rifle silhouette, cannot readily perceive bullet trajectories or bullet holes, and see a crude walking shadow that does not match the player presentation. This is subjective feedback, not evidence of a full-mission human clear. The user asked to review several candidate weapon appearances before choosing; [GAME_VISION.md](GAME_VISION.md) still confirms a 1944 submachine gun, and no replacement has been selected.
+
+The effects are implemented but have not met the user's visibility expectation. Player shots call `CombatFx.tracer()` and impacts call `CombatFx.impact()`; its decals are small (0.13 m for most bullet holes), and dirt receives a dark scorch instead. The current player is a collision body with camera-bound weapon and hands, without a matching full world-body visual. The shadow's exact source and remedy require a rendered inspection of the user's view. These findings support a focused visual review; they do not imply that firing or hit detection is absent.
 
 ## Preceding visual package (16fa7347)
 

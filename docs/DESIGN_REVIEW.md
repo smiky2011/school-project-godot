@@ -16,6 +16,7 @@ Original design review: 25 September 2026. Production has since delivered an exp
 | Decision | Why it matters |
 | --- | --- |
 | Region/month and factions | The town is fictional and European in 1944; Normandy/France and specific forces were not selected |
+| Weapon silhouette and identity | The user dislikes the current Sten and asked for an AK47-like rifle look, then asked to see several candidate appearances before choosing. No weapon replacement or change to the confirmed 1944 submachine-gun rule is selected yet. |
 
 Budget and delivery are settled: free assets only, notify the user about registration-gated free resources, no fixed deadline, and a locally playable Mac game. Combat-free completion is allowed; no kill gate may be added.
 

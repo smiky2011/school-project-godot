@@ -1,6 +1,6 @@
 # Gameplay Rules and Runtime Architecture
 
-Status: game-design baseline with an implemented Godot architecture and a packaged first playable visual build. Confirmed rules govern the current mission; file interfaces and tuning are recorded in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). The current visual PCK completed an input-driven rendered zero-kill route; first-time human navigation and pacing remain to be measured.
+Status: game-design baseline with an implemented Godot architecture and a packaged first playable visual build. Confirmed rules govern the current mission; file interfaces and tuning are recorded in [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md). The current animated-guard PCK completed a corrected input-driven rendered zero-kill route; first-time human full-mission navigation and pacing remain to be measured.
 
 ## Mission and System Boundaries
 
@@ -52,7 +52,7 @@ Provide a short briefing, landmarks and a simple current-objective direction cue
 | `MissionDirector` | Authoritative phase, handoff, alarm and completion: `scripts/core/mission_director.gd` |
 | `HUD` | Read-only mission feedback and menus: `scripts/ui/hud.gd` |
 
-Weapon firing behavior currently lives in `Player`; its model and grip hands live in presentation nodes. The guard's visible walking motion uses baked mesh morphs, not skeletal animation; see [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md). [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters. These module boundaries are implemented code, while broader scope remains a proposal.
+Weapon firing behavior currently lives in `Player`; its model and grip hands live in presentation nodes. Guards now use an in-place skinned walk and idle on a MakeHuman-derived rig, driven by actual horizontal speed; see [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md). The player has a camera-bound weapon and hands but no full world-body presentation, leaving the reported walking-shadow mismatch to diagnose. [LEVEL_LAYOUT.md](LEVEL_LAYOUT.md) records the blockout's routes, landmarks and encounters. These module boundaries are implemented code, while broader scope remains a proposal.
 
 ## Acceptance Checks
 
@@ -63,4 +63,4 @@ Weapon firing behavior currently lives in `Player`; its model and grip hands liv
 - Reload is required when empty; reserves never run out. Health recovery behaves consistently with its eventual specification.
 - Death before/after the alarm and consecutive retries produce clean, completable runs.
 
-The preceding blockout PCK completed a rendered zero-kill extraction in 202.66 game seconds; the current visual PCK completed the covered route in 202.75 seconds. Integration tests cover handoff interruption, alarm, combat-allowed extraction, death and repeated retry; rendered probes also covered magazine exhaustion, health recovery, failure and retry. This is input-driven route evidence, not a first-time human playthrough or proof of the intended ten-minute pace. See [QA_REPORT.md](QA_REPORT.md). A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
+The current animated-guard PCK completed a corrected covered zero-kill extraction in 204.225 game seconds. Integration tests cover handoff interruption, alarm, combat-allowed extraction, death and repeated retry; exact-PCK rendered probes also covered magazine exhaustion, failure and retry. This is input-driven route evidence, not a first-time human full-mission playthrough or proof of the intended ten-minute pace. Earlier package results remain in [QA_REPORT.md](QA_REPORT.md). A diagram, asset download or successful import alone is not playable evidence; see [DESIGN_REVIEW.md](DESIGN_REVIEW.md).
