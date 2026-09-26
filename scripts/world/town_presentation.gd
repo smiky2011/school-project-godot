@@ -14,6 +14,8 @@ const MUD_NORMAL: Texture2D = preload("res://assets/world_materials/muddy_tracks
 const MUD_ROUGH: Texture2D = preload("res://assets/world_materials/muddy_tracks_rough.png")
 const CRATE: PackedScene = preload("res://assets/vendor/polyhaven/wooden_crate_02/wooden_crate_02_1k.gltf")
 const SERVICE_WING := preload("res://scripts/world/service_wing_visual.gd")
+const FACADE := preload("res://scripts/world/facade_variation.gd")
+const TOWN_GROUND := preload("res://scripts/world/town_ground.gd")
 
 static var _cobble_material: StandardMaterial3D
 static var _mud_material: StandardMaterial3D
@@ -34,6 +36,7 @@ static func add_plot_shell(parent: Node3D, label: String, base: Vector3, size: V
 	visual.position = base
 	visual.scale = Vector3(size.x / 9.0, 1.0, size.z / 16.0)
 	parent.add_child(visual)
+	FACADE.apply(visual, hash(label), plaster, true)
 	return true
 
 
@@ -48,15 +51,17 @@ static func add_street_surfaces(parent: Node3D, navigation_obstacles: Array[Rect
 		_mud_material = _ground_material(MUD_DIFF, MUD_NORMAL, MUD_ROUGH, 2.4, Color(0.56, 0.59, 0.57))
 	if _cobble_material == null:
 		_cobble_material = _ground_material(COBBLE_DIFF, COBBLE_NORMAL, COBBLE_ROUGH, 2.4, Color(0.86, 0.84, 0.81))
-	_add_patch(parent, "Compacted muddy ground", Vector3(0, 0.013, 0), Vector2(129.7, 409.7), _mud_material)
-	# A main paved route and selected crossings mark older built-up streets.
-	# Other lanes stay mud, matching the town-to-fields transition.
-	_add_patch(parent, "Old east street setts", Vector3(12.0, 0.028, 0), Vector2(6.1, 405), _cobble_material)
-	_add_patch(parent, "Old west street setts", Vector3(-48.0, 0.028, 0), Vector2(5.6, 405), _cobble_material)
-	_add_patch(parent, "Central crossing setts", Vector3(-3.0, 0.029, 34), Vector2(31, 5.5), _cobble_material)
-	_add_patch(parent, "Market crossing setts", Vector3(-3.0, 0.029, -44), Vector2(31, 5.1), _cobble_material)
+	# One blended surface: worn setts, trodden mud, brick grit, puddles and
+	# weedy edges (scripts/world/town_ground.gdshader).
+	var ground := MeshInstance3D.new()
+	ground.name = "Town ground"
+	var plane := PlaneMesh.new()
+	plane.size = Vector2(129.7, 409.7)
+	ground.mesh = plane
+	ground.material_override = TOWN_GROUND.make_material()
+	ground.position = Vector3(0, 0.013, 0)
+	parent.add_child(ground)
 	_add_west_street_edges(parent)
-	_add_puddles(parent)
 	_add_roadside_props(parent, navigation_obstacles)
 	_add_rubble_bands(parent)
 

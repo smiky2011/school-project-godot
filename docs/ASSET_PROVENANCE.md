@@ -25,6 +25,42 @@ The three material packages are 1K Blender ZIP downloads. Their source archives 
 
 The two reusable domestic exterior GLBs, their portable native `.blend`, original map transformations, exact filenames and license chain are described in [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md). The separately adapted Sten and its required CC BY 3.0 attribution are described in [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md). The integrated contact, guard and scout models, retained Blender sources, CC0 chain and baked guard stride morphs are documented in [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md) and its [source provenance record](../assets/vendor/character_visual/makehuman/PROVENANCE.txt). Contact and scout remain noncolliding interaction visuals at their existing anchors; guard AI and collider rules remain in place. None of the selected downloads required registration or payment.
 
+## Claude Code visual pass (26 September 2026)
+
+All rows below are [Poly Haven](https://polyhaven.com/license) CC0 assets, downloaded anonymously and free on 26 September 2026 with `tools/art/fetch_polyhaven.py`, which verifies each file against the MD5 the Poly Haven API reports. Each folder's `PROVENANCE.json` records source page, authors, license, URLs, sizes and MD5 values. No account, payment or registration was needed. How each asset is used is described in [CLAUDE_HANDOFF.md](CLAUDE_HANDOFF.md).
+
+| Asset | Authors | Folder | Note |
+| --- | --- | --- | --- |
+| Kloofendal 48d Partly Cloudy (Pure Sky) (`kloofendal_48d_partly_cloudy_puresky`, hdri) | Greg Zaal (original), Jarod Guest (sky edits) | `assets/vendor/polyhaven_cc0/hdri/kloofendal_48d_partly_cloudy_puresky/` |  |
+| Jacaranda Tree (`jacaranda_tree`, model) | Rob Tuytel (guidance), Rico Cilliers (all) | `assets/vendor/polyhaven_cc0/model/jacaranda_tree/` | Source only (Git- and import-ignored, re-fetch with the script); reduced to `assets/environment/trees/town_tree.glb` and `town_tree_card.png` by `tools/art/build_tree_lod.py`. |
+| Metal Jerrycan Green (`metal_jerrycan_green`, model) | Ulan Cabanilla (all) | `assets/vendor/polyhaven_cc0/model/metal_jerrycan_green/` |  |
+| Nettle Plant (`nettle_plant`, model) | Rob Tuytel (photography), Rico Cilliers (modeling) | `assets/vendor/polyhaven_cc0/model/nettle_plant/` |  |
+| Old Military Crate (`old_military_crate`, model) | Jack Mava (all) | `assets/vendor/polyhaven_cc0/model/old_military_crate/` |  |
+| Painted Wooden Bench (`painted_wooden_bench`, model) | Kirill Sannikov (all) | `assets/vendor/polyhaven_cc0/model/painted_wooden_bench/` |  |
+| Shrub 02 (`shrub_02`, model) | Rico Cilliers (all) | `assets/vendor/polyhaven_cc0/model/shrub_02/` |  |
+| Street Lamp 01 (`street_lamp_01`, model) | Josh Dean (all) | `assets/vendor/polyhaven_cc0/model/street_lamp_01/` |  |
+| Street Lamp 02 (`street_lamp_02`, model) | Josh Dean (all) | `assets/vendor/polyhaven_cc0/model/street_lamp_02/` |  |
+| Vintage Oil Lamp (`vintage_oil_lamp`, model) | Monsta3D (all) | `assets/vendor/polyhaven_cc0/model/vintage_oil_lamp/` |  |
+| Vintage Radio Transceiver (`vintage_radio_transceiver`, model) | Mateusz Sadek (all) | `assets/vendor/polyhaven_cc0/model/vintage_radio_transceiver/` |  |
+| Weed Plant 02 (`weed_plant_02`, model) | Rob Tuytel (photography), Rico Cilliers (modeling) | `assets/vendor/polyhaven_cc0/model/weed_plant_02/` |  |
+| Wicker Basket 01 (`wicker_basket_01`, model) | Kuutti Siitonen (all) | `assets/vendor/polyhaven_cc0/model/wicker_basket_01/` |  |
+| Wooden Bookshelf Worn (`wooden_bookshelf_worn`, model) | Ulan Cabanilla (all) | `assets/vendor/polyhaven_cc0/model/wooden_bookshelf_worn/` |  |
+| Wooden Bucket 01 (`wooden_bucket_01`, model) | James Ray Cock (all) | `assets/vendor/polyhaven_cc0/model/wooden_bucket_01/` |  |
+| Wooden Crate 01 (`wooden_crate_01`, model) | James Ray Cock (all) | `assets/vendor/polyhaven_cc0/model/wooden_crate_01/` |  |
+| Wooden Military Crate (`wooden_military_crate`, model) | Prabhjinder Singh (all) | `assets/vendor/polyhaven_cc0/model/wooden_military_crate/` |  |
+| Brick Gravel (`brick_gravel`, texture) | Dimitrios Savva (all) | `assets/vendor/polyhaven_cc0/texture/brick_gravel/` |  |
+| Broken Brick Wall (`broken_brick_wall`, texture) | Amal Kumar (all) | `assets/vendor/polyhaven_cc0/texture/broken_brick_wall/` |  |
+| Brown Mud 02 (`brown_mud_02`, texture) | Rob Tuytel (all) | `assets/vendor/polyhaven_cc0/texture/brown_mud_02/` |  |
+| Cobblestone Floor 03 (`cobblestone_floor_03`, texture) | Rob Tuytel (all) | `assets/vendor/polyhaven_cc0/texture/cobblestone_floor_03/` |  |
+| Damaged Plaster (`damaged_plaster`, texture) | Amal Kumar (all) | `assets/vendor/polyhaven_cc0/texture/damaged_plaster/` |  |
+| Hessian 230 (`hessian_230`, texture) | colormass (photography), Rico Cilliers (processing) | `assets/vendor/polyhaven_cc0/texture/hessian_230/` |  |
+| Leafy Grass (`leafy_grass`, texture) | Charlotte Baglioni (all) | `assets/vendor/polyhaven_cc0/texture/leafy_grass/` |  |
+| Medieval Red Brick (`medieval_red_brick`, texture) | Rob Tuytel (all) | `assets/vendor/polyhaven_cc0/texture/medieval_red_brick/` |  |
+| Old Planks 02 (`old_planks_02`, texture) | Rob Tuytel (all) | `assets/vendor/polyhaven_cc0/texture/old_planks_02/` |  |
+| Rock Wall 13 (`rock_wall_13`, texture) | Amal Kumar (all) | `assets/vendor/polyhaven_cc0/texture/rock_wall_13/` |  |
+
+Derived project files: `assets/environment/trees/town_tree.glb` (about 143k triangles from the 3.9M-triangle jacaranda scan) and `assets/environment/trees/town_tree_card.png` (a transparent Blender EEVEE side view for distant billboards) are both produced by `tools/art/build_tree_lod.py` from the CC0 source above. Procedural sandbags, grass tufts, rubble mounds, telegraph poles and wires, effect textures and weapon sounds are generated in code and need no license record.
+
 ## Bounded shortlist for remaining categories
 
 | Need | Free lead | Current decision |

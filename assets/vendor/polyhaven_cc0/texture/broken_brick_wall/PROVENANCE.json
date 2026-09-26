@@ -1,0 +1,38 @@
+{
+  "asset_id": "broken_brick_wall",
+  "name": "Broken Brick Wall",
+  "source_page": "https://polyhaven.com/a/broken_brick_wall",
+  "authors": {
+    "Amal Kumar": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "broken_brick_wall_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/broken_brick_wall/broken_brick_wall_diff_1k.jpg",
+      "md5": "5f6a252fe6353183ca86f7314cb77cab",
+      "bytes": 740797
+    },
+    {
+      "file": "broken_brick_wall_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/broken_brick_wall/broken_brick_wall_nor_gl_1k.jpg",
+      "md5": "4da30f0f7ba1a5bf9fcb4602638fab11",
+      "bytes": 1199972
+    },
+    {
+      "file": "broken_brick_wall_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/broken_brick_wall/broken_brick_wall_rough_1k.jpg",
+      "md5": "cac97c731f4917762da2b7d7d57bfde4",
+      "bytes": 333615
+    },
+    {
+      "file": "broken_brick_wall_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/broken_brick_wall/broken_brick_wall_ao_1k.jpg",
+      "md5": "0a68286bd2388f2bce0f13495e0ea27a",
+      "bytes": 701617
+    }
+  ]
+}

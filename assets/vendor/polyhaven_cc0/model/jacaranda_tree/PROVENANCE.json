@@ -1,0 +1,81 @@
+{
+  "asset_id": "jacaranda_tree",
+  "name": "Jacaranda Tree",
+  "source_page": "https://polyhaven.com/a/jacaranda_tree",
+  "authors": {
+    "Rob Tuytel": "guidance",
+    "Rico Cilliers": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "jacaranda_tree_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/jacaranda_tree/jacaranda_tree_1k.gltf",
+      "md5": "8fed93ff7cbdaac0f5c199ef1fd0f694",
+      "bytes": 9526
+    },
+    {
+      "file": "textures/jacaranda_tree_branches_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_branches_nor_gl_1k.jpg",
+      "md5": "789084affb01f4a22290a848558f5e12",
+      "bytes": 819101
+    },
+    {
+      "file": "textures/jacaranda_tree_branches_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_branches_diff_1k.jpg",
+      "md5": "e5bacbfd3e7ce397bdd34b0bac6669ca",
+      "bytes": 531544
+    },
+    {
+      "file": "textures/jacaranda_tree_branches_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_branches_arm_1k.jpg",
+      "md5": "5b6f5b3838f4a8f60fea14fa3a3fef9f",
+      "bytes": 484806
+    },
+    {
+      "file": "textures/jacaranda_tree_trunk_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_trunk_nor_gl_1k.jpg",
+      "md5": "af34d3a054b498f153e4793f7520a630",
+      "bytes": 1096100
+    },
+    {
+      "file": "textures/jacaranda_tree_trunk_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_trunk_diff_1k.jpg",
+      "md5": "c3edc2e76157023e7a5c35cd13867498",
+      "bytes": 896938
+    },
+    {
+      "file": "textures/jacaranda_tree_trunk_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_trunk_arm_1k.jpg",
+      "md5": "7232b4514e9412725a6a8e65a69f4ed4",
+      "bytes": 895975
+    },
+    {
+      "file": "textures/jacaranda_tree_leaves_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_leaves_nor_gl_1k.jpg",
+      "md5": "7cbd82c0dd4b8c8a4ab314338f50404d",
+      "bytes": 700843
+    },
+    {
+      "file": "textures/jacaranda_tree_leaves_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_leaves_diff_1k.jpg",
+      "md5": "8ae91737f39567629768a255817d80be",
+      "bytes": 533896
+    },
+    {
+      "file": "textures/jacaranda_tree_leaves_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/jacaranda_tree/jacaranda_tree_leaves_arm_1k.jpg",
+      "md5": "fabee050680fd173032acf003ef61191",
+      "bytes": 332762
+    },
+    {
+      "file": "jacaranda_tree.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/jacaranda_tree/jacaranda_tree.bin",
+      "md5": "ae25eacd5e67ea2e9bbbaa2854b6ed99",
+      "bytes": 208307808
+    }
+  ]
+}

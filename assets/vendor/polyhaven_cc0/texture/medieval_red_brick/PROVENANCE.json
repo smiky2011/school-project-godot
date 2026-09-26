@@ -1,0 +1,38 @@
+{
+  "asset_id": "medieval_red_brick",
+  "name": "Medieval Red Brick",
+  "source_page": "https://polyhaven.com/a/medieval_red_brick",
+  "authors": {
+    "Rob Tuytel": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "medieval_red_brick_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/medieval_red_brick/medieval_red_brick_diff_1k.jpg",
+      "md5": "217f3e9db4fa2a89dfa49d5bf5e5bf97",
+      "bytes": 872053
+    },
+    {
+      "file": "medieval_red_brick_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/medieval_red_brick/medieval_red_brick_nor_gl_1k.jpg",
+      "md5": "e4e1bde5cf80bd1aa9c4614d2d06ef53",
+      "bytes": 1186400
+    },
+    {
+      "file": "medieval_red_brick_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/medieval_red_brick/medieval_red_brick_rough_1k.jpg",
+      "md5": "5af35ac7a1933a1f08fc5c83959b4edf",
+      "bytes": 432817
+    },
+    {
+      "file": "medieval_red_brick_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/medieval_red_brick/medieval_red_brick_ao_1k.jpg",
+      "md5": "48e92a14955331ed7898f0cee38eaabe",
+      "bytes": 741491
+    }
+  ]
+}

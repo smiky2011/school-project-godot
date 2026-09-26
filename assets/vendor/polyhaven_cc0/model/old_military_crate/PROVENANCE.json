@@ -1,0 +1,44 @@
+{
+  "asset_id": "old_military_crate",
+  "name": "Old Military Crate",
+  "source_page": "https://polyhaven.com/a/old_military_crate",
+  "authors": {
+    "Jack Mava": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "old_military_crate_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/old_military_crate/old_military_crate_1k.gltf",
+      "md5": "4c83b9887a0db6ecd5af18293012c3f0",
+      "bytes": 10126
+    },
+    {
+      "file": "textures/old_military_crate_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/old_military_crate/old_military_crate_nor_gl_1k.jpg",
+      "md5": "4403c6773bcc7c0182fac32e750c7231",
+      "bytes": 742682
+    },
+    {
+      "file": "textures/old_military_crate_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/old_military_crate/old_military_crate_diff_1k.jpg",
+      "md5": "a679925cb14dbb3ffc39a5d152d23114",
+      "bytes": 709506
+    },
+    {
+      "file": "textures/old_military_crate_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/old_military_crate/old_military_crate_arm_1k.jpg",
+      "md5": "5e877bd1644fe490e9450794aadc3dd7",
+      "bytes": 704105
+    },
+    {
+      "file": "old_military_crate.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/old_military_crate/old_military_crate.bin",
+      "md5": "4aa204ebcc401c38206677a808aebea6",
+      "bytes": 329004
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "asset_id": "old_planks_02",
+  "name": "Old Planks 02",
+  "source_page": "https://polyhaven.com/a/old_planks_02",
+  "authors": {
+    "Rob Tuytel": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "old_planks_02_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/old_planks_02/old_planks_02_diff_1k.jpg",
+      "md5": "c3f0cbe96566c8c0001e325475065fd4",
+      "bytes": 334200
+    },
+    {
+      "file": "old_planks_02_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/old_planks_02/old_planks_02_nor_gl_1k.jpg",
+      "md5": "1b410991d4a8c427fd7141a2f2ee2283",
+      "bytes": 557304
+    },
+    {
+      "file": "old_planks_02_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/old_planks_02/old_planks_02_rough_1k.jpg",
+      "md5": "c60d656648e02a16558fcf709ca6a38f",
+      "bytes": 189699
+    },
+    {
+      "file": "old_planks_02_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/old_planks_02/old_planks_02_ao_1k.jpg",
+      "md5": "8939b255f1e2ce8caaa1483447bc1042",
+      "bytes": 280924
+    }
+  ]
+}

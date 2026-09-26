@@ -1,0 +1,62 @@
+{
+  "asset_id": "vintage_radio_transceiver",
+  "name": "Vintage Radio Transceiver",
+  "source_page": "https://polyhaven.com/a/vintage_radio_transceiver",
+  "authors": {
+    "Mateusz Sadek": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "vintage_radio_transceiver_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_radio_transceiver/vintage_radio_transceiver_1k.gltf",
+      "md5": "abe85407660ef17f41faab948c7833ac",
+      "bytes": 25848
+    },
+    {
+      "file": "textures/vintage_radio_transceiver_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_radio_transceiver/vintage_radio_transceiver_nor_gl_1k.jpg",
+      "md5": "854e6576a2f1e61ca311071baa89a435",
+      "bytes": 575198
+    },
+    {
+      "file": "textures/vintage_radio_transceiver_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_radio_transceiver/vintage_radio_transceiver_diff_1k.jpg",
+      "md5": "368967f76872933710e77959659bda95",
+      "bytes": 754292
+    },
+    {
+      "file": "textures/vintage_radio_transceiver_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_radio_transceiver/vintage_radio_transceiver_arm_1k.jpg",
+      "md5": "0bd1286f0c4cebbea0f3498e4453f72e",
+      "bytes": 943816
+    },
+    {
+      "file": "textures/vintage_radio_transceiver_accessories_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_radio_transceiver/vintage_radio_transceiver_accessories_nor_gl_1k.jpg",
+      "md5": "f61ff0918376a7f7a0b40ab3ccbc20ef",
+      "bytes": 591038
+    },
+    {
+      "file": "textures/vintage_radio_transceiver_accessories_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_radio_transceiver/vintage_radio_transceiver_accessories_diff_1k.jpg",
+      "md5": "858f7c7cf0c1ab38457b4dc70abbd82b",
+      "bytes": 739039
+    },
+    {
+      "file": "textures/vintage_radio_transceiver_accessories_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_radio_transceiver/vintage_radio_transceiver_accessories_arm_1k.jpg",
+      "md5": "1951d58a87ae545213f642a0f4b30148",
+      "bytes": 932225
+    },
+    {
+      "file": "vintage_radio_transceiver.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/vintage_radio_transceiver/vintage_radio_transceiver.bin",
+      "md5": "81b1c00a7fe0254f6d507bb80111368f",
+      "bytes": 1740024
+    }
+  ]
+}

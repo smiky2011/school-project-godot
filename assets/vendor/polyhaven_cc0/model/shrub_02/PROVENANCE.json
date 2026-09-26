@@ -1,0 +1,44 @@
+{
+  "asset_id": "shrub_02",
+  "name": "Shrub 02",
+  "source_page": "https://polyhaven.com/a/shrub_02",
+  "authors": {
+    "Rico Cilliers": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "shrub_02_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/shrub_02/shrub_02_1k.gltf",
+      "md5": "8f7254d279c0c49c0b3edfe260aa5c86",
+      "bytes": 8083
+    },
+    {
+      "file": "textures/shrub_02_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_02/shrub_02_arm_1k.jpg",
+      "md5": "28c218aeb7cab930d99ee16578984241",
+      "bytes": 313715
+    },
+    {
+      "file": "textures/shrub_02_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_02/shrub_02_nor_gl_1k.jpg",
+      "md5": "51a7f2db7e06a207171fd725585241d5",
+      "bytes": 490815
+    },
+    {
+      "file": "shrub_02.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/shrub_02/shrub_02.bin",
+      "md5": "683b5475238310899eac1458520903e6",
+      "bytes": 758692
+    },
+    {
+      "file": "textures/shrub_02_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_02/shrub_02_diff_1k.jpg",
+      "md5": "3f4ae281928de030c7d4e41ad5b88a8b",
+      "bytes": 395120
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "asset_id": "leafy_grass",
+  "name": "Leafy Grass",
+  "source_page": "https://polyhaven.com/a/leafy_grass",
+  "authors": {
+    "Charlotte Baglioni": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "leafy_grass_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leafy_grass/leafy_grass_diff_1k.jpg",
+      "md5": "0dbc071e91d6905edfcfbe8eb785a1ab",
+      "bytes": 1195394
+    },
+    {
+      "file": "leafy_grass_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leafy_grass/leafy_grass_nor_gl_1k.jpg",
+      "md5": "8279e096e204ea326d57a318869f99df",
+      "bytes": 1466049
+    },
+    {
+      "file": "leafy_grass_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leafy_grass/leafy_grass_rough_1k.jpg",
+      "md5": "05f6bb1383e12b327727d313c5899cf2",
+      "bytes": 511385
+    },
+    {
+      "file": "leafy_grass_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leafy_grass/leafy_grass_ao_1k.jpg",
+      "md5": "c9d0077eefe28c5b18cf2fe78e945abb",
+      "bytes": 1056302
+    }
+  ]
+}

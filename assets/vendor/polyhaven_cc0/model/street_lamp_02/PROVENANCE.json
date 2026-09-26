@@ -1,0 +1,44 @@
+{
+  "asset_id": "street_lamp_02",
+  "name": "Street Lamp 02",
+  "source_page": "https://polyhaven.com/a/street_lamp_02",
+  "authors": {
+    "Josh Dean": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "street_lamp_02_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/street_lamp_02/street_lamp_02_1k.gltf",
+      "md5": "94023fbd7e6392d9276d91ca36c00144",
+      "bytes": 6429
+    },
+    {
+      "file": "textures/street_lamp_02_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_02/street_lamp_02_diff_1k.jpg",
+      "md5": "381097a4c700b86b1c8f7e0d115b1a0a",
+      "bytes": 303714
+    },
+    {
+      "file": "textures/street_lamp_02_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_02/street_lamp_02_arm_1k.jpg",
+      "md5": "d4d49b0153762ebe5ccde8e87af87dd5",
+      "bytes": 657710
+    },
+    {
+      "file": "street_lamp_02.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/street_lamp_02/street_lamp_02.bin",
+      "md5": "5c89269a65d65cdb33d018012f003ef7",
+      "bytes": 530092
+    },
+    {
+      "file": "textures/street_lamp_02_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_02/street_lamp_02_nor_gl_1k.jpg",
+      "md5": "39389c9a5c2c467ea559ac3ad3a03218",
+      "bytes": 372301
+    }
+  ]
+}

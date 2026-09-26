@@ -1,0 +1,45 @@
+{
+  "asset_id": "weed_plant_02",
+  "name": "Weed Plant 02",
+  "source_page": "https://polyhaven.com/a/weed_plant_02",
+  "authors": {
+    "Rob Tuytel": "Photography",
+    "Rico Cilliers": "Modeling"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "weed_plant_02_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/weed_plant_02/weed_plant_02_1k.gltf",
+      "md5": "7716ffcf325cbec5c433085a0c0e5f1f",
+      "bytes": 9128
+    },
+    {
+      "file": "textures/weed_plant_02_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/weed_plant_02/weed_plant_02_nor_gl_1k.jpg",
+      "md5": "1f58acb112882c7d0eb7b7d8e58d65c0",
+      "bytes": 679362
+    },
+    {
+      "file": "textures/weed_plant_02_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/weed_plant_02/weed_plant_02_diff_1k.jpg",
+      "md5": "147c346358cf123ca50473cf05df7b86",
+      "bytes": 457595
+    },
+    {
+      "file": "textures/weed_plant_02_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/weed_plant_02/weed_plant_02_arm_1k.jpg",
+      "md5": "ef589b514bd7515ded97f81466e27dd8",
+      "bytes": 571490
+    },
+    {
+      "file": "weed_plant_02.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/weed_plant_02/weed_plant_02.bin",
+      "md5": "31440e5d2ad17eff90fcf83f3dbe989e",
+      "bytes": 330884
+    }
+  ]
+}

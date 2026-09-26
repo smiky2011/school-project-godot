@@ -1,0 +1,44 @@
+{
+  "asset_id": "wicker_basket_01",
+  "name": "Wicker Basket 01",
+  "source_page": "https://polyhaven.com/a/wicker_basket_01",
+  "authors": {
+    "Kuutti Siitonen": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "wicker_basket_01_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wicker_basket_01/wicker_basket_01_1k.gltf",
+      "md5": "6910bb33f9b29c30e41c06342cba4f9b",
+      "bytes": 2792
+    },
+    {
+      "file": "textures/wicker_basket_01_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wicker_basket_01/wicker_basket_01_arm_1k.jpg",
+      "md5": "e456e1e051da9b8433162de9cb96cb61",
+      "bytes": 874111
+    },
+    {
+      "file": "textures/wicker_basket_01_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wicker_basket_01/wicker_basket_01_nor_gl_1k.jpg",
+      "md5": "4cca87156e77045fd29562b09609b41d",
+      "bytes": 549218
+    },
+    {
+      "file": "textures/wicker_basket_01_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wicker_basket_01/wicker_basket_01_diff_1k.jpg",
+      "md5": "54c05d9c5e4f92930cbbf67e4770fc61",
+      "bytes": 679110
+    },
+    {
+      "file": "wicker_basket_01.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/wicker_basket_01/wicker_basket_01.bin",
+      "md5": "154e2cd9157175591e3585e706925fa9",
+      "bytes": 624920
+    }
+  ]
+}

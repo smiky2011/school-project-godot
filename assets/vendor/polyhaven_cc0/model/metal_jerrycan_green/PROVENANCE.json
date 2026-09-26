@@ -1,0 +1,44 @@
+{
+  "asset_id": "metal_jerrycan_green",
+  "name": "Metal Jerrycan Green",
+  "source_page": "https://polyhaven.com/a/metal_jerrycan_green",
+  "authors": {
+    "Ulan Cabanilla": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "metal_jerrycan_green_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_jerrycan_green/metal_jerrycan_green_1k.gltf",
+      "md5": "8816bb58283db5d391b6b57d00171df1",
+      "bytes": 9539
+    },
+    {
+      "file": "textures/metal_jerrycan_green_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_jerrycan_green/metal_jerrycan_green_nor_gl_1k.jpg",
+      "md5": "2771ff769c5265dd1e9e97ce052c1a72",
+      "bytes": 744758
+    },
+    {
+      "file": "textures/metal_jerrycan_green_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_jerrycan_green/metal_jerrycan_green_diff_1k.jpg",
+      "md5": "c0e675b4fac7dbe66d301ca34626a4c9",
+      "bytes": 577269
+    },
+    {
+      "file": "textures/metal_jerrycan_green_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_jerrycan_green/metal_jerrycan_green_arm_1k.jpg",
+      "md5": "dc7cbd1b48df78d62afd7c2a1c33e048",
+      "bytes": 1050155
+    },
+    {
+      "file": "metal_jerrycan_green.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/metal_jerrycan_green/metal_jerrycan_green.bin",
+      "md5": "d413746af56ec6ed4b2b532eda0c4800",
+      "bytes": 273368
+    }
+  ]
+}

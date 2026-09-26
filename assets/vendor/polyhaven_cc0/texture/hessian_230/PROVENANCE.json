@@ -1,0 +1,39 @@
+{
+  "asset_id": "hessian_230",
+  "name": "Hessian 230",
+  "source_page": "https://polyhaven.com/a/hessian_230",
+  "authors": {
+    "colormass": "Photography",
+    "Rico Cilliers": "Processing"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "hessian_230_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/hessian_230/hessian_230_diff_1k.jpg",
+      "md5": "6d2cee5fb9e5584b7a202ab27e1a6dcc",
+      "bytes": 1062404
+    },
+    {
+      "file": "hessian_230_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/hessian_230/hessian_230_nor_gl_1k.jpg",
+      "md5": "468a884ffa63d912053840b110674c0a",
+      "bytes": 1030521
+    },
+    {
+      "file": "hessian_230_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/hessian_230/hessian_230_rough_1k.jpg",
+      "md5": "8d3a20d7cc91d00de7d5980d471b3c59",
+      "bytes": 923890
+    },
+    {
+      "file": "hessian_230_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/hessian_230/hessian_230_ao_1k.jpg",
+      "md5": "17721ce56e0f082d3d9fc0940a8258e8",
+      "bytes": 641037
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "asset_id": "vintage_oil_lamp",
+  "name": "Vintage Oil Lamp",
+  "source_page": "https://polyhaven.com/a/vintage_oil_lamp",
+  "authors": {
+    "Monsta3D": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "vintage_oil_lamp_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_oil_lamp/vintage_oil_lamp_1k.gltf",
+      "md5": "95aefcb2ccfad1f5e10dd69522ec09ed",
+      "bytes": 7786
+    },
+    {
+      "file": "textures/vintage_oil_lamp_glass_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_diff_1k.jpg",
+      "md5": "3f2ed8af86381524fb7c02a023950309",
+      "bytes": 39058
+    },
+    {
+      "file": "textures/vintage_oil_lamp_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_nor_gl_1k.jpg",
+      "md5": "09ac342783f48e29152415890215c3b7",
+      "bytes": 227296
+    },
+    {
+      "file": "textures/vintage_oil_lamp_flame_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_flame_diff_1k.jpg",
+      "md5": "b37858e7969def84f786a54f8e952904",
+      "bytes": 92425
+    },
+    {
+      "file": "textures/vintage_oil_lamp_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_diff_1k.jpg",
+      "md5": "fd73c81fc05f116ca4f908badb5b8974",
+      "bytes": 536650
+    },
+    {
+      "file": "vintage_oil_lamp.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/vintage_oil_lamp/vintage_oil_lamp.bin",
+      "md5": "b43f17a0f09d6c14d45eb1099eb1077f",
+      "bytes": 186096
+    },
+    {
+      "file": "textures/vintage_oil_lamp_glass_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_nor_gl_1k.jpg",
+      "md5": "40b084dae82420f972a3399e04cea91f",
+      "bytes": 42123
+    },
+    {
+      "file": "textures/vintage_oil_lamp_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_arm_1k.jpg",
+      "md5": "5a385b1f8bea13f7d8ce47a1f6583db1",
+      "bytes": 655961
+    },
+    {
+      "file": "textures/vintage_oil_lamp_glass_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_arm_1k.jpg",
+      "md5": "35280190a34ca941710131a51e4c8d2a",
+      "bytes": 282607
+    }
+  ]
+}

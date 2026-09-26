@@ -20,3 +20,9 @@ __pycache__/
 /build/
 /dist/
 *.pck
+
+# Oversized CC0 source (208 MB .bin); re-fetch with
+# python3 tools/art/fetch_polyhaven.py model jacaranda_tree 1k
+/assets/vendor/polyhaven_cc0/model/jacaranda_tree/*
+!/assets/vendor/polyhaven_cc0/model/jacaranda_tree/PROVENANCE.json
+!/assets/vendor/polyhaven_cc0/model/jacaranda_tree/.gdignore

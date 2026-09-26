@@ -1,0 +1,44 @@
+{
+  "asset_id": "wooden_military_crate",
+  "name": "Wooden Military Crate",
+  "source_page": "https://polyhaven.com/a/wooden_military_crate",
+  "authors": {
+    "Prabhjinder Singh": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "wooden_military_crate_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_military_crate/wooden_military_crate_1k.gltf",
+      "md5": "a6dc6b8e8519a115e8481d9a1c9525cf",
+      "bytes": 6002
+    },
+    {
+      "file": "textures/wooden_military_crate_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_military_crate/wooden_military_crate_nor_gl_1k.jpg",
+      "md5": "768fcbb54910fbad95abfb6bd90901d3",
+      "bytes": 745490
+    },
+    {
+      "file": "textures/wooden_military_crate_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_military_crate/wooden_military_crate_diff_1k.jpg",
+      "md5": "042ee9d280238702cde679ea00bb37ec",
+      "bytes": 824093
+    },
+    {
+      "file": "textures/wooden_military_crate_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_military_crate/wooden_military_crate_arm_1k.jpg",
+      "md5": "b8f165142d290078ffb08b608cec9d48",
+      "bytes": 782386
+    },
+    {
+      "file": "wooden_military_crate.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/wooden_military_crate/wooden_military_crate.bin",
+      "md5": "fb5dbf4aed842eb45f2e18e62683d34a",
+      "bytes": 687548
+    }
+  ]
+}

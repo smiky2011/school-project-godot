@@ -1,0 +1,38 @@
+{
+  "asset_id": "cobblestone_floor_03",
+  "name": "Cobblestone Floor 03",
+  "source_page": "https://polyhaven.com/a/cobblestone_floor_03",
+  "authors": {
+    "Rob Tuytel": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "cobblestone_floor_03_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cobblestone_floor_03/cobblestone_floor_03_diff_1k.jpg",
+      "md5": "d5e23f634ea666527747ea22734d1984",
+      "bytes": 531203
+    },
+    {
+      "file": "cobblestone_floor_03_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cobblestone_floor_03/cobblestone_floor_03_nor_gl_1k.jpg",
+      "md5": "714091302c0177ff073ee385a07800e5",
+      "bytes": 531882
+    },
+    {
+      "file": "cobblestone_floor_03_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cobblestone_floor_03/cobblestone_floor_03_rough_1k.jpg",
+      "md5": "e136999af6faa42d51aef4ddfe9e7b87",
+      "bytes": 251847
+    },
+    {
+      "file": "cobblestone_floor_03_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cobblestone_floor_03/cobblestone_floor_03_ao_1k.jpg",
+      "md5": "3c9df6eb63b2c909940034c3ff5ca817",
+      "bytes": 265298
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "asset_id": "wooden_crate_01",
+  "name": "Wooden Crate 01",
+  "source_page": "https://polyhaven.com/a/wooden_crate_01",
+  "authors": {
+    "James Ray Cock": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "wooden_crate_01_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_crate_01/wooden_crate_01_1k.gltf",
+      "md5": "33df4d2ae00186d4b64e878466c9e22e",
+      "bytes": 5612
+    },
+    {
+      "file": "textures/wooden_crate_01_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_diff_1k.jpg",
+      "md5": "266e0462d06e77c5745f66e89820544f",
+      "bytes": 711292
+    },
+    {
+      "file": "textures/wooden_crate_01_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_nor_gl_1k.jpg",
+      "md5": "e31626a1fcf6f7062c2ffd9fc982b942",
+      "bytes": 594076
+    },
+    {
+      "file": "wooden_crate_01.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/wooden_crate_01/wooden_crate_01.bin",
+      "md5": "8318f76b0c24b5538ce23051dbcb79a0",
+      "bytes": 189408
+    },
+    {
+      "file": "textures/wooden_crate_01_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_crate_01/wooden_crate_01_arm_1k.jpg",
+      "md5": "67c4aeb1154af98f95516b21ef62291c",
+      "bytes": 776699
+    }
+  ]
+}

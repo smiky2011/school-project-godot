@@ -1,0 +1,44 @@
+{
+  "asset_id": "wooden_bucket_01",
+  "name": "Wooden Bucket 01",
+  "source_page": "https://polyhaven.com/a/wooden_bucket_01",
+  "authors": {
+    "James Ray Cock": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "wooden_bucket_01_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_bucket_01/wooden_bucket_01_1k.gltf",
+      "md5": "d3a6ff00895b69406b203dc417113d9a",
+      "bytes": 4248
+    },
+    {
+      "file": "textures/wooden_bucket_01_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bucket_01/wooden_bucket_01_arm_1k.jpg",
+      "md5": "9f42842024b3117b557348ec265cfeee",
+      "bytes": 777463
+    },
+    {
+      "file": "wooden_bucket_01.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/wooden_bucket_01/wooden_bucket_01.bin",
+      "md5": "a93114e5fadd149de908464de7b42550",
+      "bytes": 158408
+    },
+    {
+      "file": "textures/wooden_bucket_01_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bucket_01/wooden_bucket_01_diff_1k.jpg",
+      "md5": "d6296adf55e03bb1acc5de3e5fc8b10f",
+      "bytes": 698083
+    },
+    {
+      "file": "textures/wooden_bucket_01_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bucket_01/wooden_bucket_01_nor_gl_1k.jpg",
+      "md5": "68ad3de3f685798a8d46c070da840e5a",
+      "bytes": 693440
+    }
+  ]
+}

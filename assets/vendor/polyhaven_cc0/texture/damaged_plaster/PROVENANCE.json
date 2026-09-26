@@ -1,0 +1,38 @@
+{
+  "asset_id": "damaged_plaster",
+  "name": "Damaged Plaster",
+  "source_page": "https://polyhaven.com/a/damaged_plaster",
+  "authors": {
+    "Amal Kumar": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "damaged_plaster_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/damaged_plaster/damaged_plaster_diff_1k.jpg",
+      "md5": "a8df39b93ebece3c1c84290e3e916ec1",
+      "bytes": 850524
+    },
+    {
+      "file": "damaged_plaster_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/damaged_plaster/damaged_plaster_nor_gl_1k.jpg",
+      "md5": "f51f2fb57309e9d1974b9841f9b605ea",
+      "bytes": 959148
+    },
+    {
+      "file": "damaged_plaster_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/damaged_plaster/damaged_plaster_rough_1k.jpg",
+      "md5": "bbdad97a6d7c74e24b58b6e398e8eb19",
+      "bytes": 421151
+    },
+    {
+      "file": "damaged_plaster_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/damaged_plaster/damaged_plaster_ao_1k.jpg",
+      "md5": "c7b9d2269caa02e3641ea0d889d3a5a7",
+      "bytes": 488395
+    }
+  ]
+}

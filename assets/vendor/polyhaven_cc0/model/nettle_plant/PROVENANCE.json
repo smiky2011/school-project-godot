@@ -1,0 +1,45 @@
+{
+  "asset_id": "nettle_plant",
+  "name": "Nettle Plant",
+  "source_page": "https://polyhaven.com/a/nettle_plant",
+  "authors": {
+    "Rob Tuytel": "Photography",
+    "Rico Cilliers": "modeling"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "nettle_plant_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/nettle_plant/nettle_plant_1k.gltf",
+      "md5": "474e138cdee694335ca4270ac43f9d49",
+      "bytes": 10450
+    },
+    {
+      "file": "textures/nettle_plant_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/nettle_plant/nettle_plant_arm_1k.jpg",
+      "md5": "7244d9f04fdc0b53212c3d38f5a215b4",
+      "bytes": 467172
+    },
+    {
+      "file": "textures/nettle_plant_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/nettle_plant/nettle_plant_nor_gl_1k.jpg",
+      "md5": "471821200314d7eee64cbd35bf3e5bd0",
+      "bytes": 654754
+    },
+    {
+      "file": "textures/nettle_plant_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/nettle_plant/nettle_plant_diff_1k.jpg",
+      "md5": "efa546b37e9a8669b214b1fea1422892",
+      "bytes": 388629
+    },
+    {
+      "file": "nettle_plant.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/nettle_plant/nettle_plant.bin",
+      "md5": "975cb59d9f42871bb448de70aeecbc01",
+      "bytes": 956560
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "asset_id": "rock_wall_13",
+  "name": "Rock Wall 13",
+  "source_page": "https://polyhaven.com/a/rock_wall_13",
+  "authors": {
+    "Amal Kumar": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "rock_wall_13_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_wall_13/rock_wall_13_diff_1k.jpg",
+      "md5": "dd6ed4899e8b2a860fc8508beb3ca9a1",
+      "bytes": 775643
+    },
+    {
+      "file": "rock_wall_13_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_wall_13/rock_wall_13_nor_gl_1k.jpg",
+      "md5": "5901ba80bc11daf3fe72ea0107847664",
+      "bytes": 1007293
+    },
+    {
+      "file": "rock_wall_13_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_wall_13/rock_wall_13_rough_1k.jpg",
+      "md5": "5be04fb94f6a83408ca63cc72c5e0730",
+      "bytes": 458629
+    },
+    {
+      "file": "rock_wall_13_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_wall_13/rock_wall_13_ao_1k.jpg",
+      "md5": "31b599026d4c680f34afafb3406b5322",
+      "bytes": 585180
+    }
+  ]
+}

@@ -3,6 +3,9 @@ extends Node3D
 const GUARD_SCRIPT := preload("res://scripts/actors/guard.gd")
 const TOWN_PRESENTATION := preload("res://scripts/world/town_presentation.gd")
 const COMBAT_FX := preload("res://scripts/fx/combat_fx.gd")
+const TOWN_ATMOSPHERE := preload("res://scripts/world/town_atmosphere.gd")
+const TOWN_DRESSING := preload("res://scripts/world/town_dressing.gd")
+const TOWN_BACKDROP := preload("res://scripts/world/town_backdrop.gd")
 const CONTACT_VISUAL: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/contact_idle.glb")
 const SCOUT_VISUAL: PackedScene = preload("res://assets/vendor/character_visual/makehuman/runtime/scout_idle.glb")
 const CONTACT_DESK_SURFACE_Y := 3.825
@@ -14,6 +17,8 @@ const MAX_Z := 204
 var director: Node
 var player: CharacterBody3D
 var guards: Array = []
+# Every plot house as {"label", "base", "size", "plaster"}; used by dressing.
+var plots: Array[Dictionary] = []
 var _obstacles: Array[Rect2] = []
 var _path_grid: AStarGrid2D
 var _reinforcements_spawned := false
@@ -157,7 +162,6 @@ func _build_town() -> void:
 	_build_lighting()
 	_box("Ground", Vector3(0, -0.25, 0), Vector3(130, 0.5, 410), _earth)
 	TOWN_PRESENTATION.add_street_surfaces(self, _obstacles)
-	_visual_box("Southern muddy track sample", Vector3(-47, 0.008, 190), Vector3(5.5, 0.018, 11), _mud_track)
 	_box("West outer boundary", Vector3(-65, 2, 0), Vector3(1, 4, 410), _dark_stone, true)
 	_box("East outer boundary", Vector3(65, 2, 0), Vector3(1, 4, 410), _dark_stone, true)
 	_box("South outer boundary", Vector3(0, 2, 205), Vector3(130, 4, 1), _dark_stone, true)
@@ -192,34 +196,12 @@ func _build_town() -> void:
 	_build_scout_shelter()
 	_build_contact()
 	_build_crate_sample()
+	TOWN_DRESSING.new().build(self, _obstacles)
+	TOWN_BACKDROP.new().build(self)
 
 
 func _build_lighting() -> void:
-	var world := WorldEnvironment.new()
-	world.name = "Cloudy daylight"
-	var environment := Environment.new()
-	environment.background_mode = Environment.BG_SKY
-	var sky := Sky.new()
-	var atmosphere := PanoramaSkyMaterial.new()
-	atmosphere.panorama = load("res://assets/vendor/environment_visual/polyhaven/overcast_soil_puresky/overcast_soil_puresky_1k.hdr")
-	atmosphere.energy_multiplier = 0.28
-	sky.sky_material = atmosphere
-	environment.sky = sky
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	environment.ambient_light_energy = 0.48
-	environment.ssao_enabled = true
-	environment.ssao_radius = 1.45
-	environment.ssao_intensity = 1.1
-	world.environment = environment
-	add_child(world)
-	var sun := DirectionalLight3D.new()
-	sun.name = "Soft afternoon sun"
-	sun.rotation_degrees = Vector3(-50, -28, 0)
-	sun.light_energy = 0.82
-	sun.light_color = Color(0.88, 0.90, 0.91)
-	sun.light_angular_distance = 0.8
-	sun.shadow_enabled = true
-	add_child(sun)
+	TOWN_ATMOSPHERE.build(self)
 
 
 func _build_southern_district() -> void:
@@ -361,6 +343,7 @@ func _build_crate_sample() -> void:
 
 func _build_solid_house(label: String, base: Vector3, size: Vector3, wall_material: Material) -> void:
 	var plaster := wall_material == _plaster
+	plots.append({"label": label, "base": base, "size": size, "plaster": plaster})
 	var shell_added: bool = TOWN_PRESENTATION.add_plot_shell(self, label, base, size, plaster)
 	# Preserve the human-sized doors/windows: shell height is fixed in metres.
 	# The old rectangular collision still owns the same horizontal footprint.

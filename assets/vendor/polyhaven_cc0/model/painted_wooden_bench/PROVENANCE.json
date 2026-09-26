@@ -1,0 +1,44 @@
+{
+  "asset_id": "painted_wooden_bench",
+  "name": "Painted Wooden Bench",
+  "source_page": "https://polyhaven.com/a/painted_wooden_bench",
+  "authors": {
+    "Kirill Sannikov": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "painted_wooden_bench_1k.gltf",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_bench/painted_wooden_bench_1k.gltf",
+      "md5": "784a49250144aa5299a93c1f3b6968d7",
+      "bytes": 2835
+    },
+    {
+      "file": "textures/painted_wooden_bench_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_bench/painted_wooden_bench_diff_1k.jpg",
+      "md5": "60c7d0f34f52b1003345d318e35f468d",
+      "bytes": 545216
+    },
+    {
+      "file": "textures/painted_wooden_bench_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_bench/painted_wooden_bench_nor_gl_1k.jpg",
+      "md5": "08b74bebcff262c14beae35a4f7b3405",
+      "bytes": 830104
+    },
+    {
+      "file": "textures/painted_wooden_bench_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_bench/painted_wooden_bench_arm_1k.jpg",
+      "md5": "754ecc7f47b1e5d032e45e22334954f1",
+      "bytes": 586040
+    },
+    {
+      "file": "painted_wooden_bench.bin",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/painted_wooden_bench/painted_wooden_bench.bin",
+      "md5": "ed331b50f955852f007313c1a75c2e2d",
+      "bytes": 25444
+    }
+  ]
+}

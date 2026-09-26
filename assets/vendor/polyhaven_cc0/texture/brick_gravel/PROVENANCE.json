@@ -1,0 +1,38 @@
+{
+  "asset_id": "brick_gravel",
+  "name": "Brick Gravel",
+  "source_page": "https://polyhaven.com/a/brick_gravel",
+  "authors": {
+    "Dimitrios Savva": "All"
+  },
+  "license": "CC0 1.0 (https://polyhaven.com/license)",
+  "downloaded": "2026-09-26",
+  "resolution": "1k",
+  "account_required": false,
+  "files": [
+    {
+      "file": "brick_gravel_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brick_gravel/brick_gravel_diff_1k.jpg",
+      "md5": "527aa6dbd4fb9e1f252e1bfc33dffb6e",
+      "bytes": 1004459
+    },
+    {
+      "file": "brick_gravel_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brick_gravel/brick_gravel_nor_gl_1k.jpg",
+      "md5": "e539da5e7c3a073004bba025c0f55fc6",
+      "bytes": 1402835
+    },
+    {
+      "file": "brick_gravel_rough_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brick_gravel/brick_gravel_rough_1k.jpg",
+      "md5": "0fc38870dc42d3d334e1a2066713a9aa",
+      "bytes": 643561
+    },
+    {
+      "file": "brick_gravel_ao_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brick_gravel/brick_gravel_ao_1k.jpg",
+      "md5": "27b5eaf82d099201c5364380159d0f72",
+      "bytes": 1028417
+    }
+  ]
+}
