@@ -1,6 +1,6 @@
 # Design Document Index
 
-Status: the first playable mission has a packaged visual-production increment with modeled town houses, textured Sten and clothed contact, guard and scout. The current visual package passed its own exact-PCK input-driven zero-kill route; remaining acceptance checks are recorded in [QA_REPORT.md](QA_REPORT.md). Full manual human navigation and the intended ten-minute pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
+Status: the first playable mission has a packaged visual-production increment with modeled town houses, textured Sten, clothed contact and scout, and an animated guard gait. The current package passed exact-PCK input-driven zero-kill extraction, combat, failure/retry and native menu checks; [QA_REPORT.md](QA_REPORT.md) records the package identity and performance caveat. First-time human navigation, listening, weapon feel and the intended ten-minute pace remain unverified. Design commitments below remain distinct from provisional implementation choices.
 
 ## Read in This Order
 
@@ -28,13 +28,14 @@ Status: the first playable mission has a packaged visual-production increment wi
 | [ENVIRONMENT_ASSET_SCREENING.md](ENVIRONMENT_ASSET_SCREENING.md) | Authored houses, source materials and architecture previews |
 | [WEAPON_CHARACTER_ASSETS.md](WEAPON_CHARACTER_ASSETS.md) | Sten and first-person grip-hand source and attribution |
 | [CHARACTER_PRODUCTION.md](CHARACTER_PRODUCTION.md) | Contact, guard and scout visuals, editable sources and motion limits |
+| [FIRST_PERSON_MOTION.md](FIRST_PERSON_MOTION.md) | Grounded player acceleration, viewmodel gait and overlapping Sten reflection tails |
 | [RUNTIME_ENVIRONMENT.md](RUNTIME_ENVIRONMENT.md) | Target-machine runtime observations |
 | [QA_REPORT.md](QA_REPORT.md) | Source and packaged playthrough evidence, performance and acceptance limits |
 | [SHOOTER_BENCHMARKS.md](SHOOTER_BENCHMARKS.md) | AAA weapon and asset practice compared with this project |
 | [CLAUDE_HANDOFF.md](CLAUDE_HANDOFF.md) | Claude Code session (26 Sep): weapon feel, visual style pass, validation and open items |
 | [PLAYTEST_REPORT.md](PLAYTEST_REPORT.md) | Route observations and pacing interpretation |
 
-`scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The preceding blockout's source direct-west route completed in 207.88 game seconds; its exact packaged PCK's covered route completed in 202.66 game seconds, with zero kills and a single-press final handoff. Both used normal movement and collisions. They are known automated routes, not a measured first-time human play session or proof of the intended ten-minute pace. The current visual package also completed a covered automated route in 202.75 game seconds with zero kills; its source commit, PCK hash, performance and remaining checks are in [QA_REPORT.md](QA_REPORT.md).
+`scenes/main.tscn` starts the mission. `scripts/core/main.gd` creates the level, player and director; the director owns mission phase and lockdown separately. Automated runners live in `tests/`. The preceding blockout's source direct-west route completed in 207.88 game seconds; its exact packaged PCK's covered route completed in 202.66 game seconds. The later visual PCK completed in 202.75 seconds. The current animated-guard PCK completed a corrected covered route in 204.225 game seconds, with zero kills, no sprint and a single-press final handoff. These used mapped movement and real collision; they are known automated routes, not measured first-time human play sessions or proof of the intended ten-minute pace. Current source commit, PCK hash, performance and acceptance limits are in [QA_REPORT.md](QA_REPORT.md).
 
 ## Team Configuration
 

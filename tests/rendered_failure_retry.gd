@@ -33,7 +33,9 @@ func _run() -> void:
 
 	# Cross at the southern lane, then face the fixed middle sentry from its
 	# open south side. No transforms, guard flags or damage calls are changed.
-	if not await _walk_axis("move_forward", "z", 164.0, false, 20.0):
+	# The northern end of the spawn sandbags is at z=162.85. Cross only after
+	# moving beyond it so this route uses the open lane and real collision.
+	if not await _walk_axis("move_forward", "z", 160.5, false, 20.0):
 		_fail("The player did not reach the southern crossing")
 		return
 	if not await _walk_axis("move_right", "x", -19.0, true, 20.0):

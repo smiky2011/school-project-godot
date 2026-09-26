@@ -77,7 +77,10 @@ func _run() -> void:
 	var approach: Array = [["south_west_street", Vector2(-48.0, 164.0)]]
 	if route_name == "covered":
 		approach.append_array([
-			["south_service_lane", Vector2(-32.5, 164.0)],
+			# The sandbag wall at x=-43.6 spans z=162.85..170.15. Cross
+			# north of its end with capsule clearance instead of steering into it.
+			["south_sandbag_end", Vector2(-48.0, 160.5)],
+			["south_service_lane", Vector2(-32.5, 160.5)],
 			["south_service_corner", Vector2(-32.5, 130.0)],
 			["south_service_passage", Vector2(-32.5, 111.0)],
 			["south_service_north", Vector2(-32.5, 96.0)],
