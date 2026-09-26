@@ -155,8 +155,8 @@ func _run() -> void:
 	reload_release.physical_keycode = KEY_R
 	reload_release.pressed = false
 	Input.parse_input_event(reload_release)
-	# An empty open-bolt Sten also re-cocks: 2.45 s instead of the 1.9 s
-	# tactical reload (scripts/player/weapon_profile.gd).
+	# The empty StG 44 reload includes a charging-handle pull: 2.45 s versus
+	# the 1.9 s tactical reload (scripts/player/weapon_profile.gd).
 	await create_timer(2.7).timeout
 	_check(player.ammo == 30 and not player.is_reloading, "Empty reload restores magazine")
 

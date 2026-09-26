@@ -3,20 +3,21 @@ extends Node3D
 # Visual-only viewmodel. Ballistics, magazine capacity and reload time remain in
 # Player and weapon_profile.gd. Motion is procedural: springs for recoil kick,
 # lagging sway from mouse input, breathing, walk bob and a lowered sprint pose.
-const STEN_SCENE: PackedScene = preload("res://assets/vendor/weapon_visual/sten_mk2/runtime/sten_mk2.glb")
+const RIFLE_SCENE: PackedScene = preload("res://assets/vendor/weapon_visual/stg44/runtime/stg44.glb")
 const HANDS_SCRIPT: Script = preload("res://assets/player/gloved_hands.gd")
 const FX_TEXTURES := preload("res://scripts/fx/fx_textures.gd")
-const HIP := Vector3(0.24, -0.255, -0.55)
-const ADS := Vector3(0.0, -0.083, -0.58)
+const HIP := Vector3(0.23, -0.29, -0.50)
+const ADS := Vector3(0.0, -0.2011, -0.16)
 const SPRINT_OFFSET := Vector3(0.05, -0.1, 0.04)
 const SPRINT_ROTATION := Vector3(-0.32, 0.55, 0.28)
 const VIEWMODEL_LAYER := 2
-# Muzzle and ejection port measured on the imported mesh before model yaw.
-const MUZZLE_LOCAL := Vector3(0.0, 0.061, 0.347)
-const EJECTION_LOCAL := Vector3(-0.028, 0.066, 0.03)
+# Markers measured in the imported rifle's Godot coordinates.
+const MUZZLE_LOCAL := Vector3(0.0, 0.163, -0.47)
+const EJECTION_LOCAL := Vector3(0.026, 0.137, -0.015)
 
 var model: Node3D
 var magazine: Node3D
+var bolt_node: Node3D
 var hands: Node3D
 var muzzle_light: OmniLight3D
 var muzzle_flash: MeshInstance3D
@@ -25,7 +26,7 @@ var _flash_side_b: MeshInstance3D
 var _ejection: Marker3D
 var _smoke: CPUParticles3D
 var _magazine_origin := Vector3.ZERO
-var _support_from_magazine := Transform3D.IDENTITY
+var _bolt_origin := Vector3.ZERO
 var _aim := 0.0
 var _flash_timer := 0.0
 var _walk_cycle := 0.0
@@ -43,18 +44,20 @@ var _sway_target := Vector2.ZERO
 
 
 func _ready() -> void:
-	name = "StenMkIIViewmodel"
+	name = "StG44Viewmodel"
 	position = HIP
-	model = STEN_SCENE.instantiate() as Node3D
-	model.name = "StenModel"
-	model.rotation.y = PI # Imported barrel is +Z; first-person forward is -Z.
+	model = RIFLE_SCENE.instantiate() as Node3D
+	model.name = "StG44Model"
+	# The front post is 1.3 mm lower than the rear notch across a 0.434 m
+	# sight radius. This small pitch puts both source sight points on the aim ray.
+	model.rotation.x = 0.003
 	add_child(model)
-	magazine = model.get_node("StenMagazine") as Node3D
+	magazine = model.get_node("Magazine") as Node3D
 	_magazine_origin = magazine.position
+	bolt_node = model.get_node("Body_Bolt") as Node3D
+	_bolt_origin = bolt_node.position
 	hands = HANDS_SCRIPT.new() as Node3D
 	add_child(hands)
-	# Keep the authored grip offset in magazine space for the entire reload.
-	_support_from_magazine = magazine.global_transform.affine_inverse() * hands.support_hand.global_transform
 	_ejection = Marker3D.new()
 	_ejection.name = "EjectionPort"
 	_ejection.position = EJECTION_LOCAL
@@ -91,7 +94,7 @@ func get_ejection_transform() -> Transform3D:
 
 
 func update_pose(delta: float, aim_amount: float, ground_travel: float, sprinting: bool, reloading: bool, reload_progress: float, reload_empty: bool = false, suppression: float = 0.0, crouching: bool = false) -> void:
-	_wall_tuck = move_toward(_wall_tuck, clampf((0.82 - _wall_distance()) / 0.50, 0.0, 1.0), delta * 7.0)
+	_wall_tuck = move_toward(_wall_tuck, clampf((1.08 - _wall_distance()) / 0.55, 0.0, 1.0), delta * 7.0)
 	_aim = aim_amount if _wall_tuck < 0.15 else move_toward(_aim, 0.0, delta * 8.0)
 	_sprint = move_toward(_sprint, 1.0 if sprinting else 0.0, delta * 6.0)
 	_flash_timer = maxf(0.0, _flash_timer - delta)
@@ -122,13 +125,16 @@ func update_pose(delta: float, aim_amount: float, ground_travel: float, sprintin
 	var lower := 0.0
 	var roll := 0.0
 	var magazine_out := 0.0
+	var hand_to_magazine := 0.0
 	var bolt := 0.0
 	if reloading:
-		# Tactical: magazine out and in. Empty: the same, then the bolt is
-		# pulled back and released (a short sharp jerk of the whole gun).
+		# Move the support hand from the fore-end to the bottom magazine, draw
+		# the magazine down, then seat it before an empty-reload bolt pull.
 		var mag_phase := reload_progress / (0.8 if reload_empty else 1.0)
-		lower = sin(clampf(mag_phase, 0.0, 1.0) * PI) * 0.025
+		# Bring the receiver and bottom magazine into the frame for the swap.
+		lower = -sin(clampf(mag_phase, 0.0, 1.0) * PI) * 0.11
 		roll = sin(clampf(mag_phase, 0.0, 1.0) * PI) * 0.19
+		hand_to_magazine = smoothstep(0.02, 0.20, mag_phase) * (1.0 - smoothstep(0.80, 0.98, mag_phase))
 		if mag_phase < 0.52:
 			magazine_out = smoothstep(0.12, 0.33, mag_phase)
 		else:
@@ -146,9 +152,11 @@ func update_pose(delta: float, aim_amount: float, ground_travel: float, sprintin
 		deg_to_rad(_kick_rot.x) + 0.64 * _wall_tuck + SPRINT_ROTATION.x * _sprint + _sway.y * 0.05 * sway_scale,
 		deg_to_rad(_kick_rot.y) + SPRINT_ROTATION.y * _sprint - _sway.x * 0.06 * sway_scale,
 		deg_to_rad(_kick_rot.z) + roll - 0.14 * _wall_tuck + SPRINT_ROTATION.z * _sprint - _sway.x * 0.08 * sway_scale)
-	magazine.position = _magazine_origin + Vector3(0.16 * magazine_out, -0.04 * magazine_out, 0.015 * magazine_out)
-	magazine.rotation.z = -0.18 * magazine_out
-	hands.support_hand.global_transform = magazine.global_transform * _support_from_magazine
+	var mag_displacement := Vector3(-0.012, -0.19, 0.06) * magazine_out
+	magazine.position = _magazine_origin + mag_displacement
+	magazine.rotation.x = -0.18 * magazine_out
+	bolt_node.position = _bolt_origin + Vector3(0.0, 0.0, 0.045 * bolt)
+	hands.support_hand.position = Vector3(0.0, -0.14, 0.14) * hand_to_magazine + mag_displacement * hand_to_magazine
 
 
 func _step_springs(delta: float) -> void:
@@ -170,13 +178,13 @@ func _wall_distance() -> float:
 	var camera := get_parent() as Camera3D
 	var player := camera.get_parent().get_parent() as CollisionObject3D
 	var from := camera.global_position
-	var to := from - camera.global_transform.basis.z * 0.82
+	var to := from - camera.global_transform.basis.z * 1.08
 	var query := PhysicsRayQueryParameters3D.create(from, to)
 	query.collision_mask = 1
 	query.exclude = [player.get_rid()]
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
 	if hit.is_empty():
-		return 0.82
+		return 1.08
 	return from.distance_to(hit["position"])
 
 

@@ -100,7 +100,7 @@ func _process(_delta: float) -> void:
 	_health.add_theme_color_override("font_color", Color(1.0, 0.48, 0.42) if player.damage_flash > 0.0 or player.health <= 30.0 else Color(0.91, 0.95, 0.86))
 	_damage_tint.color = Color(0.8, 0.045, 0.025, player.damage_flash * 0.35)
 	var ammo_status := ("RELOADING %d%%" % roundi(player.get_reload_progress() * 100.0)) if player.is_reloading else ("RELOAD [R]" if player.ammo == 0 else "UNLIMITED RESERVE")
-	_ammo.text = "SMG  %02d / 30   %s" % [player.ammo, ammo_status]
+	_ammo.text = "STG 44  %02d / 30   %s" % [player.ammo, ammo_status]
 	var awareness: Dictionary = director.get_local_awareness()
 	_awareness.text = "%s  ·  SUSPICION %d%%" % [awareness["state"], roundi(float(awareness["suspicion"]) * 100.0)]
 	_awareness.add_theme_color_override("font_color", Color(1.0, 0.52, 0.37) if awareness["state"] == "COMBAT" else (Color(1.0, 0.77, 0.43) if awareness["state"] != "CLEAR" else Color(0.72, 0.87, 0.79)))
@@ -136,7 +136,7 @@ func _build_gameplay() -> void:
 	var health_panel := _panel(_game_layer, 22, -64, 210, 44, false, true)
 	_health = _label(health_panel, "HEALTH  100 / 100", 20, Color(0.91, 0.95, 0.86), Vector2(13, 9), Vector2(190, 28))
 	var ammo_panel := _panel(_game_layer, -312, -64, 290, 44, true, true)
-	_ammo = _label(ammo_panel, "SMG  30 / 30", 17, Color(0.91, 0.95, 0.86), Vector2(13, 11), Vector2(270, 24))
+	_ammo = _label(ammo_panel, "STG 44  30 / 30", 17, Color(0.91, 0.95, 0.86), Vector2(13, 11), Vector2(270, 24))
 	_crosshair = _label(_game_layer, "+", 26, Color(0.91, 0.94, 0.9), Vector2.ZERO, Vector2(30, 30))
 	_crosshair.anchor_left = 0.5
 	_crosshair.anchor_right = 0.5

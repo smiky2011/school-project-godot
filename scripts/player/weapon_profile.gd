@@ -1,12 +1,12 @@
 extends RefCounted
 
-# Sten Mk II handling data. Gameplay code reads these values instead of
+# StG 44 handling data. Gameplay code reads these values instead of
 # scattering numbers through Player; see docs/SHOOTER_BENCHMARKS.md for the
 # AAA patterns (authored recoil, separate spread, tactical/empty reloads).
 # Magazine size and unlimited reserve are confirmed design rules; every other
 # number here is provisional tuning awaiting human playtest.
 
-const NAME := "Sten Mk II"
+const NAME := "StG 44"
 const MAGAZINE_SIZE := 30
 const FIRE_INTERVAL := 0.105 # About 570 rounds per minute.
 const RANGE := 120.0
@@ -21,7 +21,7 @@ const FALLOFF_END := 80.0
 const FALLOFF_MIN_SCALE := 0.7
 const HEAD_RADIUS := 0.14
 
-# Reloads. An open-bolt Sten that ran dry also needs the bolt re-cocked.
+# Reloads. The empty-magazine animation includes a charging-handle pull.
 const TACTICAL_RELOAD := 1.9
 const EMPTY_RELOAD := 2.45
 

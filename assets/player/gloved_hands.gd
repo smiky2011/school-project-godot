@@ -1,6 +1,6 @@
 extends Node3D
 
-# Authored CC0 MakeHuman skin hands are posed around the Sten; only the cloth
+# Authored CC0 MakeHuman skin hands are posed around the StG 44; only the cloth
 # sleeves and cuff rings are generated here to conceal the cut wrists.
 const LEFT_HAND: PackedScene = preload("res://assets/player/hands/hand_left_grip.glb")
 const RIGHT_HAND: PackedScene = preload("res://assets/player/hands/hand_right_grip.glb")
@@ -28,11 +28,11 @@ func _ready() -> void:
 	var trigger := Node3D.new()
 	trigger.name = "TriggerHand"
 	add_child(trigger)
-	_tube(trigger, "TriggerSleeve", [Vector3(0.34, -0.49, 0.31), Vector3(0.13, -0.23, 0.16), Vector3(0.0, -0.005, 0.03)], [Vector2(0.075, 0.068), Vector2(0.064, 0.057), Vector2(0.038, 0.037)], cloth)
-	_tube(trigger, "TriggerCuff", [Vector3(0.014, -0.032, 0.045), Vector3(0.0, -0.003, 0.03)], [Vector2(0.043, 0.041), Vector2(0.040, 0.039)], cuff)
+	_tube(trigger, "TriggerSleeve", [Vector3(0.34, -0.49, 0.40), Vector3(0.14, -0.23, 0.24), Vector3(0.0, -0.005, 0.13)], [Vector2(0.075, 0.068), Vector2(0.064, 0.057), Vector2(0.038, 0.037)], cloth)
+	_tube(trigger, "TriggerCuff", [Vector3(0.014, -0.032, 0.145), Vector3(0.0, -0.003, 0.13)], [Vector2(0.043, 0.041), Vector2(0.040, 0.039)], cuff)
 	var right := RIGHT_HAND.instantiate() as Node3D
 	right.name = "MakeHumanRightGrip"
-	right.position = Vector3(0.0, -0.005, 0.03)
+	right.position = Vector3(0.0, -0.005, 0.13)
 	right.basis = Basis(Vector3.RIGHT, deg_to_rad(30.0)) * Basis(Vector3.UP, PI)
 	trigger.add_child(right)
 	_configure_viewmodel_hand(right)
@@ -40,11 +40,11 @@ func _ready() -> void:
 	support_hand = Node3D.new()
 	support_hand.name = "SupportHand"
 	add_child(support_hand)
-	_tube(support_hand, "SupportSleeve", [Vector3(-0.37, -0.48, 0.17), Vector3(-0.25, -0.17, 0.08), Vector3(-0.15, 0.065, 0.04)], [Vector2(0.078, 0.071), Vector2(0.063, 0.058), Vector2(0.038, 0.037)], cloth)
-	_tube(support_hand, "SupportCuff", [Vector3(-0.163, 0.038, 0.052), Vector3(-0.15, 0.067, 0.04)], [Vector2(0.044, 0.042), Vector2(0.040, 0.039)], cuff)
+	_tube(support_hand, "SupportSleeve", [Vector3(-0.37, -0.48, 0.14), Vector3(-0.23, -0.17, -0.10), Vector3(-0.04, 0.065, -0.18)], [Vector2(0.078, 0.071), Vector2(0.063, 0.058), Vector2(0.038, 0.037)], cloth)
+	_tube(support_hand, "SupportCuff", [Vector3(-0.053, 0.038, -0.168), Vector3(-0.04, 0.067, -0.18)], [Vector2(0.044, 0.042), Vector2(0.040, 0.039)], cuff)
 	var left := LEFT_HAND.instantiate() as Node3D
 	left.name = "MakeHumanLeftGrip"
-	left.position = Vector3(-0.15, 0.065, 0.04)
+	left.position = Vector3(-0.04, 0.065, -0.18)
 	left.basis = Basis(Vector3.RIGHT, deg_to_rad(30.0)) * Basis(Vector3.UP, PI)
 	support_hand.add_child(left)
 	_configure_viewmodel_hand(left)
