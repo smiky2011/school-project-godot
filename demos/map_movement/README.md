@@ -19,7 +19,7 @@ From the repository root, run:
 
 ```sh
 python3 tools/create_map_movement_demo.py
-/Users/quan/Downloads/Godot.app/Contents/MacOS/Godot --headless --path demos/map_movement --editor --quit
+/Users/quan/Downloads/Godot.app/Contents/MacOS/Godot --headless --path demos/map_movement --import
 /Users/quan/Downloads/Godot.app/Contents/MacOS/Godot --path demos/map_movement
 ```
 
